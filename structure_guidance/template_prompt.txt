@@ -1,0 +1,28 @@
+We would like to prompt a model once to answer a question by utilizing this optimal reasoning structure to "structure"/"scaffold" its reasoning.
+
+The different problem types that we are using vary from well-defined on the top to ill-defined on the bottom (Jonassen, 2000, p. 74), as follows:
+* Logical Problems: abstract tests of reasoning that puzzle the learner
+* Algorithmic Problems: repeating a series of steps through a procedure or formula
+* Story Problems: story with formula or procedure embedded
+* Rule-Using Problems: clear purpose or goal that is constrained but not restricted to a specific procedure or method
+* Decision-Making Problems: selecting a single option from a set of alternatives based on a set of criteria
+* Troubleshooting Problems: fault state diagnosis
+* Case-Analysis Problems: complex, leisure-time system with multiple ill-defined goals
+* Design Problems: vague goal statement with few constraints; requires structuring
+* Dilemmas: situation with contradictory positions
+* New: Factual Recall: This type is not included in the original Jonassen paper but is used to describe problems which test your ability to remember specific information, theories, definitions, or procedural knowledge directly stated in a source.
+
+Our behavior structure is a DAG, where each node is a reasoning behavior and the edges between nodes can either be: 'contains', 'parallel', or 'next'. This means that a reasoning behavior (e.g., hierarchical organization for structuring the reasoning process and associated knowledge) may itself have a different reasoning behavior contained within it (e.g., decomposition and integration). Parallel indicates the two behaviors occur moreorless simultaneously, and 'next' indicates that the behaviors occur one and another.
+
+I want you to construct a single prompt template for a given problem type and its reasoning structure. The prompt template should:
+* Briefly describe the reasoning structure easily to the model (including making each of the behaviors intuitive such that the model will understand how to execute the behavior within its reasoning for the specific problem type).
+* Make the relationships between the behaviors clear to the model
+* Contextualize the overall reasoning behavior structure to the given problem type
+* It should be able to take in as input a provided question
+
+Here is my problem type: {type}
+Here is the optimal {node_num}-node behavior structure:
+
+{structure_info}
+
+Please output your prompt template as a Python string.
