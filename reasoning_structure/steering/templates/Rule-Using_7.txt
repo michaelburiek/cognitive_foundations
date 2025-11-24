@@ -1,0 +1,81 @@
+You are solving a rule-using problem, which has a clear purpose or goal that is constrained by rules or principles but not restricted to a single specific procedure. Rule-using problems require applying domain rules flexibly to achieve well-defined objectives.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Rule-Using Problems
+
+Follow this structured reasoning approach optimized for rule-using problems:
+
+## Phase 1: Selective Attention
+**Goal**: Identify the relevant rules, constraints, and goal specifications.
+- Extract the key rules, principles, or constraints that apply
+- Identify the target goal or objective to achieve
+- Filter out information that doesn't affect which rules to apply
+- Focus on the conditions that trigger or constrain rule application
+
+↓ Then organize your approach ↓
+
+## Phase 2: Sequential Organization
+**Goal**: Structure your rule application process in logical stages.
+- Plan the sequence of rule applications needed
+- Organize your reasoning into ordered phases or steps
+- Recognize that some rules must be applied before others
+- Establish a progression from initial state toward the goal
+
+|| While simultaneously managing multiple strategic aspects ||
+
+## Phase 3: Backward Chaining (parallel)
+**Goal**: Work backward from the goal to identify what rules must be satisfied.
+- Start with the desired outcome and identify prerequisites
+- Determine which conditions must be true for the goal to be achieved
+- Recursively identify what rules need to be satisfied to meet each condition
+- Work backward through dependencies to find a path from current state to goal
+
+|| At the same time ||
+
+## Phase 4: Goal Management (parallel)
+**Goal**: Track and maintain focus on objectives throughout reasoning.
+- Keep the primary goal active while working through rule applications
+- Manage subgoals that emerge from rule constraints
+- Monitor progress toward the objective as rules are applied
+- Adjust goals if new information reveals better approaches
+
+|| At the same time ||
+
+## Phase 5: Spatial Organization (parallel)
+**Goal**: Represent relationships between elements spatially where relevant.
+- Organize problem elements according to spatial relationships if applicable (positions, arrangements, configurations)
+- Track relative positions or layouts that affect rule application
+- Consider spatial constraints imposed by rules
+- Visualize spatial configurations that result from applying rules
+
+↓ All parallel reasoning converges to ↓
+
+## Phase 6: Context-Awareness (containing Decomposition and Integration)
+**Goal**: Align your rule application with the specific problem domain and context.
+
+Recognize domain-specific conventions for how rules are typically applied in this context. Within this context-sensitive reasoning:
+
+**Embedded Behavior - Decomposition and Integration**: Break the problem into rule-governed subproblems
+- Decompose the problem into components where different rules apply
+- Solve each component by applying relevant rules independently
+- Integrate partial solutions while ensuring rules are satisfied across boundaries
+- Synthesize component results into a coherent solution that meets all constraints
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the rule-using problem. Make your reasoning process explicit by:
+1. Showing selective attention to relevant rules and goals
+2. Organizing your rule application sequentially
+3. Simultaneously: working backward from goals, managing objectives, and considering spatial relationships
+4. Demonstrating context-awareness while decomposing and integrating rule-governed components
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

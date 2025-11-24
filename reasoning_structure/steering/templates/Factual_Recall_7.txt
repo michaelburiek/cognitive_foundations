@@ -1,0 +1,97 @@
+You are solving a **factual recall problem**, which requires retrieving precise information, 
+definitions, descriptions, or procedural facts from memory or a known knowledge source. 
+Unlike interpretive or generative tasks, factual recall emphasizes accuracy, clarity, and 
+alignment with established information structures.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Factual Recall Problems
+
+Follow this optimized reasoning structure. The flow of reasoning is:
+
+**selective-attention → logical-coherence → forward-chaining → sequential-organization → 
+knowledge-structure-alignment → adaptive-detail-management → temporal-organization**
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify exactly what factual information the question is asking for.
+- Determine the specific term, concept, definition, event, or procedural step being queried
+- Ignore unrelated associations or interpretive tangents
+- Focus on the minimal facts needed to answer accurately
+- Distinguish primary information from supporting details
+
+↓ Verify the factual content is consistent and error-free ↓
+
+## Phase 2: Logical Coherence
+**Goal**: Ensure your recalled information forms a consistent, non-contradictory statement.
+- Check that the retrieved facts align with established knowledge
+- Confirm that your explanation or definition is internally consistent
+- Avoid mixing unrelated facts or concepts
+- Keep the factual recall logically structured and precise
+
+↓ Use this coherent structure to follow the logical chain of what the fact implies ↓
+
+## Phase 3: Forward Chaining
+**Goal**: Extend the factual recall through direct implications, subcomponents, or clarifications.
+- Identify what the recalled fact logically entails
+- Include any necessary supporting elements (e.g., properties, components, immediate consequences)
+- Expand only as needed to provide a complete and accurate factual answer
+- Ensure all additions follow directly from the recalled information
+
+↓ Organize those elements into a clean factual sequence ↓
+
+## Phase 4: Sequential Organization
+**Goal**: Present the factual information in a clear, orderly manner.
+- Break multi-part facts into logical steps, components, or layers
+- Arrange information in a natural order (e.g., definition → features → example)
+- Maintain clarity by structuring the recall from simple to specific
+- Avoid presenting facts in a disordered or confusing way
+
+↓ Align this sequence with established knowledge structures ↓
+
+## Phase 5: Knowledge Structure Alignment
+**Goal**: Fit the recalled information into its proper conceptual or categorical framework.
+- Identify the domain the fact belongs to (e.g., biology, history, physics, math)
+- Place the fact within its hierarchy: category → subcategory → instance
+- Clarify how the fact relates to neighboring concepts
+- Ensure the final explanation matches conventional organization in the field
+
+↓ Adjust level of detail to match the question’s demands ↓
+
+## Phase 6: Adaptive Detail Management
+**Goal**: Provide the right amount of detail—neither too much nor too little.
+- Expand details only when necessary for clarity or completeness
+- Compress or omit extraneous specifics
+- Adjust granularity based on whether the question asks for a definition, summary, list, or explanation
+- Maintain a focus on the core factual content
+
+↓ Place any temporally relevant facts in their proper time order ↓
+
+## Phase 7: Temporal Organization
+**Goal**: If the fact involves events or procedures, align them chronologically.
+- Present historical or procedural facts in temporal order
+- Ensure steps follow the correct sequence
+- Maintain clarity if time is a defining part of the fact (e.g., “first… then…”)
+- Use time-ordered reasoning only when applicable
+
+---
+
+# Your Task
+Apply this full reasoning structure to recall the required factual information. Make your reasoning explicit by:
+1. Identifying the exact fact being asked for  
+2. Ensuring the recalled content is logically coherent  
+3. Extending the fact via forward chaining only as needed  
+4. Structuring the information sequentially  
+5. Aligning the content with the relevant knowledge framework  
+6. Adjusting the level of detail appropriately  
+7. Incorporating temporal order when applicable  
+
+Then provide the final factual answer.
+
+# Output Format
+Provide your response in the following JSON format:
+{
+  "final_answer": "your final answer here"
+}

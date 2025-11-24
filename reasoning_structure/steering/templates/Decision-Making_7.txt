@@ -1,0 +1,87 @@
+You are solving a decision-making problem, which involves selecting a single optimal option from a set of alternatives based on specific criteria. Decision-making problems require systematic evaluation and comparison to justify the best choice.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Decision-Making Problems
+
+Follow this structured reasoning approach optimized for decision-making problems:
+
+## Phase 1: Selective Attention
+**Goal**: Identify the decision criteria, alternatives, and relevant information.
+- Extract the key criteria for evaluating options
+- Identify all available alternatives to choose from
+- Filter out information that doesn't affect the decision
+- Focus on factors that differentiate between options
+
+↓ Then establish logical foundations ↓
+
+## Phase 2: Logical Coherence
+**Goal**: Ensure your decision framework is internally consistent.
+- Verify that evaluation criteria don't contradict each other
+- Establish a logically sound approach to comparing alternatives
+- Ensure your reasoning about trade-offs is consistent
+- Check that your decision logic flows coherently from criteria to choice
+
+↓ Then generate evaluation dimensions ↓
+
+## Phase 3: Productivity
+**Goal**: Generate comprehensive ways to evaluate and compare alternatives.
+- Create multiple evaluation frameworks or perspectives for comparing options
+- Generate diverse criteria combinations to assess alternatives
+- Produce varied scenarios or weightings to test decision robustness
+- Develop novel ways to think about trade-offs between options
+
+↓ Then manage decision objectives ↓
+
+## Phase 4: Goal Management
+**Goal**: Track and balance multiple decision objectives.
+- Maintain focus on the primary decision goal throughout evaluation
+- Manage competing objectives and trade-offs between criteria
+- Track which criteria are most important for the decision
+- Adjust priorities if new insights reveal different goal emphases
+
+|| While simultaneously structuring the process ||
+
+## Phase 5: Sequential Organization (parallel)
+**Goal**: Structure your decision process in logical evaluation stages.
+- Organize your reasoning into phases (e.g., criteria identification → option evaluation → comparison → selection)
+- Ensure systematic progression through evaluation steps
+- Build your decision incrementally through ordered analysis
+- Establish clear progression from alternatives to final choice
+
+↓ Both converge to domain-aligned reasoning ↓
+
+## Phase 6: Knowledge-Structure Alignment
+**Goal**: Align your decision-making with domain-specific frameworks and conventions.
+- Apply decision-making frameworks appropriate to this domain (e.g., cost-benefit for business, risk-benefit for medical)
+- Use domain-standard criteria and evaluation methods
+- Structure your reasoning according to how experts in this field make similar decisions
+- Leverage domain-specific knowledge about what matters in these choices
+
+|| While simultaneously thinking conceptually ||
+
+## Phase 7: Conceptual-Level Processing (parallel)
+**Goal**: Reason with abstract decision concepts before verbalizing specifics.
+- Build mental models of how each alternative would play out
+- Reason abstractly about trade-off structures before detailing specifics
+- Understand options at a conceptual level (what they fundamentally represent)
+- Think through implications conceptually before committing to detailed analysis
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the decision-making problem. Make your reasoning process explicit by:
+1. Showing selective attention to decision criteria and alternatives
+2. Establishing logical coherence in your evaluation framework
+3. Generating productive evaluation approaches
+4. Managing decision goals while organizing evaluation sequentially
+5. Aligning with domain decision-making conventions while processing conceptually
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

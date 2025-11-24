@@ -1,0 +1,84 @@
+You are solving a story problem, which embeds a mathematical formula or procedure within a narrative context. Story problems require extracting quantitative information from descriptive text and applying appropriate procedures.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Story Problems
+
+Follow this structured reasoning approach optimized for story problems:
+
+## Phase 1: Logical Coherence
+**Goal**: Establish a logically consistent understanding of the problem scenario.
+- Ensure your interpretation of the story context is internally consistent
+- Verify that relationships between story elements make logical sense
+- Confirm that the problem setup doesn't contain contradictions
+- Establish a coherent mental model of the situation before proceeding
+
+↓ Then organize your approach ↓
+
+## Phase 2: Sequential Organization
+**Goal**: Structure your solution process in a logical step-by-step order.
+- Identify the sequence of operations needed (what must be calculated first, second, etc.)
+- Recognize dependencies between steps (later calculations depend on earlier ones)
+- Plan the order of your solution before executing it
+- Ensure each step builds properly on previous results
+
+↓ Then break down the problem ↓
+
+## Phase 3: Decomposition and Integration
+**Goal**: Break the story problem into manageable subproblems, solve each, then combine results.
+- Identify distinct components or questions within the narrative
+- Separate the problem into solvable parts (e.g., find rate, then time, then distance)
+- Solve each subproblem independently
+- Integrate partial solutions into a coherent final answer
+- Ensure combined results answer the original question
+
+↓ Then build understanding compositionally ↓
+
+## Phase 4: Compositionality
+**Goal**: Build complex understanding from simpler components.
+- Understand how simple facts from the story combine into complex relationships
+- Recognize how basic quantities compose into derived quantities (e.g., rate × time = distance)
+- Build your solution by systematically combining simpler elements
+- Understand the whole problem through its parts and how they relate
+
+↓ Then focus on what matters ↓
+
+## Phase 5: Selective Attention
+**Goal**: Filter the narrative to focus on quantitatively relevant information.
+- Identify the numbers, units, and relationships that matter for calculation
+- Distinguish story details that affect the solution from decorative narrative elements
+- Focus on the mathematical core hidden in the story context
+- Ignore irrelevant descriptive details while retaining essential quantities
+
+↓ Then derive the solution forward ↓
+
+## Phase 6: Forward Chaining (containing Pattern Recognition)
+**Goal**: Start from given information and progressively derive the answer.
+
+Begin with the known quantities from the story and apply operations to derive new information step-by-step until reaching the goal. Within this forward progression:
+
+**Embedded Behavior - Pattern Recognition**: Identify the underlying problem type and structure
+- Recognize what kind of story problem this is (rate problem, work problem, mixture problem, etc.)
+- Identify familiar patterns that indicate which formulas or procedures to use
+- Notice structural similarities to other story problems you've encountered
+- Use the recognized pattern to guide which operations to apply in your forward derivation
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the story problem. Make your reasoning process explicit by:
+1. Establishing logical coherence in understanding the scenario
+2. Organizing your solution steps sequentially
+3. Decomposing into subproblems and integrating results
+4. Building complex understanding from simple components
+5. Selecting relevant quantitative information from the narrative
+6. Forward chaining from givens while recognizing the problem pattern
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

@@ -1,0 +1,98 @@
+You are solving a **dilemma problem**, which involves navigating a situation with two or more 
+conflicting positions, each with meaningful trade-offs and no fully satisfactory resolution. 
+Dilemmas require identifying the core tensions, generating alternatives, evaluating competing 
+strategies, and reasoning through the causal implications of each pathway before forming an 
+abstracted understanding of the underlying conflict.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Dilemma Problems
+
+Follow this optimized reasoning structure. The flow of reasoning is:
+
+**selective-attention → sequential-organization → productivity → strategy-selection → 
+forward-chaining → causal-organization → abstraction**
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify the competing positions and essential tensions within the dilemma.
+- Extract the core conflicting values, goals, or constraints
+- Isolate the central trade-off(s) that make the problem a dilemma
+- Remove details that do not materially influence the conflict
+- Identify what must be balanced, sacrificed, or prioritized
+
+↓ Organize these tensions into a structured reasoning sequence ↓
+
+## Phase 2: Sequential Organization
+**Goal**: Lay out a clear process for comparing and evaluating the conflicting options.
+- Structure the analysis into steps: clarify positions → generate options → evaluate → integrate
+- Ensure each step builds logically from the previous one
+- Maintain a transparent progression through the dilemma
+- Move from understanding to exploration to evaluation
+
+↓ Use this structure to generate multiple meaningful options ↓
+
+## Phase 3: Productivity
+**Goal**: Generate a diverse set of ways to approach the dilemma.
+- Produce multiple interpretations, options, or reframings of the problem
+- Consider alternative solutions, compromises, or hybrid approaches
+- Avoid prematurely narrowing down the options
+- Expand the option space before evaluating strategies
+
+↓ Use these options to select the most appropriate strategy ↓
+
+## Phase 4: Strategy Selection
+**Goal**: Choose the reasoning strategy best suited for this specific dilemma.
+- Consider whether to compare consequences, principles, risks, or value systems
+- Evaluate which strategy exposes the key differences between options
+- Justify why this strategy is appropriate for resolving (or illuminating) this dilemma
+- Select the strategy before reasoning through consequences
+
+↓ Apply the chosen strategy to infer downstream implications ↓
+
+## Phase 5: Forward Chaining
+**Goal**: Trace the implications of each position or option forward.
+- Follow each option to its logical consequences
+- Identify how each choice influences stakeholders, goals, risks, or constraints
+- Evaluate whether any option reduces or worsens the dilemma
+- Compare the implications across options to highlight trade-offs
+
+↓ Organize these consequences into a coherent causal story ↓
+
+## Phase 6: Causal Organization
+**Goal**: Build a cause-and-effect map of the dilemma’s dynamics.
+- Identify what causes which outcomes under each option
+- Connect initial choices to intermediate effects and final consequences
+- Clarify how competing values or constraints generate the conflict
+- Distinguish root causes from surface-level tensions
+
+↓ Use the causal model to extract general insights ↓
+
+## Phase 7: Abstraction
+**Goal**: Generalize the dilemma to a higher-level understanding.
+- Identify the deeper principle or structural conflict underlying the dilemma
+- Abstract away from the specific scenario to a broader conceptual pattern
+- Clarify what this dilemma reveals about competing values, systems, or priorities
+- Highlight how the abstracted insight helps interpret or evaluate the dilemma
+
+---
+
+# Your Task
+Apply this full reasoning structure to analyze the dilemma. Make your reasoning explicit by:
+1. Identifying the central tensions through selective attention  
+2. Structuring the analysis sequentially  
+3. Generating multiple options via productivity  
+4. Choosing an appropriate evaluative strategy  
+5. Reasoning forward through the consequences of each option  
+6. Organizing those consequences causally  
+7. Abstracting the dilemma to reveal deeper insights  
+
+Then present your final, integrated analysis of the dilemma.
+
+# Output Format
+Provide your response in the following JSON format:
+{
+  "final_answer": "your final answer here"
+}

@@ -1,0 +1,98 @@
+You are solving a **diagnosis–solution problem**, which involves (1) diagnosing the underlying cause 
+of an issue and (2) proposing a justified solution tailored to the diagnosed cause. These problems 
+require identifying core signals, aligning them with relevant knowledge structures, reasoning 
+forward from possible causes, and selecting a strategy that leads to a coherent, conceptually grounded 
+solution.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Diagnosis–Solution Problems
+
+Follow this optimized reasoning structure. The flow of reasoning is:
+
+**selective-attention → sequential-organization → knowledge-structure-alignment → forward-chaining 
+(containing strategy-selection) → strategy-selection → conceptual-level-processing ∥ causal-organization**
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify the meaningful diagnostic cues in the problem.
+- Extract key symptoms, constraints, or signals
+- Separate high-value information from noise
+- Highlight the central issue requiring explanation or correction
+- Identify what is missing or ambiguous in the problem description
+
+↓ Use the extracted information to structure your path forward ↓
+
+## Phase 2: Sequential Organization
+**Goal**: Create an ordered diagnostic–solution workflow.
+- Break the problem into steps: observe → diagnose → infer → propose solution
+- Ensure each step logically depends on the previous one
+- Move cleanly from evidence to diagnosis, and from diagnosis to solution
+- Maintain a transparent, stepwise flow
+
+↓ Connect the sequence to relevant knowledge structures ↓
+
+## Phase 3: Knowledge Structure Alignment
+**Goal**: Match identified signs and steps to relevant conceptual frameworks.
+- Map symptoms or observations onto known categories, models, or principles
+- Align the problem with diagnostic schemas (e.g., known failure modes, conceptual taxonomies)
+- Identify where the problem fits within established knowledge domains
+- Use structured knowledge to constrain possible diagnoses
+
+↓ Use aligned knowledge to reason forward through consequences ↓
+
+## Phase 4: Forward Chaining (containing Strategy Selection)
+**Goal**: Push implications forward from hypothesized causes to check consistency.
+- Infer what should follow if a hypothesized cause is correct
+- Compare those predicted outcomes to the observed facts
+- Narrow down plausible diagnoses based on consistency
+- Strengthen or eliminate hypotheses through logical propagation
+
+Within this forward reasoning:
+
+### Embedded Behavior — Strategy Selection
+**Goal**: Choose the most suitable diagnostic and solution strategies.
+- Identify which reasoning or intervention approach best matches the aligned knowledge structure
+- Consider different solution pathways and evaluate their feasibility
+- Select the strategy that offers the highest diagnostic clarity or problem resolution
+- Justify why this approach is preferable to alternatives
+
+↓ Develop a conceptually deep and coherent explanation ↓
+
+## Phase 5: Conceptual-Level Processing (parallel with Causal Organization)
+**Goal**: Ground your diagnosis and solution in core principles, not superficial symptoms.
+- Explain the issue using underlying concepts or mechanisms
+- Ensure the proposed solution addresses the conceptual root of the problem
+- Generalize the reasoning when useful (e.g., principle-based explanation)
+- Tie the diagnosis to higher-order understanding
+
+|| In parallel ||
+
+## Phase 6: Causal Organization
+**Goal**: Construct a clear causal chain linking observations → causes → consequences → solution.
+- Organize the explanation around cause-and-effect relationships
+- Identify the initiating cause and trace its downstream effects
+- Ensure your solution directly targets the identified causal pathway
+- Present a cohesive causal narrative
+
+---
+
+# Your Task
+Apply this full reasoning structure to solve the diagnosis–solution problem. Make your reasoning explicit by:
+1. Identifying key signals using selective attention  
+2. Structuring your workflow sequentially  
+3. Aligning the problem with relevant knowledge structures  
+4. Using forward chaining to test diagnostic hypotheses  
+5. Selecting an appropriate strategy for solving the issue  
+6. Demonstrating conceptual understanding of the diagnosis  
+7. Organizing the explanation causally in parallel  
+
+Then present your final, well-justified diagnosis and solution.
+
+# Output Format
+Provide your response in the following JSON format:
+{
+  "final_answer": "your final answer here"
+}

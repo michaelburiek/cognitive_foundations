@@ -1,0 +1,99 @@
+You are solving a **case analysis problem**, which involves interpreting a complex real-world 
+situation with multiple interacting elements, ambiguous information, and overlapping goals. 
+Case analysis requires identifying the most relevant details, structuring them, abstracting 
+general principles, tracing causal and temporal relationships, and synthesizing a coherent, 
+logically grounded interpretation or recommendation.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Case Analysis Problems
+
+Follow this optimized reasoning structure. The flow of reasoning is:
+
+**selective-attention → sequential-organization → abstraction → causal-organization → 
+temporal-organization → conceptual-level-processing → logical-coherence**
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify the most relevant details from a complex, information-rich scenario.
+- Extract the essential facts, stakeholders, constraints, and events
+- Ignore tangential or extraneous details that obscure the central dynamics
+- Identify patterns of relevance and key signals within the case
+- Distinguish between primary drivers and secondary background information
+
+↓ Organize what you’ve selected into a structured reasoning path ↓
+
+## Phase 2: Sequential Organization
+**Goal**: Build a clear analytical workflow for understanding the case.
+- Break down the case into sequential steps: describe → analyze → interpret → evaluate
+- Ensure each step logically builds on the previous one
+- Maintain a structured progression from concrete details to higher-level insight
+- Keep the analysis transparent and cumulative
+
+↓ Once structured, move from specifics to general principles ↓
+
+## Phase 3: Abstraction
+**Goal**: Identify underlying patterns, themes, and governing principles.
+- Generalize from case-specific details to conceptual categories
+- Extract broader concepts (e.g., risks, incentives, constraints, systemic factors)
+- Treat the case as an instance of a broader class of situations
+- Use abstraction to clarify what is essential versus situational
+
+↓ Use these abstracted elements to map out causal relationships ↓
+
+## Phase 4: Causal Organization
+**Goal**: Construct a causal explanation of how the case dynamics unfolded.
+- Identify the causes, mechanisms, and effects linking the key elements
+- Build a clear cause-and-effect chain connecting conditions to outcomes
+- Determine which factors were driving forces and which were reactive
+- Distinguish between direct causes, enabling conditions, and indirect influences
+
+↓ Anchor the causal narrative in the actual order of events ↓
+
+## Phase 5: Temporal Organization
+**Goal**: Align your causal explanation with the sequence of events.
+- Reconstruct the timeline of actions, decisions, and consequences
+- Ensure causes precede effects and the temporal order is realistic
+- Identify time-sensitive dependencies or delays that shaped the outcome
+- Detect temporal patterns (e.g., escalation, feedback, lag effects)
+
+↓ Translate the timeline into deeper conceptual insight ↓
+
+## Phase 6: Conceptual-Level Processing
+**Goal**: Interpret the case using high-level concepts or theories.
+- Connect the case to broader conceptual frameworks (e.g., organizational theory, 
+  behavioral principles, risk models, systemic dynamics)
+- Explain the deeper meaning or significance of the events
+- Use conceptual reasoning to evaluate decisions or outcomes
+- Clarify the general principles the case illustrates
+
+↓ Ensure the entire analysis forms a coherent whole ↓
+
+## Phase 7: Logical Coherence
+**Goal**: Ensure your final explanation is internally consistent and well-supported.
+- Check that all claims align with the evidence in the case
+- Verify that your abstractions, causal story, and conceptual insights do not contradict one another
+- Ensure the final interpretation logically follows from the earlier steps
+- Present a cohesive and rationally connected analysis
+
+---
+
+# Your Task
+Apply this full reasoning structure to analyze the case. Make your reasoning explicit by:
+1. Identifying relevant details through selective attention  
+2. Structuring the analysis sequentially  
+3. Abstracting broader patterns and principles  
+4. Organizing the case causally  
+5. Anchoring causes and effects temporally  
+6. Interpreting the case using conceptual insight  
+7. Checking for complete logical coherence  
+
+Then present your final integrated case analysis.
+
+# Output Format
+Provide your response in the following JSON format:
+{
+  "final_answer": "your final answer here"
+}

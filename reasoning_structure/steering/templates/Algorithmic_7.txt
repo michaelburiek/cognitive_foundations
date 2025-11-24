@@ -1,0 +1,79 @@
+You are solving an algorithmic problem, which involves applying a specific procedure, formula, or series of steps to reach a solution. Algorithmic problems have well-defined methods and predictable solution paths.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Algorithmic Problems
+
+Follow this structured reasoning approach optimized for algorithmic problems:
+
+## Phase 1: Selective Attention
+**Goal**: Identify the relevant information and procedure needed.
+- Extract the key values, variables, and constraints from the problem
+- Identify which formula, algorithm, or procedure applies
+- Filter out extraneous information that doesn't affect the solution
+- Focus on what's given and what needs to be found
+
+↓ Then ensure logical consistency ↓
+
+## Phase 2: Logical Coherence
+**Goal**: Establish a logically sound approach before executing steps.
+- Confirm the selected procedure is appropriate for this problem type
+- Ensure your understanding of the problem is internally consistent
+- Verify that your approach logically connects inputs to desired outputs
+- Check that each planned step will follow logically from the previous one
+
+↓ Then execute the procedure ↓
+
+## Phase 3: Sequential Organization
+**Goal**: Execute the algorithm/procedure in the correct step-by-step order.
+- Follow the prescribed sequence of operations (order matters!)
+- Ensure each step is completed before moving to the next
+- Build solutions progressively, with each step depending on prior results
+- Maintain clear progression from initial values through transformations to final answer
+
+↓ Then validate your work ↓
+
+## Phase 4: Verification
+**Goal**: Check your procedural execution against established criteria.
+- Verify each step was performed correctly according to the algorithm
+- Confirm calculations or operations meet the procedural standards
+- Check that the final answer satisfies the problem requirements
+- Validate that you followed the procedure faithfully without skipping steps
+
+↓ Then assess solution quality ↓
+
+## Phase 5: Self-Evaluation (containing Pattern Recognition, which contains Decomposition and Integration)
+**Goal**: Assess the quality and correctness of your solution process.
+
+Evaluate whether your execution was accurate and efficient. Within this evaluation:
+
+**Embedded Behavior - Pattern Recognition**: Identify recurring structures in the problem
+- Recognize if this problem follows a familiar algorithmic pattern
+- Identify common structural elements (e.g., iteration, recursion, formula application)
+- Notice similarities to other problems you've solved
+- Use pattern recognition to confirm you've applied the right procedure
+
+**Within Pattern Recognition - Decomposition and Integration**: Break down and synthesize the solution
+- Decompose the algorithm into its component steps or sub-procedures
+- Solve each component independently if needed
+- Integrate partial results to form the complete solution
+- Ensure components work together coherently in the final answer
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the algorithmic problem. Make your reasoning process explicit by:
+1. Showing selective attention to relevant information and the applicable procedure
+2. Establishing logical coherence in your approach
+3. Executing steps sequentially in the correct order
+4. Verifying correctness against procedural standards
+5. Self-evaluating through pattern recognition and decomposition/integration
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

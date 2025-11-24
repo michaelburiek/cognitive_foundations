@@ -1,0 +1,101 @@
+You are solving a **troubleshooting problem**, which involves diagnosing a fault state by 
+systematically identifying symptoms, tracing causal chains, and isolating the most probable source 
+of failure. Troubleshooting problems require a structured, evidence-driven process for explaining 
+what went wrong and why.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Troubleshooting Problems
+
+Follow this structured reasoning approach optimized for troubleshooting. Each behavior contributes to 
+building an accurate causal explanation. The flow of reasoning is:
+
+**selective-attention → logical-coherence → pattern-recognition → sequential-organization → 
+forward-chaining → temporal-organization → compositionality**
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify the critical information relevant to diagnosing the fault.
+- Extract the key symptoms, system behaviors, or anomalies
+- Ignore irrelevant background details
+- Identify which components, processes, or states are implicated
+- Distinguish between primary symptoms and secondary noise
+
+↓ Establish a logically consistent view of the situation ↓
+
+## Phase 2: Logical Coherence
+**Goal**: Build a consistent interpretation of all observed symptoms.
+- Ensure that no hypothesis contradicts the known properties of the system
+- Align all clues under a single coherent diagnostic frame
+- Reject explanations that cannot fit all observed facts
+- Maintain a strict cause-and-effect standard
+
+↓ Use coherence to reveal diagnostic patterns ↓
+
+## Phase 3: Pattern Recognition
+**Goal**: Detect diagnostic patterns that suggest likely sources of failure.
+- Identify recurring symptom clusters or known failure signatures
+- Match patterns to prior faults, system models, or causal archetypes
+- Notice inconsistencies or missing signals that may reveal system-level issues
+- Use anomaly alignment to narrow the fault space
+
+↓ Convert recognized patterns into an ordered reasoning pathway ↓
+
+## Phase 4: Sequential Organization
+**Goal**: Lay out a step-by-step diagnostic plan.
+- Break the problem into ordered steps, from initial symptoms to deeper checks
+- Reason from observable evidence → intermediate inferences → candidate fault hypotheses
+- Ensure each step builds on validated information
+- Maintain clarity in the progression of diagnostic reasoning
+
+↓ Use the ordered plan to infer consequences through the system ↓
+
+## Phase 5: Forward Chaining
+**Goal**: Push implications forward through the system to test hypotheses.
+- Given a hypothesis, infer what should happen next if it were true
+- Compare expected consequences with actual system behavior
+- Use mismatches to rule out incorrect hypotheses
+- Use matches to strengthen the case for a likely fault source
+
+↓ Anchor these forward inferences to the timeline of events ↓
+
+## Phase 6: Temporal Organization
+**Goal**: Align the fault explanation with the actual sequence of events.
+- Construct a timeline linking events, system states, and symptoms
+- Ensure that the fault explanation matches when each symptom occurred
+- Identify causes that must precede effects and eliminate impossible sequences
+- Use temporal consistency as a diagnostic filter
+
+↓ Integrate the temporally coherent components into a full causal explanation ↓
+
+## Phase 7: Compositionality
+**Goal**: Build a complete fault explanation from smaller causal pieces.
+- Combine local inferences into a system-level diagnosis
+- Integrate component failures, temporal patterns, and causal implications
+- Synthesize the most probable fault source that explains all symptoms
+- Present a cohesive, well-structured causal model of the failure
+
+---
+
+# Your Task
+Apply this complete reasoning structure to diagnose the troubleshooting problem. Make your reasoning 
+process explicit by:
+1. Identifying key symptoms using selective attention  
+2. Building a logically coherent interpretation of all evidence  
+3. Detecting relevant diagnostic patterns  
+4. Organizing the diagnostic steps sequentially  
+5. Using forward chaining to test hypotheses  
+6. Structuring the timeline with temporal organization  
+7. Composing all validated inferences into a final fault explanation  
+
+Then present your final diagnosis clearly and concisely.
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

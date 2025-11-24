@@ -1,0 +1,92 @@
+You are solving a **logical problem**, which involves reasoning about abstract relationships,
+constraints, and implications in a precise and internally consistent way. Logical problems do not 
+rely on domain knowledge; instead, they require you to detect structure, apply rules, and derive 
+conclusions from the given information alone.
+
+# Problem to Solve
+{question}
+
+# Reasoning Structure for Logical Problems
+
+Follow this structured reasoning approach optimized for logical problems. Each behavior contributes
+to rigorous, step-by-step inference. The flow of reasoning is:
+
+**selective-attention → logical-coherence → pattern-recognition → sequential-organization**
+(while sequential-organization runs in parallel with adaptive-detail-management → compositionality → productivity)
+
+---
+
+## Phase 1: Selective Attention
+**Goal**: Identify only the information that matters for the logical inference.
+- Filter out irrelevant or distracting details
+- Identify the propositions, conditions, and constraints that define the logical structure
+- Clarify what is explicitly given vs. what must be inferred
+
+↓ Proceed to constructing a consistent reasoning foundation ↓
+
+## Phase 2: Logical Coherence
+**Goal**: Build an internally consistent interpretation of the given information.
+- Align all premises so they do not contradict one another
+- Ensure each inference follows validly from prior steps
+- Maintain strict adherence to logical rules, not assumptions
+
+↓ Use coherence to surface deeper structures ↓
+
+## Phase 3: Pattern Recognition
+**Goal**: Detect structural patterns in the information.
+- Notice repeated forms, symmetries, equivalences, or contrasts
+- Identify conditional structures (if–then), logical operators, or relational patterns
+- Use these patterns to identify the types of inferences that are possible
+
+↓ Transform patterns into an ordered reasoning path ↓
+
+## Phase 4: Sequential Organization (parallel with Adaptive Detail Management)
+**Goal**: Lay out your inference steps in a clear, logically ordered progression.
+- Break the reasoning process into discrete steps from premises → intermediate conclusions → final conclusion
+- Ensure each step depends only on already-established information
+- Present deductions in a clean, cumulative sequence
+
+|| In parallel ||
+
+## Phase 5: Adaptive Detail Management (containing Compositionality → Productivity)
+**Goal**: Adjust the level of detail as needed during reasoning.
+- Zoom in on complex sub-steps when necessary
+- Zoom out when details are trivial or redundant
+- Allocate detail to components that affect the overall logical chain
+
+Within this process:
+
+### Embedded Behavior — Compositionality
+**Goal**: Build complex logical structures out of simple components.
+- Combine atomic facts into compound propositions
+- Decompose complex statements into simpler parts
+- Integrate small inferences into larger, multi-step reasoning chains
+
+And within compositionality:
+
+### Embedded Behavior — Productivity
+**Goal**: Generate all logically valid possibilities or pathways.
+- Enumerate all candidate interpretations consistent with the premises
+- Explore alternate chains of inference when applicable
+- Do not stop at the first conclusion—ensure completeness by considering all meaningful permutations
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the logical problem. Make your reasoning process explicit by:
+1. Demonstrating selective attention to the key logical elements
+2. Maintaining logical coherence throughout the inference
+3. Identifying structural patterns that guide the reasoning
+4. Laying out your deductions sequentially
+5. Managing detail levels appropriately while composing complex structures from simpler pieces
+6. Generating all relevant logical possibilities before committing to a conclusion
+
+Then provide the final logically derived answer.
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```

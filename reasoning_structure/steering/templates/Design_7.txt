@@ -1,0 +1,75 @@
+You are solving a design problem, which involves creating solutions for vague goal statements with few constraints. Design problems require you to structure the problem space itself while generating innovative solutions.
+
+# Problem to Solve
+Critically evaluate the neutron detection technique described in a research paper on Low Energy Nuclear Reactions (LENR), considering the design of the detector, the statistical analysis of the data, and the potential sources of background noise. How would you improve the experiment to increase the confidence in the results, and what control measurements would you suggest to validate the findings?
+
+# Reasoning Structure for Design Problems
+
+Follow this structured reasoning approach optimized for design problems:
+
+## Phase 1: Selective Attention
+**Goal**: Identify what matters most in this vague problem space.
+- Filter the essential requirements from the noise
+- Distinguish core constraints from flexible elements  
+- Identify key stakeholders, contexts, or success criteria
+- Focus on what's truly given vs. what you need to define
+
+↓ Then move to structured exploration ↓
+
+## Phase 2: Sequential Organization (containing Productivity)
+**Goal**: Build your solution through ordered stages of generative thinking.
+
+Organize your design process into clear sequential stages (e.g., understanding → ideation → refinement → specification). Within each stage:
+
+**Embedded Behavior - Productivity**: Generate diverse design alternatives
+- Create multiple novel combinations of design elements
+- Explore different approaches by recombining constraints, features, and concepts
+- Produce varied solutions from the limited set of requirements and resources
+- Don't settle on the first idea—systematically generate alternatives
+
+↓ Then validate your reasoning ↓
+
+## Phase 3: Logical Coherence
+**Goal**: Ensure your design reasoning is internally consistent.
+- Check that design decisions logically support each other
+- Verify your solution doesn't contain contradictions
+- Ensure constraints are satisfied without conflicts
+- Validate that your reasoning chain from problem to solution is sound
+
+|| While simultaneously ||
+
+## Phase 4: Context-Awareness (containing Adaptive Detail Management, which contains Representational Restructuring)
+**Goal**: Align your design thinking with the specific problem context and adjust as needed.
+
+Match your reasoning to the design domain's characteristics and norms. Within this context-sensitive reasoning:
+
+**Embedded Behavior - Adaptive Detail Management**: Adjust detail levels throughout your design process
+- Start high-level (overall concept), then zoom into specifics where needed
+- Keep some aspects abstract while detailing critical components
+- Expand on complex elements, compress straightforward ones
+- Shift between overview and details as the design develops
+
+**Within Detail Management - Representational Restructuring**: Reformulate your design representation when stuck
+- If one framing doesn't work, reframe the problem from a different angle
+- Transform representations to reveal hidden insights (e.g., spatial → functional → temporal views)
+- Restructure when you hit dead ends to make the problem more tractable
+- Use alternative perspectives to unlock creative solutions
+
+---
+
+# Your Task
+Apply this complete reasoning structure to solve the design problem. Make your reasoning process explicit by:
+1. Showing your selective attention to essential elements
+2. Organizing your design exploration sequentially while generating multiple alternatives
+3. Checking logical coherence of your design decisions
+4. Demonstrating context-awareness while adapting detail levels and restructuring representations when needed
+
+Produce a well-reasoned design solution that reflects this structured approach.
+
+# Output Format
+Provide your response in the following JSON format:
+```json
+{
+  "final_answer": "your final answer here"
+}
+```
