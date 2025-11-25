@@ -20,7 +20,7 @@ I want you to construct a single prompt template for a given problem type and it
 * Contextualize the overall reasoning behavior structure to the given problem type
 * It should be able to take in as input a provided question
 
-Here is my problem type: {type}
+Here is my problem type: {p_type}
 Here is the optimal {node_num}-node behavior structure:
 
 {structure_info}

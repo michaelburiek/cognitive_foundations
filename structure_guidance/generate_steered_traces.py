@@ -375,23 +375,11 @@ async def main():
     parser.add_argument("--temperature", type=float, default=0.6)
     parser.add_argument("--max_concurrent", type=int, default=150)
     parser.add_argument("--no_parser", action="store_true")
-    
-    # Data paths
-    parser.add_argument("--element_dir", type=str, required=True,
-                       help="Directory containing element annotation JSON files")
-    parser.add_argument("--id2type_file", type=str, required=True,
-                       help="JSON file mapping IDs to problem types")
     parser.add_argument("--output_dir", type=str, default="output")
     
     # Sampling parameters
     parser.add_argument("--samples_per_type", type=int, default=50,
                        help="Number of samples per problem type")
-    parser.add_argument("--core_percentile", type=float, default=0.5,
-                       help="Percentile for core structure extraction (0-1)")
-    
-    # SpanTree parameters
-    parser.add_argument("--overlap_threshold", type=float, default=0.8)
-    parser.add_argument("--parallel_threshold", type=int, default=20)
     
     args = parser.parse_args()
     
