@@ -1,0 +1,129 @@
+# Annotation Guidelines: Verification in the Reasoning Process
+
+## Definition
+**Verification** is the ability to check reasoning steps against established criteria. In reasoning traces, verification refers to when the participant demonstrates the ability to confirm the correctness or validity of its reasoning, evaluate whether conclusions follow from premises, check for errors or inconsistencies, and assess whether reasoning meets relevant standards.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates verification:
+
+1. **Validity checking**: Does the participant verify that conclusions logically follow from premises?
+   - Look for assessment of whether inferences are valid
+   - Check if the participant confirms that deductions are properly drawn
+
+2. **Error detection**: Does the participant check for mistakes or inconsistencies?
+   - Look for identification of potential errors in reasoning
+   - Check if the participant catches contradictions or flawed logic
+
+3. **Standard conformity**: Does the participant evaluate reasoning against established criteria?
+   - Look for assessment of whether reasoning meets domain-specific standards
+   - Check if the participant confirms that appropriate principles or methods are followed
+
+4. **Confirmation procedures**: Does the participant use systematic approaches to verify results?
+   - Look for verification techniques like checking examples, testing edge cases, or using alternative methods
+   - Check if the participant employs confirmation strategies to validate conclusions
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no verification. The participant proceeds without checking validity, detecting errors, evaluating against standards, or confirming results.
+
+**1 - Partially Present**: The reasoning trace shows some verification, but with limited depth or inconsistent application. The participant occasionally checks validity or looks for errors, but doesn't systematically verify reasoning throughout the process.
+
+**2 - Present**: The reasoning trace shows clear verification throughout. The participant consistently checks validity, detects potential errors, evaluates against established standards, and uses confirmation procedures to verify results.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of verification, you must identify specific spans (text segments) in the reasoning trace that demonstrate verification. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of verification (validity checking, error detection, standard conformity, or confirmation procedures)
+- **Completeness**: Include enough context to understand the verification being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to verification
+- **Multiple spans**: Identify all significant instances of verification, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of verification are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of verification it demonstrates (validity checking, error detection, standard conformity, or confirmation procedures)
+- How it contributes to the overall verification score
+
+### How to Identify Valid Spans
+1. **Look for verification language**: Words like "verify," "check," "confirm," "validate," "test," "examine," "assess," "evaluate against standards"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant checking, validating, or confirming their reasoning?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether verification is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate verification. Describe what specific phrases or sentences show validity checking, error detection, standard conformity, or confirmation procedures, and explain why they demonstrate verification. This guides you to identify the character indices. Use an empty string "" if no verification is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate verification. Use an empty list [] if no spans demonstrate verification.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the area of the triangle, I'll use the formula A = (1/2)bh, where b is the base and h is the height. The triangle has a base of 6 inches and a height of 4 inches. Substituting these values into the formula: A = (1/2)(6 inches)(4 inches) = (1/2)(24 square inches) = 12 square inches. Therefore, the area of the triangle is 12 square inches."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant simply applies a formula and calculates a result without any attempt to verify the validity of its reasoning, check for errors, confirm the result, or evaluate against standards.",
+  "span_analysis": "This text shows no verification - it's a straightforward calculation without any checking, validation, confirmation, or assessment of the reasoning process or result.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this equation 3x + 7 = 22, I'll isolate the variable x. First, I'll subtract 7 from both sides: 3x + 7 - 7 = 22 - 7, which simplifies to 3x = 15. Next, I'll divide both sides by 3: 3x/3 = 15/3, giving me x = 5.
+
+Let me verify this answer by substituting x = 5 back into the original equation: 3(5) + 7 = 15 + 7 = 22. Since I get 22, which matches the right side of the original equation, my answer x = 5 is correct."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some verification by checking its answer through substitution back into the original equation, but this represents a single basic verification step rather than a systematic approach to verification throughout the reasoning process.",
+  "span_analysis": "Looking for verification in this text: The phrase 'Let me verify this answer by substituting x = 5 back into the original equation' explicitly shows verification through confirmation procedures. The text demonstrates checking the result against the original equation and confirming the answer is correct. However, this is a single, basic verification step rather than systematic verification throughout.",
+  "spans": [[196, 396]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "I'll analyze whether the study's conclusion that 'coffee consumption reduces risk of type 2 diabetes' is justified by the evidence presented.
+
+First, let me verify the logical structure of the argument. The study establishes a correlation between coffee consumption and lower diabetes rates, then concludes causation. This is potentially a post hoc ergo propter hoc fallacy. Let me check if the evidence supports the stronger causal claim.
+
+Examining the methodology, the study is observational rather than experimental, which limits causal inference. Let me verify whether they controlled for confounding variables. The paper mentions controlling for age, BMI, and physical activity, which are indeed major confounders. However, I should check if other important confounders were addressed: dietary patterns, socioeconomic status, and family history of diabetes. Reviewing the methods section again, I see they controlled for dietary patterns and education level (as a proxy for socioeconomic status) but not family history. This is a limitation in their confounder control.
+
+Now let me verify the statistical analysis. The reported association shows a relative risk reduction of 27% (95% CI: 18-35%) for those consuming ≥3 cups daily versus non-drinkers. The p-value is <0.001, indicating statistical significance by conventional standards. Let me check if they addressed multiple hypothesis testing, as they analyzed several exposure categories... reviewing again, they did apply Bonferroni correction, which is appropriate.
+
+Let me verify biological plausibility. The authors propose that coffee's antioxidant compounds improve insulin sensitivity. Checking against established literature, there is indeed preliminary evidence from laboratory studies supporting this mechanism, strengthening their causal argument.
+
+Let me also verify consistency with other evidence. The authors cite three other large cohort studies with similar findings, which increases confidence through replication. However, I should note they don't mention any contradictory studies, which I need to verify against the broader literature... researching further, there are two smaller studies with null findings they didn't cite.
+
+Based on this verification process, I conclude that while there is a robust association between coffee consumption and reduced diabetes risk that meets statistical standards and has some biological plausibility, the causal claim is stronger than warranted given the observational design and incomplete control of confounders. A more accurate conclusion would be that 'coffee consumption is associated with reduced risk of type 2 diabetes.'"
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates comprehensive verification throughout its reasoning process by systematically checking the logical structure of the argument, evaluating the methodology against scientific standards, verifying statistical analysis procedures, assessing biological plausibility against established knowledge, confirming consistency with broader literature, and identifying limitations in the evidence that affect the validity of the conclusion.",
+  "span_analysis": "Analyzing this text for verification: The phrase 'First, let me verify the logical structure of the argument' explicitly shows verification through validity checking. The text 'Let me check if the evidence supports the stronger causal claim' demonstrates confirmation procedures. The phrase 'Let me verify whether they controlled for confounding variables' shows methodological verification. The text 'Now let me verify the statistical analysis' demonstrates procedural verification. The phrase 'Let me verify biological plausibility' shows evidence verification. The text 'Let me also verify consistency with other evidence' shows confirmation against external standards. These show comprehensive verification across multiple dimensions.",
+  "spans": [[143, 202], [375, 439], [552, 616], [1077, 1120], [1529, 1567], [1820, 1871]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of verification is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

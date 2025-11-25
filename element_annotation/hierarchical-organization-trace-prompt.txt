@@ -1,0 +1,154 @@
+# Annotation Guidelines: Hierarchical Organization in the Reasoning Process
+
+## Definition
+**Hierarchical organization** is the ability to arrange concepts in nested, tree-like structures with parent-child relationships. In reasoning traces, hierarchical organization refers to when the participant demonstrates the ability to organize information in multiple levels of abstraction, establish clear parent-child relationships between concepts, and navigate between different levels of the hierarchy during reasoning.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates hierarchical organization:
+
+1. **Multilevel structure**: Does the participant organize information at different levels of abstraction?
+   - Look for clear distinctions between general principles and specific instances
+   - Check if the participant structures information with higher and lower levels
+
+2. **Parent-child relationships**: Does the participant establish clear hierarchical relationships between concepts?
+   - Look for explicit nesting of concepts within broader categories
+   - Check if the participant shows how specific elements relate to more general ones
+
+3. **Top-down reasoning**: Does the participant work from general principles to specific applications?
+   - Look for starting with high-level concepts and deriving specific conclusions
+   - Check if the participant applies general rules to particular cases
+
+4. **Bottom-up integration**: Does the participant aggregate specific details into higher-level concepts?
+   - Look for synthesis of specific observations into general patterns
+   - Check if the participant builds up abstract concepts from concrete examples
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no hierarchical organization. The participant treats concepts at a single level without establishing clear parent-child relationships or distinguishing between levels of abstraction.
+
+**1 - Partially Present**: The reasoning trace shows some hierarchical organization, but with limited depth or inconsistent application. The participant occasionally distinguishes between levels of abstraction or establishes some parent-child relationships, but doesn't consistently maintain a hierarchical structure.
+
+**2 - Present**: The reasoning trace shows clear hierarchical organization throughout. The participant consistently organizes information at multiple levels of abstraction, establishes clear parent-child relationships, and effectively navigates between different levels of the hierarchy during reasoning.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of hierarchical organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate hierarchical organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of hierarchical organization (multilevel abstraction, parent-child relationships, level navigation, or hierarchical categorization)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to hierarchical organization
+- **Multiple spans**: Identify all significant instances of hierarchical organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of hierarchical organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates hierarchical organization
+
+### How to Identify Valid Spans
+1. **Look for hierarchical organization language**: Words like "at a higher level," "more specifically," "subcategory," "parent," "child," "nested," "broader," "narrower," "general," "specific," "overarching"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant organizing information in hierarchical levels or establishing parent-child relationships?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether hierarchical organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate hierarchical organization. Describe what specific phrases or sentences show multilevel abstraction, parent-child relationships, level navigation, or hierarchical categorization, and explain why they demonstrate hierarchical organization. This guides you to identify the character indices. Use an empty string "" if no hierarchical organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate hierarchical organization. Use an empty list [] if no spans demonstrate hierarchical organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The French Revolution was a period of radical social and political upheaval in France from 1789 to 1799. It was partly caused by financial problems, social inequality, and Enlightenment ideas. During this time, the monarchy was overthrown, and a republic was established. There was also the Reign of Terror, where many people were executed. Napoleon eventually took power at the end of this period. The revolution had lasting effects on French society and influenced other revolutionary movements around the world."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant presents information as a flat sequence of facts without organizing them into any hierarchical structure, establishing parent-child relationships, or distinguishing between different levels of abstraction.",
+  "span_analysis": "This text shows no hierarchical organization - it presents historical facts in a linear sequence without establishing multilevel abstraction, parent-child relationships, or hierarchical categorization.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Let's classify this animal based on its characteristics. It has fur, mammary glands, and is warm-blooded, so it belongs to the class Mammalia. Within mammals, it has powerful legs for jumping and a pouch for carrying young, which places it in the order Diprotodontia. More specifically, its large hind legs and hopping locomotion indicate it's part of the family Macropodidae. Given its size and distinctive features, it appears to be a kangaroo, genus Macropus. Based on its large size and coloration patterns, it's likely a red kangaroo, Macropus rufus."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some hierarchical organization by working through taxonomic levels (class, order, family, genus, species), but doesn't clearly establish the relationships between these levels or consistently navigate between general principles and specific attributes.",
+  "span_analysis": "Looking for hierarchical organization in this text: The phrase 'so it belongs to the class Mammalia' shows basic hierarchical categorization. The text 'Within mammals, it has powerful legs for jumping and a pouch for carrying young, which places it in the order Diprotodontia' demonstrates level navigation from broader to narrower categories. The phrase 'More specifically, its large hind legs and hopping locomotion indicate it's part of the family Macropodidae' shows multilevel abstraction by moving to a more specific level. These demonstrate basic hierarchical organization through taxonomic classification.",
+  "spans": [[109, 149], [151, 273], [275, 395]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To understand the political structure of the United States, I'll analyze it as a hierarchical system with multiple levels.
+
+At the highest level, we have the federal constitutional republic as the overarching political structure. This top level establishes the foundational principles of governance through the Constitution.
+
+Within this top level, we can identify three main branches forming the next level down:
+1. Legislative branch (Congress)
+2. Executive branch (Presidency)
+3. Judicial branch (Supreme Court and federal courts)
+
+Each of these branches can be further decomposed into constituent elements:
+
+The legislative branch divides into:
+- Senate (upper chamber)
+  - 100 senators (2 per state)
+  - Led by the Vice President as President of the Senate
+- House of Representatives (lower chamber)
+  - 435 voting members (proportional to state population)
+  - Led by the Speaker of the House
+
+The executive branch hierarchically organizes as:
+- President (head of executive)
+  - Vice President
+  - Cabinet departments (15 major departments)
+    - Each headed by a Secretary (e.g., Secretary of State)
+      - Each department containing multiple agencies and bureaus
+
+The judicial branch structures as:
+- Supreme Court (highest court)
+  - 9 justices
+- Circuit Courts of Appeals (intermediate level)
+  - 13 appellate circuits
+- District Courts (trial level)
+  - 94 federal judicial districts
+
+Beneath the federal level, we have the state level of government, each with its own hierarchical structure mirroring aspects of the federal system with:
+- State executive (Governor)
+- State legislature (typically bicameral)
+- State judiciary
+
+States are further divided into counties or county-equivalents, which contain:
+- Municipal governments (cities, towns)
+  - Some with their own hierarchical structures (mayor, city council)
+
+This multilevel hierarchical organization allows for both top-down implementation of national policies and bottom-up representation of local interests, creating a complex system of nested governance structures with defined relationships between levels."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated hierarchical organization by systematically structuring information across multiple nested levels (federal → branches → specific institutions → components), clearly establishing parent-child relationships throughout, and navigating effectively between general principles and specific instances.",
+  "span_analysis": "Analyzing this text for hierarchical organization: The phrase 'I'll analyze it as a hierarchical system with multiple levels' explicitly establishes the hierarchical approach. The text 'At the highest level, we have the federal constitutional republic as the overarching political structure' shows multilevel abstraction by establishing the top level. The phrase 'Within this top level, we can identify three main branches forming the next level down:' demonstrates clear parent-child relationships and level navigation. These demonstrate sophisticated hierarchical organization through explicit multilevel structuring and systematic level navigation.",
+  "spans": [[60, 122], [124, 229], [326, 413]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of hierarchical organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

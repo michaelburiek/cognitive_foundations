@@ -1,0 +1,127 @@
+# Annotation Guidelines: Productivity in the Reasoning Process
+
+## Definition
+**Productivity** is the ability to generate novel combinations using a finite set of elements. In reasoning traces, productivity refers to when the participant demonstrates the ability to create new ideas, solutions, or approaches by recombining existing concepts or rules in original ways rather than just applying fixed patterns.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates productivity:
+
+1. **Novel combinations**: Does the participant combine existing elements in new ways?
+   - Look for unexpected or creative combinations of concepts
+   - Check if the participant goes beyond standard applications of formulas or procedures
+
+2. **Generative reasoning**: Does the participant generate new possibilities rather than selecting from predefined options?
+   - Look for the creation of multiple potential approaches or solutions
+   - Check if the participant produces ideas that weren't explicitly provided in the problem
+
+3. **Adaptive application**: Does the participant adapt known principles to new contexts?
+   - Look for flexible application of rules or concepts to unfamiliar situations
+   - Check if the participant transfers methods from one domain to another
+
+4. **Insight generation**: Does the participant produce insights that go beyond mechanical application of procedures?
+   - Look for "aha moments" where the participant makes a creative connection
+   - Check if the participant discovers shortcuts or elegant solutions
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no productivity. The participant applies standard procedures or fixed patterns without generating novel combinations or approaches.
+
+**1 - Partially Present**: The reasoning trace shows some productivity, but with limited originality or depth. The participant occasionally combines elements in somewhat novel ways or generates basic alternatives, but largely stays within conventional approaches.
+
+**2 - Present**: The reasoning trace shows clear productivity throughout. The participant generates truly novel combinations, creates multiple original approaches, adaptively applies concepts across contexts, and produces genuine insights.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of productivity, you must identify specific spans (text segments) in the reasoning trace that demonstrate productivity. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of productivity (novel combinations, generative reasoning, adaptive application, or insight generation)
+- **Completeness**: Include enough context to understand the productivity being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to productivity
+- **Multiple spans**: Identify all significant instances of productivity, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of productivity are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of productivity it demonstrates (novel combinations, generative reasoning, adaptive application, or insight generation)
+- How it contributes to the overall productivity score
+
+### How to Identify Valid Spans
+1. **Look for productivity language**: Words like "novel," "creative," "combine," "adapt," "generate," "original," "new approach," "hybrid"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant creating new combinations or generating original approaches?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether productivity is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate productivity. Describe what specific phrases or sentences show novel combinations, generative reasoning, adaptive application, or insight generation, and explain why they demonstrate productivity. This guides you to identify the character indices. Use an empty string "" if no productivity is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate productivity. Use an empty list [] if no spans demonstrate productivity.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the area of a circle with radius 5 cm, I'll use the formula A = πr². Substituting r = 5 cm: A = π(5 cm)² = π(25 cm²) = 25π cm². Using π ≈ 3.14159, we get A ≈ 25 × 3.14159 ≈ 78.54 cm². Therefore, the area of the circle is approximately 78.54 square centimeters."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a standard formula in a straightforward, algorithmic way without generating any novel combinations, alternative approaches, or original insights.",
+  "span_analysis": "This text shows no signs of productivity - it's a mechanical application of a standard formula without any novel combinations, creative adaptations, or original approaches.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "I need to estimate how many piano tuners there are in Chicago. Rather than looking up the answer, I'll try to derive it from basic principles. I'll start with Chicago's population, which is roughly 3 million people. Assuming one piano per 50 households, with average household size of 2.5 people, that gives us 3,000,000 ÷ 2.5 ÷ 50 = 24,000 pianos. If each piano needs tuning once per year, and a tuner can tune 5 pianos per day, working 250 days per year, that's 1,250 pianos per tuner per year. So we need about 24,000 ÷ 1,250 = 19.2, or approximately 20 piano tuners in Chicago."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some productivity by breaking down an unusual estimation problem into component factors and combining them in a reasonable way, though it follows a relatively standard Fermi estimation approach without generating truly novel combinations or multiple alternative methods.",
+  "span_analysis": "Looking for productivity in this text: The phrase 'Rather than looking up the answer, I'll try to derive it from basic principles' shows some generative reasoning by choosing to create a solution rather than use existing information. The approach of breaking down the problem into population, households, pianos per household, tuning frequency, and tuner capacity demonstrates adaptive application of estimation principles. However, this follows a fairly standard Fermi estimation approach without truly novel combinations.",
+  "spans": [[67, 157]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To solve the problem of efficiently packing different-sized objects into the container, I'll try multiple approaches.
+
+First, let's consider a greedy algorithm where we sort objects by volume and insert the largest ones first. This traditional approach works well for uniform objects but may leave inefficient gaps with irregular shapes.
+
+What if we instead think of this as a 3D Tetris problem? We could rotate objects to fit them into complementary spaces, minimizing gaps. But this requires complex spatial reasoning.
+
+Wait - I'm realizing we could borrow a concept from chemistry: molecular packing. What if we model small objects as "solvent molecules" that can fill the gaps between larger "solute molecules"? This suggests a two-phase approach: position large objects first using minimal spacing, then "pour in" smaller objects to fill interstitial spaces.
+
+We could also apply a simulated annealing algorithm, randomly perturbing the configuration and accepting changes that improve packing density with some probability of accepting suboptimal moves to escape local maxima.
+
+Another novel approach would be to use principles from architecture: create "load-bearing structures" with the sturdiest objects, forming arches and vaults that can support weight while creating stable void spaces specifically shaped to accommodate smaller objects.
+
+The most promising approach seems to be a hybrid: use the architectural principles for large, sturdy objects, the molecular packing model for medium and small objects, and simulated annealing to optimize the overall configuration."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates exceptional productivity by generating multiple novel approaches that creatively adapt concepts from diverse domains (Tetris, chemistry, architecture), combines these approaches in original ways, and develops a hybrid solution that wasn't obvious from standard packing algorithms.",
+  "span_analysis": "Analyzing this text for productivity: The phrase 'What if we instead think of this as a 3D Tetris problem?' shows novel combination by adapting a game concept to packing. The text 'Wait - I'm realizing we could borrow a concept from chemistry: molecular packing' demonstrates adaptive application by transferring chemistry concepts. The phrase 'We could also apply a simulated annealing algorithm' shows novel combination of optimization techniques. The text 'Another novel approach would be to use principles from architecture' explicitly demonstrates novel combination across domains. Finally, 'The most promising approach seems to be a hybrid' shows insight generation by combining multiple approaches into something new. These demonstrate exceptional productivity through creative cross-domain adaptation and novel combinations.",
+  "spans": [[339, 395], [522, 603], [865, 916], [1084, 1151], [1351, 1581]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of productivity is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

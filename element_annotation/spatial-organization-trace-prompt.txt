@@ -1,0 +1,127 @@
+# Annotation Guidelines: Spatial Organization in the Reasoning Process
+
+## Definition
+**Spatial organization** is the ability to arrange elements according to spatial relationships and configurations. In reasoning traces, spatial organization refers to when the participant demonstrates the ability to reason about relative positions, distances, or arrangements in space, understand how elements relate to each other spatially, and manipulate or transform spatial configurations.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates spatial organization:
+
+1. **Spatial representation**: Does the participant represent spatial relationships between elements?
+   - Look for descriptions of where things are located relative to each other
+   - Check if the participant creates mental maps or spatial configurations
+
+2. **Relational reasoning**: Does the participant reason about how elements are arranged in space?
+   - Look for inferences based on spatial relationships (above, below, adjacent, etc.)
+   - Check if the participant uses spatial information to draw conclusions
+
+3. **Spatial transformation**: Does the participant mentally manipulate spatial configurations?
+   - Look for reasoning about how arrangements would change after operations
+   - Check if the participant can predict the results of spatial transformations
+
+4. **Spatial problem-solving**: Does the participant use spatial strategies to solve problems?
+   - Look for spatial approaches to reasoning tasks
+   - Check if the participant leverages spatial thinking even for abstract problems
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no spatial organization. The participant doesn't represent spatial relationships, reason about arrangements in space, or use spatial strategies for problem-solving.
+
+**1 - Partially Present**: The reasoning trace shows some spatial organization, but with limited sophistication or inconsistent application. The participant sometimes represents spatial relationships or uses basic spatial reasoning, but doesn't consistently employ spatial organization throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear spatial organization throughout. The participant consistently represents spatial relationships, reasons effectively about arrangements in space, mentally manipulates spatial configurations, and employs spatial strategies for problem-solving.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of spatial organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate spatial organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of spatial organization (spatial relationship representation, spatial reasoning, mental manipulation, or spatial problem-solving strategies)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to spatial organization
+- **Multiple spans**: Identify all significant instances of spatial organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of spatial organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates spatial organization
+
+### How to Identify Valid Spans
+1. **Look for spatial organization language**: Words like "above," "below," "left," "right," "adjacent," "perpendicular," "parallel," "rotate," "flip," "arrange," "position," "layout," "configuration"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant reasoning about spatial relationships, arrangements, or transformations?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether spatial organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate spatial organization. Describe what specific phrases or sentences show spatial relationship representation, spatial reasoning, mental manipulation, or spatial problem-solving strategies, and explain why they demonstrate spatial organization. This guides you to identify the character indices. Use an empty string "" if no spatial organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate spatial organization. Use an empty list [] if no spans demonstrate spatial organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To determine the theme of the poem, I'll analyze its language, imagery, and structure. The poem uses repeated references to the passage of time and mortality. It employs metaphors comparing life to a journey and death to a destination. The tone shifts from contemplative in the first stanza to more accepting in the final stanza. Based on these elements, the central theme appears to be the inevitability of death and the importance of accepting one's mortality."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant conducts a thematic analysis without employing any spatial reasoning, representing spatial relationships, or using spatial organization strategies in its approach.",
+  "span_analysis": "This text shows no spatial organization - it analyzes literary themes without any spatial relationship representation, spatial reasoning, or spatial problem-solving strategies.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this geometry problem, I need to find the area of the triangle. The triangle has coordinates at (0,0), (3,0), and (3,4). I can visualize this triangle as having its base along the x-axis from the origin to the point (3,0), with a height extending up to the point (3,4). The base length is 3 units. The height is 4 units. Using the formula Area = (1/2) × base × height, I get Area = (1/2) × 3 × 4 = 6 square units."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates basic spatial organization by visualizing the triangle's position on a coordinate plane and identifying its spatial properties, but employs a relatively straightforward spatial approach without sophisticated transformation or complex spatial reasoning.",
+  "span_analysis": "Looking for spatial organization in this text: The phrase 'I can visualize this triangle as having its base along the x-axis from the origin to the point (3,0)' shows spatial relationship representation by describing position and orientation. The text 'with a height extending up to the point (3,4)' demonstrates spatial reasoning about vertical relationships. These show basic spatial organization through coordinate visualization and spatial property identification.",
+  "spans": [[117, 212], [214, 265]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To solve this puzzle about fitting the furniture in the living room, I'll need to reason carefully about spatial arrangements.
+
+First, let me establish the room's configuration: it's rectangular, 15 feet by 20 feet, with the entrance door on the south wall, windows on the east wall, and a fireplace centered on the north wall. This creates essential constraints that will affect all further arrangements.
+
+The sectional sofa has an L-shape with dimensions 10 feet along one side and a 8 feet along the other. Given these measurements, I need to determine its optimal placement. If we position it with its back to the west wall and extending along the south wall, it would block the entrance door. If we rotate it to have its back to the south wall extending toward the west, the longer section would protrude too far into the room, disrupting the natural pathway from the entrance to the other areas.
+
+The most effective arrangement would place the sofa with its back to the west wall, extending toward the north, with the shorter section of the L facing east. This creates a natural division of the space while maintaining a clear pathway from the entrance. In this configuration, the sofa would be positioned approximately 5 feet from the south wall, leaving adequate clearance for the entrance.
+
+The coffee table (3 feet by 4 feet) should be placed in front of the sofa, but not directly in the walking path. Given the sofa's L-shape, the table would fit best if positioned toward the inner corner of the L, approximately 1.5 feet from the sofa on both sides. This maintains accessibility while creating a functional arrangement.
+
+For the two armchairs (each 3 feet by 3 feet), we have several options. If we place them opposite the sofa, facing west, they would create a conversation area around the coffee table. However, this might crowd the pathway to the fireplace. Alternatively, we could position them at angles in the northeast and southeast corners of the conversation area, which would maintain the pathway while still allowing all seats to face each other.
+
+The entertainment center (6 feet wide) would logically be placed against the east wall, between the windows. In this position, it would be visible from the sofa and armchairs without becoming the room's focal point, which should remain the fireplace.
+
+If we mentally rearrange this configuration, rotating the entire setup 90 degrees counterclockwise, the sofa would block the windows and create an awkward relationship with the fireplace. Similarly, a 90-degree clockwise rotation would place the entertainment center against the fireplace wall, creating a competing focal point.
+
+Therefore, the optimal spatial organization places the sofa against the west wall, the entertainment center against the east wall, and the armchairs completing the conversation area while maintaining clear pathways throughout the space."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated spatial organization by mentally representing a complex room layout, reasoning about relative positions and clearances between multiple objects, simulating different spatial arrangements and transformations (rotations), considering pathways through the space, and using spatial constraints to solve the furniture arrangement problem.",
+  "span_analysis": "Analyzing this text for spatial organization: The phrase 'I'll need to reason carefully about spatial arrangements' explicitly establishes spatial reasoning as the approach. The text 'First, let me establish the room's configuration: it's rectangular, 15 feet by 20 feet' shows spatial relationship representation by describing dimensions and layout. The phrase 'with the entrance door on the south wall, windows on the east wall, and a fireplace centered on the north wall' demonstrates detailed spatial positioning using directional references. The text 'If we position it with its back to the west wall and extending along the south wall' shows mental manipulation of spatial configurations. These demonstrate sophisticated spatial organization through detailed spatial reasoning and mental manipulation.",
+  "spans": [[69, 126], [128, 214], [216, 327], [579, 662]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of spatial organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,130 @@
+# Annotation Guidelines: Compositionality in the Reasoning Process
+
+## Definition
+**Compositionality** is the ability to build complex ideas from simpler components. In reasoning traces, compositionality refers to when the participant demonstrates the ability to decompose complex problems into simpler parts, reason about these parts individually, and then recombine them to address the overall problem.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates compositionality:
+
+1. **Conceptual decomposition**: Does the participant break down complex concepts into simpler components?
+   - Look for the identification of constituent elements of a complex idea
+   - Check if the participant explains complex notions in terms of more basic concepts
+
+2. **Modular reasoning**: Does the participant reason about components individually before combining them?
+   - Look for separate treatment of distinct problem elements
+   - Check if the participant addresses subproblems before tackling the whole
+
+3. **Hierarchical construction**: Does the participant build up complex structures from simpler ones?
+   - Look for progressive construction of ideas, starting from basic elements
+   - Check if the participant creates intermediate concepts that build toward the final solution
+
+4. **Recombination**: Does the participant effectively integrate component solutions?
+   - Look for synthesis of individual analyses into a coherent whole
+   - Check if the participant ensures consistency when combining partial solutions
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no compositionality. The participant approaches problems holistically without breaking them down into component parts or building up complex ideas from simpler ones.
+
+**1 - Partially Present**: The reasoning trace shows some compositionality, but with limited depth or inconsistent application. The participant may partially decompose problems or combine ideas, but doesn't consistently apply compositional principles throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear compositionality throughout. The participant systematically breaks down complex concepts, reasons about components separately, builds hierarchical structures, and recombines elements to address the overall problem.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of compositionality, you must identify specific spans (text segments) in the reasoning trace that demonstrate compositionality. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of compositionality (decomposition, component reasoning, hierarchical building, or recombination)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to compositionality
+- **Multiple spans**: Identify all significant instances of compositionality, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of compositionality are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates compositionality
+
+### How to Identify Valid Spans
+1. **Look for compositionality language**: Words like "break down," "decompose," "component," "part," "element," "combine," "integrate," "build up," "construct," "assemble"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant breaking down complex ideas into parts or building up from simpler components?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether compositionality is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate compositionality. Describe what specific phrases or sentences show decomposition, component reasoning, hierarchical building, or recombination, and explain why they demonstrate compositionality. This guides you to identify the character indices. Use an empty string "" if no compositionality is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate compositionality. Use an empty list [] if no spans demonstrate compositionality.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The question asks for the meaning of the poem 'The Road Not Taken' by Robert Frost. This poem is about making choices in life. The narrator comes to a fork in the road and has to decide which path to take. He chooses the one less traveled, and that has made all the difference in his life. The poem is about individuality and how our choices define our lives. So the meaning of the poem is about the importance of making our own choices rather than following the crowd."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant provides a holistic interpretation without breaking down the poem into constituent elements, analyzing specific components, or building up its interpretation from simpler components.",
+  "span_analysis": "This text shows no compositionality - it provides a general interpretation without decomposing the poem into parts, analyzing components separately, or building up understanding from simpler elements.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To calculate the total cost of the shopping trip, I need to find the cost of each item and add them together. The apples cost $1.50 per pound, and I'm buying 3 pounds, so that's $1.50 × 3 = $4.50. The bread costs $2.75 per loaf, and I'm buying 2 loaves, so that's $2.75 × 2 = $5.50. The milk costs $3.25 per gallon, and I'm buying 1 gallon, so that's $3.25. Now I'll add these up: $4.50 + $5.50 + $3.25 = $13.25. Therefore, the total cost is $13.25."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant shows basic compositionality by breaking down the total cost calculation into individual item costs and then recombining them, but doesn't demonstrate more complex compositional reasoning beyond this straightforward decomposition and addition.",
+  "span_analysis": "Looking for compositionality in this text: The phrase 'I need to find the cost of each item and add them together' shows decomposition by breaking down the total into components. The individual calculations for apples, bread, and milk demonstrate component reasoning by addressing each part separately. The text 'Now I'll add these up: $4.50 + $5.50 + $3.25 = $13.25' shows recombination by integrating the components. These demonstrate basic compositionality through decomposition and recombination.",
+  "spans": [[59, 118], [119, 194], [390, 459]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To analyze the economic impact of the proposed policy, I'll break this down into components and then integrate them for an overall assessment.
+
+First, let's examine the direct fiscal effects:
+1. Revenue generation: The new tax is estimated to generate $50 million annually
+2. Implementation costs: Administrative overhead is projected at $5 million initially, then $2 million annually
+Direct fiscal impact: +$48 million in year one, +$48 million in subsequent years
+
+Second, let's consider market effects:
+1. Producer response: Likely price increases of 2-3% based on elasticity data
+2. Consumer response: Estimated 1.5% reduction in consumption
+3. Labor market: Minimal effect (less than 0.1% employment change)
+Net market effect: Slight contraction in market size with minimal employment impact
+
+Third, let's analyze distributional consequences:
+1. Income groups: Regressive impact with lower-income households spending 0.5% more of disposable income
+2. Geographic distribution: Rural communities face 1.2% higher effective burden due to fewer alternatives
+3. Sectoral impact: Related industries may see 0.8% reduction in revenue
+
+Now, integrating these components into an overall assessment:
+The policy generates substantial revenue ($48M annually) with modest market distortion. However, the regressive nature and uneven geographic impact suggest targeted mitigation measures would be valuable. Given the revenue-to-distortion ratio compared to alternatives, this policy shows moderate economic efficiency but raises equity concerns. The integrated analysis suggests the policy would be most effective if combined with compensatory measures for the most affected groups."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated compositionality by systematically breaking down the analysis into distinct components (fiscal, market, and distributional effects), addressing each component with appropriate subcomponents, and then integrating these separate analyses into a coherent overall assessment with new insights emerging from the combination.",
+  "span_analysis": "Analyzing this text for compositionality: The phrase 'I'll break this down into components and then integrate them for an overall assessment' explicitly establishes the compositional approach through decomposition and recombination. The text 'First, let's examine the direct fiscal effects:' shows systematic component reasoning by addressing parts separately. The phrase 'Direct fiscal impact: +$48 million in year one, +$48 million in subsequent years' demonstrates hierarchical building by synthesizing subcomponents. The text 'Second, let's consider market effects:' shows continued decomposition into distinct components. These demonstrate sophisticated compositionality through systematic decomposition, component analysis, and integration.",
+  "spans": [[55, 142], [144, 191], [378, 452], [454, 492]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of compositionality is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

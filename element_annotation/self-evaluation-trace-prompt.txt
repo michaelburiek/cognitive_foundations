@@ -1,0 +1,119 @@
+# Annotation Guidelines: Self-Evaluation in the Reasoning Process
+
+## Definition
+**Self-evaluation** is the ability to assess the quality, correctness, efficiency, and progress of one's reasoning and make adjustments as needed. In reasoning traces, self-evaluation refers to when the participant checks its own work, identifies potential errors, evaluates alternative approaches, and makes corrections or improvements to its reasoning.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates self-evaluation:
+
+1. **Verification of steps**: Does the participant check its reasoning steps for correctness?
+   - Look for statements like "Let me verify this calculation," "Checking this step," or "To confirm this is correct..."
+   - Check if the participant rechecks intermediate results or verifies logical connections
+
+2. **Error detection and correction**: Does the participant identify and fix mistakes in its reasoning?
+   - Look for recognition of errors or inconsistencies
+   - Check if the participant corrects itself when it notices problems
+
+3. **Alternative evaluation**: Does the participant assess whether its approach is optimal?
+   - Look for consideration of whether there are better or more efficient methods
+   - Check if the participant evaluates the efficiency or elegance of its solution
+
+4. **Progress assessment**: Does the participant evaluate whether it's making progress toward the goal?
+   - Look for reflections on whether the current approach is working
+   - Check if the participant recognizes when it's stuck or going in circles
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows no evidence of self-evaluation. The participant proceeds without checking its work, detecting errors, considering alternatives, or assessing progress.
+
+**1 - Partially Present**: The reasoning trace shows some evidence of self-evaluation, but it is limited or inconsistent. The participant may occasionally verify steps or detect errors, but doesn't systematically evaluate its reasoning throughout the process.
+
+**2 - Present**: The reasoning trace shows clear evidence of self-evaluation throughout. The participant consistently checks its work, identifies and corrects errors, evaluates alternative approaches, and assesses its progress toward solving the problem.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of self-evaluation, you must identify specific spans (text segments) in the reasoning trace that demonstrate self-evaluation. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of self-evaluation (verification of steps, error detection and correction, alternative evaluation, or progress assessment)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to self-evaluation
+- **Multiple spans**: Identify all significant instances of self-evaluation, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of self-evaluation are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates self-evaluation
+
+### How to Identify Valid Spans
+1. **Look for self-evaluation language**: Words like "let me check," "verify," "I notice an error," "this doesn't seem right," "let me reconsider," "is this the best approach?"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant evaluating, checking, or correcting their own reasoning?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether self-evaluation is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate self-evaluation. Describe what specific phrases or sentences show verification of steps, error detection and correction, alternative evaluation, or progress assessment, and explain why they demonstrate self-evaluation. This guides you to identify the character indices. Use an empty string "" if no self-evaluation is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate self-evaluation. Use an empty list [] if no spans demonstrate self-evaluation.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the derivative of f(x) = x²sin(x), I'll use the product rule. The product rule states that if f(x) = g(x)h(x), then f'(x) = g'(x)h(x) + g(x)h'(x). In this case, g(x) = x² and h(x) = sin(x). So g'(x) = 2x and h'(x) = cos(x). Applying the product rule: f'(x) = 2x·sin(x) + x²·cos(x). Therefore, the derivative of f(x) = x²sin(x) is f'(x) = 2xsin(x) + x²cos(x)."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant simply executes a solution procedure without checking its work, verifying results, or evaluating its approach at any point in the reasoning process.",
+  "span_analysis": "This text shows no self-evaluation - it follows a straightforward procedure without any verification of steps, error detection, alternative evaluation, or progress assessment.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve the equation 2x² - 5x - 3 = 0, I'll use the quadratic formula: x = (-b ± √(b² - 4ac))/2a, where a = 2, b = -5, and c = -3. Plugging these values in: x = (5 ± √(25 + 24))/4 = (5 ± √49)/4 = (5 ± 7)/4. So x = (5 + 7)/4 = 12/4 = 3 or x = (5 - 7)/4 = -2/4 = -0.5.
+
+Let me check my answer by substituting these values back into the original equation. For x = 3: 2(3)² - 5(3) - 3 = 2(9) - 15 - 3 = 18 - 15 - 3 = 0. For x = -0.5: 2(-0.5)² - 5(-0.5) - 3 = 2(0.25) + 2.5 - 3 = 0.5 + 2.5 - 3 = 0. Both values check out, so the solutions are x = 3 and x = -0.5."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant shows some self-evaluation by verifying its answers through substitution back into the original equation, but doesn't evaluate its approach or check intermediate steps during the problem-solving process.",
+  "span_analysis": "Looking for self-evaluation in this text: The phrase 'Let me check my answer by substituting these values back into the original equation' shows verification of steps by explicitly checking the final results. The text 'Both values check out' demonstrates the completion of the verification process. However, there's no evaluation of the approach or checking of intermediate steps during the solution process.",
+  "spans": [[269, 353], [495, 516]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "I need to find the area under the curve f(x) = x² from x = 1 to x = 3. I'll use integration: ∫₁³ x² dx = [x³/3]₁³ = 3³/3 - 1³/3 = 27/3 - 1/3 = 9 - 1/3 = 8.67.
+
+Wait, let me double-check my arithmetic. 27/3 = 9 and 1/3 = 0.33 (rounded), so 9 - 0.33 = 8.67. Actually, let me be more precise: 9 - 1/3 = 9 - 0.333... = 8.666..., which rounds to 8.67.
+
+I should also verify my integration. The antiderivative of x² is indeed x³/3 + C, but I need to make sure I applied the fundamental theorem of calculus correctly. We have ∫₁³ x² dx = [x³/3]₁³ = (3³/3) - (1³/3) = 9 - 1/3 = 8.67. This looks right.
+
+I could also use a different approach to check. Let me try using the geometric interpretation: the area is approximately the sum of rectangles. Using just two rectangles with width 1 at x = 1 and x = 2, we get 1² + 2² = 1 + 4 = 5, which is an underestimate since the function is increasing. Using three narrower rectangles would give a better approximation. This confirms my answer is in the right ballpark, but the exact value from integration is 8.67 square units."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates comprehensive self-evaluation by verifying its arithmetic calculations, double-checking the correctness of its integration, and using an alternative approach (rectangular approximation) to confirm that its answer is reasonable.",
+  "span_analysis": "Analyzing this text for self-evaluation: The phrase 'Wait, let me double-check my arithmetic' shows verification of steps by explicitly checking calculations. The text 'I should also verify my integration' demonstrates systematic verification of the solution method. The phrase 'I could also use a different approach to check' shows alternative evaluation by considering different methods. The text 'This confirms my answer is in the right ballpark' demonstrates progress assessment by evaluating the reasonableness of the result. These show comprehensive self-evaluation across multiple dimensions.",
+  "spans": [[160, 200], [348, 384], [595, 642], [953, 1001]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of self evaluation is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

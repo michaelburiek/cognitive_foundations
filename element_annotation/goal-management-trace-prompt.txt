@@ -1,0 +1,138 @@
+# Annotation Guidelines: Goal Management in the Reasoning Process
+
+## Definition
+**Goal management** is the ability to establish, maintain, and adjust goals throughout the reasoning process. In reasoning traces, goal management refers to when the participant explicitly formulates clear objectives, tracks progress toward these goals, handles subgoals effectively, and adjusts goals when necessary.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates goal management:
+
+1. **Goal articulation**: Does the participant explicitly formulate and state their goals?
+   - Look for statements like "The goal is to determine...", "We need to find...", or "Our objective is to..."
+   - Check if the participant clearly defines what they are trying to accomplish
+
+2. **Subgoal creation**: Does the participant break down complex goals into manageable subgoals?
+   - Look for systematic decomposition of main objectives into intermediate steps
+   - Check if the participant creates a logical hierarchy of goals and subgoals
+
+3. **Goal tracking**: Does the participant track progress toward their goals throughout the reasoning?
+   - Look for references back to established goals during the reasoning process
+   - Check if the participant acknowledges when subgoals have been achieved
+
+4. **Goal adjustment**: Does the participant revise or refine goals when necessary?
+   - Look for recognition when initial goals need modification
+   - Check if the participant can pivot to new or adjusted goals based on insights gained during reasoning
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows no evidence of goal management. The participant proceeds without clearly articulating goals, breaking down complex objectives, tracking progress, nor adjusting goals when needed.
+
+**1 - Partially Present**: The reasoning trace shows some evidence of goal management, but it is limited or inconsistent. The participant may establish initial goals but fail to track them effectively, create subgoals without a clear hierarchy or purpose, or neglect to adjust goals when appropriate.
+
+**2 - Present**: The reasoning trace shows clear evidence of goal management throughout. The participant explicitly formulates goals, breaks them down into appropriate subgoals, consistently tracks progress, and demonstrates the ability to adjust goals when necessary.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of goal management, you must identify specific spans (text segments) in the reasoning trace that demonstrate goal management. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of goal management (goal articulation, subgoal creation, goal tracking, or goal adjustment)
+- **Completeness**: Include enough context to understand the goal management being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to goal management
+- **Multiple spans**: Identify all significant instances of goal management, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of goal management are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of goal management it demonstrates (goal articulation, subgoal creation, goal tracking, or goal adjustment)
+- How it contributes to the overall goal management score
+
+### How to Identify Valid Spans
+1. **Look for goal management language**: Words like "goal," "objective," "aim," "target," "plan," "strategy," "first I need to," "my approach is," "step by step"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant setting, tracking, or adjusting goals in their reasoning process?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether goal management is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate goal management. Describe what specific phrases or sentences show goal articulation, subgoal decomposition, progress tracking, or goal adjustment, and explain why they demonstrate goal management. This guides you to identify the character indices. Use an empty string "" if no goal management is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate goal management. Use an empty list [] if no spans demonstrate goal management.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The equation is 3x + 2y = 12 and 2x - y = 5. We can solve for x in the second equation: 2x - y = 5, so 2x = 5 + y, thus x = (5 + y)/2. Now substitute this into the first equation: 3((5 + y)/2) + 2y = 12. Simplifying: 3(5 + y)/2 + 2y = 12. Further simplification gives us 15/2 + 3y/2 + 2y = 12. Combining like terms: 15/2 + 7y/2 = 12. Therefore, 7y/2 = 12 - 15/2 = 24/2 - 15/2 = 9/2. So y = 9/2 ÷ 7/2 = 9/7. Going back to x = (5 + y)/2, we get x = (5 + 9/7)/2 = (35/7 + 9/7)/2 = 44/14 = 22/7."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant simply executes a solution procedure without explicitly articulating goals, creating subgoals, tracking progress toward objectives, or demonstrating any clear goal management.",
+  "span_analysis": "This text shows no goal management - it's a straightforward algebraic solution without any explicit goal articulation, subgoal decomposition, progress tracking, or goal adjustment.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To find the area of the irregular polygon, I'll need to divide it into simpler shapes. To calculate the total area, I'll first split the shape into a rectangle and a triangle. For the rectangle, I'll calculate the area using length × width. The rectangle has dimensions 5m × 3m, so its area is 15m^2. For the triangle, I'll use the formula (1/2) × base × height. The triangle has base 3m and height 4m, so its area is 6m^2. Now, adding the two areas: 15m^2 + 6m^2 = 21m^2. The total area of the irregular polygon is 21m^2."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant briefly states an overall goal and creates implicit subgoals by breaking the problem into parts, but doesn't consistently track progress toward these goals or demonstrate sophisticated goal management throughout the reasoning process.",
+  "span_analysis": "Looking for goal management in this text: The phrase 'To find the area of the irregular polygon, I'll need to divide it into simpler shapes' shows goal articulation and strategy planning. The text 'To calculate the total area, I'll first split the shape into a rectangle and a triangle' demonstrates subgoal decomposition. However, the execution is straightforward without explicit progress tracking or goal adjustment.",
+  "spans": [[0, 88], [89, 178]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "My goal is to determine whether the given chemical reaction will be spontaneous under standard conditions. To achieve this, I need to calculate the Gibbs free energy (ΔG°) using the formula ΔG° = ΔH° - TΔS°. This requires three subgoals: (1) calculate the enthalpy change (ΔH°), (2) calculate the entropy change (ΔS°), and (3) combine these values at the given temperature.
+
+For the first subgoal, I'll calculate ΔH° using standard enthalpies of formation... [calculation follows]
+ΔH° = -92.4 kJ/mol. First subgoal completed.
+
+For the second subgoal, I need to determine ΔS°... [calculation follows]
+ΔS° = 65.3 J/(mol·K). Second subgoal completed.
+
+For the third subgoal, I'll calculate ΔG° at 298K... [calculation follows]
+ΔG° = -92.4 kJ/mol - (298 K)(65.3 J/(mol·K))(1 kJ/1000 J)
+ΔG° = -92.4 kJ/mol - 19.5 kJ/mol
+ΔG° = -111.9 kJ/mol
+
+Now I've achieved my primary goal: Since ΔG° is negative (-111.9 kJ/mol), the reaction is spontaneous under standard conditions.
+
+Wait, I should verify my work. Looking again at the entropy calculation, I notice I made an error in accounting for the phase change. Let me recalculate the entropy change... [recalculation follows]
+Corrected ΔS° = 43.2 J/(mol·K)
+
+I need to adjust my final calculation for the primary goal:
+ΔG° = -92.4 kJ/mol - (298 K)(43.2 J/(mol·K))(1 kJ/1000 J)
+ΔG° = -92.4 kJ/mol - 12.9 kJ/mol
+ΔG° = -105.3 kJ/mol
+
+The reaction remains spontaneous, but with a corrected ΔG° value of -105.3 kJ/mol."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated goal management by explicitly articulating a primary goal, methodically breaking it down into logical subgoals, tracking progress by noting the completion of each subgoal, and showing goal adjustment by identifying an error and revising calculations to better achieve the primary objective.",
+  "span_analysis": "Analyzing this text for goal management: The opening 'My goal is to determine whether the given chemical reaction will be spontaneous under standard conditions' shows explicit goal articulation. The text 'This requires three subgoals: (1) calculate the enthalpy change (ΔH°), (2) calculate the entropy change (ΔS°), and (3) combine these values at the given temperature' demonstrates systematic subgoal decomposition. The phrase 'For the first subgoal, I'll calculate ΔH°' shows progress tracking and subgoal execution. The text 'Now I've achieved my primary goal:' demonstrates goal completion tracking. The phrase 'I need to adjust my final calculation for the primary goal:' shows goal adjustment and revision. These demonstrate comprehensive goal management across all dimensions.",
+  "spans": [[0, 106], [207, 372], [374, 415], [835, 869], [1196, 1255]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of goal management is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

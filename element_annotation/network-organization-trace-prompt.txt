@@ -1,0 +1,126 @@
+# Annotation Guidelines: Network Organization in the Reasoning Process
+
+## Definition
+**Network organization** is the ability to arrange concepts as interconnected nodes with multiple pathways and relationship types. In reasoning traces, network organization refers to when the participant demonstrates the ability to represent knowledge as a network of interconnected concepts, establish various types of relationships between ideas, and navigate different pathways through this conceptual network.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates network organization:
+
+1. **Network representation**: Does the participant represent information as interconnected nodes?
+   - Look for explicit connections between multiple related concepts
+   - Check if the participant treats ideas as part of an interconnected network rather than isolated facts
+
+2. **Multiple relationship types**: Does the participant establish different types of connections between concepts?
+   - Look for various relationship types (causal, hierarchical, temporal, etc.) between ideas
+   - Check if the participant distinguishes between different ways concepts can relate to each other
+
+3. **Multi-pathway exploration**: Does the participant explore multiple paths through the conceptual network?
+   - Look for consideration of different routes to conclusions
+   - Check if the participant can follow various connection paths between concepts
+
+4. **Network-based inference**: Does the participant make inferences based on the network structure?
+   - Look for conclusions drawn from patterns of connections
+   - Check if the participant identifies implications from the network topology
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no network organization. The participant presents concepts as isolated or in simple linear sequences without establishing a network of relationships or exploring multiple pathways.
+
+**1 - Partially Present**: The reasoning trace shows some network organization, but with limited complexity or inconsistent application. The participant establishes some connections between concepts and may identify different relationship types, but doesn't fully develop or utilize a network structure.
+
+**2 - Present**: The reasoning trace shows clear network organization throughout. The participant consistently represents knowledge as an interconnected network, establishes various relationship types, explores multiple pathways, and leverages the network structure for inference.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of network organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate network organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of network organization (network representation, multiple relationship types, multi-pathway exploration, or network-based inference)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to network organization
+- **Multiple spans**: Identify all significant instances of network organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of network organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates network organization
+
+### How to Identify Valid Spans
+1. **Look for network language**: Words like "connected," "network," "relationships," "pathways," "nodes," "links," "interconnected," "web," "multiple routes," "various connections"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant representing information as interconnected concepts with multiple relationship types?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether network organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate network organization. Describe what specific phrases or sentences show network representation, multiple relationship types, multi-pathway exploration, or network-based inference, and explain why they demonstrate network organization. This guides you to identify the character indices. Use an empty string "" if no network organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate network organization. Use an empty list [] if no spans demonstrate network organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve this quadratic equation, I'll follow these steps: First, I need to put it in standard form ax² + bx + c = 0. Then I'll use the quadratic formula x = (-b ± √(b² - 4ac))/2a to find the roots. Substituting the values, I get x = 3 and x = -2. Therefore, the solutions to the equation are x = 3 and x = -2."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant presents a linear, procedural approach with no evidence of representing concepts as an interconnected network, establishing different types of relationships, or exploring multiple pathways.",
+  "span_analysis": "This text shows no network organization - it follows a linear procedural sequence without representing concepts as interconnected nodes, establishing multiple relationship types, or exploring different pathways.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Let's analyze how inflation affects different parts of the economy. Inflation directly increases prices, which reduces purchasing power for consumers. This connects to consumer spending, which typically decreases for non-essential goods. Meanwhile, inflation can relate to wages in different ways: sometimes wages increase in response to inflation, but often they lag behind. Inflation also connects to interest rates, as central banks often raise rates to combat high inflation. These higher rates then affect borrowing, housing markets, and business investment. There's also a connection to currency values, as high inflation can lead to currency depreciation."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some network organization by establishing various connections between inflation and other economic concepts, but doesn't fully develop these into a complex network, clearly distinguish relationship types, or explore multiple inference pathways through the connections.",
+  "span_analysis": "Looking for network organization in this text: The phrase 'This connects to consumer spending' shows network representation by establishing connections between concepts. The text 'inflation can relate to wages in different ways' demonstrates multiple relationship types by acknowledging different connection patterns. The phrase 'Inflation also connects to interest rates' shows continued network representation. The text 'There's also a connection to currency values' demonstrates network-based thinking by identifying additional connections. These show basic network organization through concept connections.",
+  "spans": [[156, 188], [260, 310], [418, 458], [571, 616]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To understand the complex causes and effects of climate change, I'll map out the interconnected factors as a causal network.
+
+Carbon dioxide emissions form a central node in this network, with bidirectional connections to several systems. CO₂ connects to the carbon cycle through absorption relationships with oceans (which absorb ~30% of emissions) and forests (which sequester carbon during growth). However, these same absorption mechanisms create feedback loops: as oceans absorb CO₂, they become more acidic, which can eventually reduce their absorption capacity.
+
+Methane emissions represent another important node, with stronger but shorter-term warming effects than CO₂. Methane connects to agricultural practices (especially rice cultivation and livestock) through production relationships, and to permafrost through a dangerous feedback loop: warming melts permafrost, which releases methane, which causes more warming.
+
+Following another pathway from emissions, we reach atmospheric temperature change, which branches into multiple consequence pathways: one leads to sea level rise (through both thermal expansion and ice sheet melting), another to precipitation pattern changes, and a third to extreme weather events.
+
+The economic system connects to emissions through multiple pathways: energy production (predominantly fossil fuels), industrial processes, transportation systems, and consumption patterns. Each of these represents a different type of relationship - some causal, some correlational, some representing dependency.
+
+If we follow the pathway from climate policies to economic systems, we find both inhibitory relationships (carbon taxes reducing emissions) and synergistic relationships (renewable subsidies promoting technological innovation).
+
+Following yet another path, from precipitation changes to agricultural systems, we discover complex relationships that vary by region - some areas benefit from increased rainfall while others suffer from drought, creating a geonetworkically heterogeneous network of effects.
+
+By mapping these interconnected factors as a complex network rather than linear chains, we can identify crucial intervention points, feedback loops, and emergent properties that might otherwise remain obscure."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated network organization by explicitly representing climate factors as an interconnected network with multiple nodes, identifying diverse relationship types (causal, feedback loops, bidirectional, inhibitory), exploring different pathways through this conceptual network, and drawing insights from the network structure itself.",
+  "span_analysis": "Analyzing this text for network organization: The phrase 'I'll map out the interconnected factors as a causal network' explicitly establishes network representation by organizing concepts as interconnected nodes. The text 'Carbon dioxide emissions form a central node in this network, with bidirectional connections to several systems' demonstrates network representation with multiple relationship types. The phrase 'CO₂ connects to the carbon cycle through absorption relationships' shows network-based connections between concepts. These demonstrate sophisticated network organization through explicit network mapping and multiple relationship types.",
+  "spans": [[64, 124], [126, 238], [239, 304]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of network organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

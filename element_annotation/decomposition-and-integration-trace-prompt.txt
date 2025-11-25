@@ -1,0 +1,166 @@
+# Annotation Guidelines: Decomposition and Integration in the Reasoning Process
+
+## Definition
+**Decomposition and integration** is the ability to break problems into subparts and synthesize solutions. In reasoning traces, decomposition and integration refers to when the participant demonstrates the ability to divide complex problems into simpler components, address each component separately, and then recombine the partial solutions into a coherent overall solution.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates decomposition and integration:
+
+1. **Problem decomposition**: Does the participant break down complex problems into simpler parts?
+   - Look for explicit division of problems into subproblems
+   - Check if the participant identifies component issues that can be addressed separately
+
+2. **Systematic subproblem handling**: Does the participant address subproblems in an organized manner?
+   - Look for methodical treatment of each component
+   - Check if the participant solves individual parts using appropriate approaches
+
+3. **Part-whole relationships**: Does the participant maintain awareness of how parts relate to the whole?
+   - Look for connections between subproblems and the overall problem
+   - Check if the participant keeps track of how components fit together
+
+4. **Solution integration**: Does the participant combine partial solutions into a coherent whole?
+   - Look for synthesis that brings component solutions together
+   - Check if the participant ensures consistency and compatibility when integrating parts
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no decomposition and integration. The participant approaches problems holistically without breaking them down into components or addresses parts without effectively integrating them.
+
+**1 - Partially Present**: The reasoning trace shows some decomposition and integration, but with limited systematicity or incomplete application. The participant may break problems into parts but not address them systematically, or may solve components without effectively integrating them.
+
+**2 - Present**: The reasoning trace shows clear decomposition and integration throughout. The participant consistently breaks complex problems into appropriate components, addresses each component systematically, maintains awareness of part-whole relationships, and effectively integrates partial solutions.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of decomposition and integration, you must identify specific spans (text segments) in the reasoning trace that demonstrate decomposition and integration. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of decomposition and integration (problem decomposition, systematic subproblem handling, part-whole relationships, or solution integration)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to decomposition and integration
+- **Multiple spans**: Identify all significant instances of decomposition and integration, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of decomposition and integration are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates decomposition and integration
+
+### How to Identify Valid Spans
+1. **Look for decomposition and integration language**: Words like "break down," "divide," "decompose," "components," "parts," "subproblems," "integrate," "combine," "synthesize," "bring together," "overall solution"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant breaking problems into parts or combining partial solutions?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether decomposition and integration is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate decomposition and integration. Describe what specific phrases or sentences show problem decomposition, systematic subproblem handling, part-whole relationships, or solution integration, and explain why they demonstrate decomposition and integration. This guides you to identify the character indices. Use an empty string "" if no decomposition and integration is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate decomposition and integration. Use an empty list [] if no spans demonstrate decomposition and integration.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve this quadratic equation, x² - 5x + 6 = 0, I'll use the quadratic formula. The formula states that for an equation in the form ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac))/2a. In this case, a = 1, b = -5, and c = 6. Plugging these values into the formula: x = (5 ± √(25 - 24))/2 = (5 ± √1)/2 = (5 ± 1)/2. So x = 6/2 = 3 or x = 4/2 = 2. Therefore, the solutions to the equation are x = 2 and x = 3."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a standard formula to solve the equation without decomposing the problem into subparts or demonstrating any integration of components, instead using a direct algorithmic approach.",
+  "span_analysis": "This text shows no decomposition and integration - it follows a direct algorithmic approach without breaking the problem into parts or integrating components.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To evaluate whether the company should launch the new product line, I'll examine several key factors. First, let's look at market demand. Based on the survey data, there appears to be moderate interest among current customers, with 45% indicating they would "likely" or "very likely" purchase the product.
+
+Next, considering production costs, the initial investment would be $500,000 with ongoing production costs of approximately $15 per unit. Given the proposed selling price of $45, the gross margin would be 67%, which is strong.
+
+For competitive analysis, there are three main competitors in this space, with market shares of 35%, 28%, and 15% respectively. Our product has two unique features that differentiate it from competitors.
+
+Looking at potential risks, there are regulatory changes expected next year that could impact production costs by 10-15%.
+
+Taking all these factors together, the product shows promise but has significant risks. The market demand seems sufficient, the financials look promising, we have competitive differentiation, but regulatory changes create uncertainty. Overall, I would recommend proceeding with the launch but developing contingency plans for the regulatory changes."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some decomposition by breaking the product launch decision into separate components (market demand, costs, competition, risks), but provides a relatively superficial analysis of each component and offers limited integration of these factors into a cohesive evaluation beyond a basic summary judgment.",
+  "span_analysis": "Looking for decomposition and integration in this text: The phrase 'I'll examine several key factors' shows problem decomposition by breaking down the decision. The text 'First, let's look at market demand' demonstrates systematic subproblem handling. The phrase 'Next, considering production costs' shows continued decomposition. The text 'Taking all these factors together' demonstrates solution integration by combining the components. These show basic decomposition and integration through systematic component analysis.",
+  "spans": [[68, 101], [102, 137], [307, 341], [863, 896]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To design an effective urban transportation plan for this growing city, I'll decompose this complex problem into interconnected components, analyze each separately, and then integrate them into a comprehensive solution.
+
+First, let's break this into major subsystems:
+1. Public transit infrastructure
+2. Road network optimization
+3. Non-motorized transportation options
+4. Policy and incentive structures
+5. Future growth accommodation
+6. Environmental impact management
+
+For public transit infrastructure, I need to further decompose into:
+- Rail system (capacity, routing, station placement)
+- Bus network (frequency, coverage, dedicated lanes)
+- Intermodal connections (transfer points, scheduling coordination)
+
+Analyzing the rail component first: The current single-line system is inadequate for projected growth. Based on population density maps and commuter data, I recommend a three-line system with a central hub. Each line requires specific analysis:
+- North-south line: 18 stations, 24km length, servicing the high-density corridor and university
+- East-west line: 12 stations, 16km length, connecting residential areas with the business district
+- Circular line: 15 stations, 20km length, connecting secondary nodes and relieving pressure on central transfers
+
+For the bus network component: Rather than treating buses as secondary, they should form a complementary grid system. This requires:
+- Primary routes: 8 high-frequency corridors with dedicated lanes
+- Secondary routes: 24 connector routes with standard frequency
+- Neighborhood circulators: 36 routes serving last-mile connections
+
+Moving to the road network optimization component:
+- Congestion management: Implement dynamic traffic signaling at 47 key intersections
+- Bottleneck elimination: Redesign the 5 most congested interchanges
+- Parking strategy: Reduce downtown parking by 20%, increase peripheral parking by 35%
+
+For non-motorized transportation:
+- Bicycle infrastructure: 85km of protected lanes forming a complete network
+- Pedestrian improvements: Walkability enhancements in 12 identified districts
+- Micromobility: Designated zones for scooters and bikeshare stations
+
+Now, integrating these components requires addressing cross-system dependencies:
+1. Temporal coordination: Phasing construction to minimize disruption (detailed 5-year timeline attached)
+2. Spatial integration: Ensuring physical connections between modes (28 key transfer points identified)
+3. Operational synchronization: Creating unified scheduling and payment systems
+4. Policy coherence: Aligning incentives across transportation modes
+
+The integrated plan demonstrates several emergent properties not visible in the component analysis:
+- 23% projected reduction in total commute times through system synergies
+- 18% increase in public transit modal share due to network effects
+- $47M annual operational savings through optimized connections
+
+This decomposition-integration approach reveals that the optimal solution isn't simply maximizing any single component, but rather finding the balance that creates a cohesive, efficient transportation ecosystem."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated decomposition and integration by systematically breaking down the complex transportation problem into hierarchical components and sub-components, methodically analyzing each part with appropriate approaches, maintaining clear awareness of how components interact, and then comprehensively integrating the solutions with explicit attention to cross-system dependencies and emergent properties.",
+  "span_analysis": "Analyzing this text for decomposition and integration: The phrase 'I'll decompose this complex problem into interconnected components, analyze each separately, and then integrate them into a comprehensive solution' explicitly establishes the decomposition and integration approach. The text 'First, let's break this into major subsystems:' demonstrates systematic problem decomposition by breaking down the complex problem into manageable parts. These demonstrate sophisticated decomposition and integration through explicit systematic breakdown and integration planning.",
+  "spans": [[72, 219], [221, 267]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of decomposition and integration is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

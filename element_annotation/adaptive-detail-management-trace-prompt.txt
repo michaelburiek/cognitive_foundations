@@ -1,0 +1,127 @@
+# Annotation Guidelines: Adaptive Detail Management in the Reasoning Process
+
+## Definition
+**Adaptive detail management** is the ability to adjust the level of detail based on reasoning requirements. In reasoning traces, adaptive detail management refers to when the participant demonstrates the ability to shift between different levels of abstraction, expand or compress information as needed, determine appropriate levels of specificity for different aspects of reasoning, and dynamically manage detail levels throughout the reasoning process.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates adaptive detail management:
+
+1. **Abstraction level shifting**: Does the participant move between different levels of abstraction?
+   - Look for transitions between high-level principles and specific details
+   - Check if the participant can zoom out for broad perspectives and zoom in for fine details
+
+2. **Detail calibration**: Does the participant provide appropriate levels of detail for different aspects?
+   - Look for more detailed treatment of critical issues and less for peripheral ones
+   - Check if the participant determines suitable granularity based on importance
+
+3. **Information expansion/compression**: Does the participant expand or compress information as needed?
+   - Look for elaboration when detail is necessary and summarization when it isn't
+   - Check if the participant can unpack concepts or condense information adaptively
+
+4. **Dynamic granularity**: Does the participant adjust detail levels throughout the reasoning process?
+   - Look for changes in specificity as reasoning progresses
+   - Check if the participant increases or decreases detail in response to emerging needs
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no adaptive detail management. The participant maintains a uniform level of detail regardless of importance or uses inappropriate levels of specificity throughout.
+
+**1 - Partially Present**: The reasoning trace shows some adaptive detail management, but with limited flexibility or inconsistent application. The participant occasionally adjusts detail levels but may not consistently provide appropriate granularity or shift between abstraction levels effectively.
+
+**2 - Present**: The reasoning trace shows clear adaptive detail management throughout. The participant consistently shifts between abstraction levels, calibrates detail appropriately, expands or compresses information effectively, and dynamically adjusts granularity in response to reasoning requirements.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of adaptive detail management, you must identify specific spans (text segments) in the reasoning trace that demonstrate adaptive detail management. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of adaptive detail management (abstraction level shifting, detail calibration, information expansion/compression, or dynamic granularity)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to adaptive detail management
+- **Multiple spans**: Identify all significant instances of adaptive detail management, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of adaptive detail management are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates adaptive detail management
+
+### How to Identify Valid Spans
+1. **Look for detail management language**: Words like "more detail," "specifically," "broadly," "zoom in," "zoom out," "elaborate," "summarize," "at a high level," "getting specific"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant adjusting detail levels or managing information granularity?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether adaptive detail management is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate adaptive detail management. Describe what specific phrases or sentences show abstraction level shifting, detail calibration, information expansion/compression, or dynamic granularity, and explain why they demonstrate adaptive detail management. This guides you to identify the character indices. Use an empty string "" if no adaptive detail management is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate adaptive detail management. Use an empty list [] if no spans demonstrate adaptive detail management.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To calculate the compound interest, we use the formula A = P(1+r)^t, where A is the final amount, P is the principal, r is the interest rate, and t is the time in years. For this problem, P = $1000, r = 5% = 0.05, and t = 3 years. Substituting these values into the formula: A = $1000(1+0.05)^3 = $1000(1.05)^3 = $1000(1.157625) = $1157.63. Therefore, the final amount after 3 years is $1157.63, and the compound interest earned is $1157.63 - $1000 = $157.63."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant maintains a uniform level of detail throughout its reasoning, simply working through a formula application without adjusting abstraction levels, calibrating detail based on importance, or dynamically managing information density.",
+  "span_analysis": "This text shows no adaptive detail management - it maintains a consistent level of detail throughout without any abstraction level shifting, detail calibration, information expansion/compression, or dynamic granularity adjustments.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Let me analyze the impact of the new policy on different stakeholders. For consumers, the policy will likely result in moderately higher prices in the short term as companies pass on compliance costs. Looking at specific numbers, research suggests a 2-3% price increase across affected products, which translates to approximately $50-75 annually for the average household.
+
+For businesses, the impact varies significantly by size. Large corporations with existing compliance systems can adapt relatively easily—implementation costs represent less than 0.1% of annual revenue for major players in the industry. For small businesses, however, I should examine the impacts more carefully. These entities face disproportionate compliance burdens, with costs potentially reaching 2-5% of revenue. The specific requirements include new reporting systems, staff training, and potential reformulation of products, each with its own timeline and expense.
+
+At a broader economic level, the policy aims to address market externalities that previously cost the public sector approximately $2.3 billion annually. The projected net social benefit is positive, though the distribution of costs and benefits deserves consideration."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some adaptive detail management by providing more specific numerical detail for consumer and small business impacts while keeping broader economic impacts more general, but it doesn't consistently shift between abstraction levels or dynamically adjust detail throughout the reasoning process.",
+  "span_analysis": "Looking for adaptive detail management in this text: The phrase 'Looking at specific numbers, research suggests a 2-3% price increase across affected products, which translates to approximately $50-75 annually for the average household' shows information expansion by providing specific numerical details. The text 'I should examine the impacts more carefully' demonstrates dynamic granularity by explicitly adjusting detail level for small businesses. The phrase 'At a broader economic level' shows abstraction level shifting by moving to a higher level of analysis. However, the adjustments are limited and not consistently applied throughout.",
+  "spans": [[201, 372], [641, 684], [947, 974]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To analyze the novel's significance, I'll need to manage detail adaptively across multiple levels of literary analysis.
+
+At the highest level of abstraction, this work represents a pivotal transition between Victorian and modernist sensibilities in English literature. This contextual frame is sufficient to establish its historical position without needing extensive period detail.
+
+Moving to a more specific level, let me examine three key innovations that define its importance: narrative technique, thematic concerns, and linguistic experimentation. For narrative technique, a moderate level of detail is appropriate. The novel introduced free indirect discourse as its primary mode, allowing for unprecedented psychological realism. I won't detail every instance of this technique—a brief illustration from Chapter 3, where the protagonist's thoughts blend seamlessly with narrative description, suffices to demonstrate the method.
+
+For thematic analysis, greater elaboration is warranted since this represents the novel's most influential contribution. I'll expand considerably here: the work's exploration of class mobility introduced a complex framework involving four distinct social strata rather than the binary divisions common in earlier works. Specifically, the protagonist navigates between: 1) the traditional aristocracy, 2) the newly wealthy industrial class, 3) the educated but financially precarious middle class, and 4) the urban working class. Each boundary crossing reveals different social mechanisms, which I'll analyze with detailed examples from pivotal scenes in Chapters 2, 7, and 12.
+
+Regarding linguistic experimentation, I can be more concise as this aspect, while innovative, had less lasting influence. The author's occasional use of regional dialects and technical terminology was noteworthy but not revolutionary.
+
+As I move into discussing critical reception, I'll shift back to a higher level of abstraction, summarizing the broad patterns of response rather than cataloging individual critics' views. A brief mention of the Wilson review (1922) provides sufficient specific grounding.
+
+Finally, for contemporary relevance, I'll increase detail again to examine how the novel's treatment of technological anxiety specifically prefigured current debates about automation and social displacement. The factory scene in Chapter 9 deserves particular attention, so I'll zoom in to analyze the symbolic elements and psychological portrayals that resonate with current concerns."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated adaptive detail management by explicitly navigating between different abstraction levels, strategically allocating detail based on importance, deliberately expanding information for critical elements while compressing others, and dynamically adjusting specificity throughout the analysis as reasoning needs change.",
+  "span_analysis": "Analyzing this text for adaptive detail management: The opening 'I'll need to manage detail adaptively across multiple levels of literary analysis' explicitly establishes adaptive detail management as the approach. The phrase 'At the highest level of abstraction' demonstrates abstraction level shifting. The text 'Moving to a more specific level' shows dynamic granularity by explicitly changing detail levels. The phrase 'For narrative technique, a moderate level of detail is appropriate' demonstrates detail calibration based on importance. The text 'For thematic analysis, greater elaboration is warranted' shows information expansion for critical elements. The phrase 'I can be more concise as this aspect, while innovative, had less lasting influence' demonstrates information compression for less important elements. These show sophisticated adaptive detail management across all dimensions.",
+  "spans": [[37, 119], [121, 268], [384, 415], [554, 621], [938, 1058], [1654, 1737]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of adaptive detail management is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,136 @@
+# Annotation Guidelines: Forward Chaining in the Reasoning Process
+
+## Definition
+**Forward chaining** is the ability to start with initial conditions and work toward goals. In reasoning traces, forward chaining refers to when the participant demonstrates the ability to begin with given information, apply logical operations to derive new information, and progressively advance toward a solution through a series of forward inference steps.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates forward chaining:
+
+1. **Initial state utilization**: Does the participant begin reasoning with given information?
+   - Look for starting points based on provided facts or premises
+   - Check if the participant identifies what is known at the outset
+
+2. **Progressive inference**: Does the participant derive new information from established facts?
+   - Look for steps that generate additional knowledge from what's already known
+   - Check if the participant extends its knowledge state through logical operations
+
+3. **Forward direction**: Does the participant work from causes to effects or premises to conclusions?
+   - Look for reasoning that follows a natural progression from given to derived
+   - Check if the participant advances from initial conditions toward goals
+
+4. **Incremental advancement**: Does the participant build solutions step by step in a forward direction?
+   - Look for gradual progress toward the solution through successive steps
+   - Check if each step builds on previous steps to move closer to the goal
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no forward chaining. The participant doesn't start with initial conditions and work forward, instead using other approaches like backward reasoning from goals or lateral thinking.
+
+**1 - Partially Present**: The reasoning trace shows some forward chaining, but with limited systematicity or incomplete application. The participant sometimes works from initial conditions toward goals, but may not consistently apply forward inference or may mix forward chaining with other approaches.
+
+**2 - Present**: The reasoning trace shows clear forward chaining throughout. The participant consistently begins with initial conditions, derives new information through forward inference, works in a forward direction from given to unknown, and advances incrementally toward solutions.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of forward chaining, you must identify specific spans (text segments) in the reasoning trace that demonstrate forward chaining. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of forward chaining (initial state utilization, progressive inference, forward direction, or incremental advancement)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to forward chaining
+- **Multiple spans**: Identify all significant instances of forward chaining, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of forward chaining are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates forward chaining
+
+### How to Identify Valid Spans
+1. **Look for forward chaining language**: Words like "given that," "since we know," "from this we can derive," "this leads to," "building on," "therefore," "consequently," "starting with"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant working forward from given information to derive new conclusions?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether forward chaining is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate forward chaining. Describe what specific phrases or sentences show initial state utilization, progressive inference, forward direction, or incremental advancement, and explain why they demonstrate forward chaining. This guides you to identify the character indices. Use an empty string "" if no forward chaining is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate forward chaining. Use an empty list [] if no spans demonstrate forward chaining.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve for x in the equation 2x + 3 = 11, I need to isolate x. I know that x should equal 4, because 2(4) + 3 = 8 + 3 = 11. To verify this, I could subtract 3 from both sides to get 2x = 8, and then divide both sides by 2 to get x = 4. Therefore, x = 4 is the solution."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant guesses the answer first and then works backward to verify it, rather than starting with the initial equation and working forward through a sequence of operations to derive the solution.",
+  "span_analysis": "This text shows no forward chaining - the participant jumps to the answer ('I know that x should equal 4') and then works backward to verify, rather than starting with the given equation and working forward through logical steps.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To determine whether the defendant is liable for negligence, I need to analyze the four elements: duty, breach, causation, and damages.
+
+First, did the defendant owe a duty of care? As a business owner opening premises to the public, the defendant had a duty to maintain safe conditions for customers.
+
+Second, was there a breach of that duty? The evidence shows that the defendant failed to fix a leaking refrigerator unit despite being notified about it twice in the week before the incident. This likely constitutes a breach of the duty of care.
+
+Third, was this breach the cause of the injury? The plaintiff slipped on water that had accumulated from the leaking unit, establishing both actual and proximate causation.
+
+Finally, were there damages? The plaintiff suffered a broken wrist requiring surgery and rehabilitation, constituting clear damages.
+
+Since all four elements are present, the defendant is likely liable for negligence."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some forward chaining by working sequentially through the elements of negligence from initial conditions (facts of the case) to a conclusion, but follows a relatively standard legal framework without requiring sophisticated forward inference beyond direct application of elements to facts.",
+  "span_analysis": "Looking for forward chaining in this text: The phrase 'First, did the defendant owe a duty of care?' shows initial state utilization by starting with given facts. The text 'Second, was there a breach of that duty?' demonstrates incremental advancement by building on the previous step. The phrase 'Third, was this breach the cause of the injury?' shows progressive inference by deriving new conclusions from established facts. The text 'Since all four elements are present, the defendant is likely liable for negligence' demonstrates forward direction by reaching a conclusion based on the accumulated evidence. These show basic forward chaining through systematic progression.",
+  "spans": [[130, 174], [297, 343], [553, 602], [771, 851]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To determine how the ecosystem will respond to the introduced species, I'll start with the initial conditions and work forward through a chain of ecological relationships.
+
+Beginning with what we know: the introduced species is a mid-sized herbivore with high reproductive capacity, no natural predators in the new environment, and a preference for eating native grasses. The current ecosystem has three native herbivores (small rodent, medium ungulate, large grazer), two predators (mid-sized canid, large feline), and four main plant communities (grassland, shrubland, riparian, forest edge).
+
+From these initial conditions, I can infer the first-order effects: The introduced herbivore will consume native grasses, reducing their biomass. Given the lack of predation and high reproductive capacity, the population will grow rapidly in the short term.
+
+This allows me to deduce second-order effects: Decreased grass biomass will reduce food availability for the native large grazer and medium ungulate, which depend heavily on these grasses. Competition will increase, likely leading to population declines in these native herbivores. The small rodent may be less affected as it primarily feeds on seeds and shrub vegetation.
+
+These changes enable prediction of third-order effects: Declining populations of the medium ungulate and large grazer will reduce prey availability for both predators. The mid-sized canid may partially adapt by increasing predation on small rodents, but the large feline, which specializes in the larger prey, will face significant food stress.
+
+Fourth-order effects become apparent: Reduced grazing pressure on shrubs (from declining native herbivores) combined with decreased grass coverage will accelerate conversion of grassland to shrubland. This habitat change will favor the small rodent, potentially leading to its population increase despite greater predation pressure from the canid.
+
+Fifth-order effects emerge: Expanding shrubland will reduce habitat quality for the large grazer, reinforcing its decline. Increasing small rodent populations may eventually provide enough alternative prey to partially sustain the mid-sized canid, but likely not the large feline, which may experience significant population reduction.
+
+By continuing this forward-chaining process through multiple levels of ecological interactions, I can project the long-term outcome: a transformed ecosystem with reduced biodiversity, dominated by shrubland rather than grassland, supporting primarily the introduced herbivore and small rodent, with reduced predator populations and potential local extinction of the large feline predator if it cannot adapt to alternative prey sources."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated forward chaining by explicitly starting with initial ecological conditions, systematically deriving new information through multiple orders of causal inference (first-order through fifth-order effects), consistently working in a forward causal direction, and incrementally building understanding of ecosystem changes through successive logical steps.",
+  "span_analysis": "Analyzing this text for forward chaining: The phrase 'I'll start with the initial conditions and work forward through a chain of ecological relationships' explicitly establishes forward chaining by starting with given information and working forward. The text 'Beginning with what we know: the introduced species is a mid-sized herbivore with high reproductive capacity' shows initial state utilization by identifying starting conditions. These demonstrate sophisticated forward chaining through explicit forward progression from initial conditions.",
+  "spans": [[71, 171], [173, 281]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of forward chaining is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

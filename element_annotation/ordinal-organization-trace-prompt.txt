@@ -1,0 +1,148 @@
+# Annotation Guidelines: Ordinal Organization in the Reasoning Process
+
+## Definition
+**Ordinal organization** is the ability to arrange elements according to relative rank or position. In reasoning traces, ordinal organization refers to when the participant demonstrates the ability to rank items along comparative dimensions, establish preference orders, reason about relative positions, or prioritize information based on importance or relevance.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates ordinal organization:
+
+1. **Comparative ranking**: Does the participant explicitly rank items along one or more dimensions?
+   - Look for comparisons using terms like "greater than," "more important than," or "higher priority"
+   - Check if the participant orders elements according to specific criteria
+
+2. **Preference ordering**: Does the participant establish clear preference orders?
+   - Look for evaluations of options in terms of desirability or optimality
+   - Check if the participant creates an ordered list of preferences
+
+3. **Gradation recognition**: Does the participant recognize degrees or gradations rather than binary distinctions?
+   - Look for acknowledgment of spectrum positions rather than all-or-nothing categories
+   - Check if the participant identifies where items fall along continua
+
+4. **Prioritization**: Does the participant prioritize information or actions based on importance?
+   - Look for explicit statements about what matters most or least
+   - Check if the participant orders its reasoning according to significance or relevance
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no ordinal organization. The participant treats items as unranked, fails to establish comparative relationships, and doesn't prioritize information based on importance.
+
+**1 - Partially Present**: The reasoning trace shows some ordinal organization, but with limited development or inconsistent application. The participant occasionally ranks items or establishes preference orders, but doesn't consistently apply ordinal principles throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear ordinal organization throughout. The participant consistently ranks items along comparative dimensions, establishes well-defined preference orders, recognizes gradations, and prioritizes information based on importance.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of ordinal organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate ordinal organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of ordinal organization (ranking along dimensions, preference ordering, gradation recognition, or importance prioritization)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to ordinal organization
+- **Multiple spans**: Identify all significant instances of ordinal organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of ordinal organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates ordinal organization
+
+### How to Identify Valid Spans
+1. **Look for ordinal organization language**: Words like "first," "second," "most important," "less critical," "higher priority," "ranked," "ordered," "better than," "worse than," "more/less"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant organizing information in ranked or ordered relationships?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether ordinal organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate ordinal organization. Describe what specific phrases or sentences show ranking along dimensions, preference ordering, gradation recognition, or importance prioritization, and explain why they demonstrate ordinal organization. This guides you to identify the character indices. Use an empty string "" if no ordinal organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate ordinal organization. Use an empty list [] if no spans demonstrate ordinal organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "Photosynthesis is the process by which plants convert light energy into chemical energy. Plants use carbon dioxide, water, and sunlight to produce glucose and oxygen. The light reactions occur in the thylakoid membrane, while the Calvin cycle takes place in the stroma. Chlorophyll is the primary pigment involved in capturing light energy. Photosynthesis is essential for life on Earth because it produces oxygen and serves as the base of most food chains."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant provides a descriptive explanation of photosynthesis without establishing any ranking, preference ordering, gradation recognition, or prioritization among the elements discussed.",
+  "span_analysis": "This text shows no ordinal organization - it presents factual information about photosynthesis without any ranking, ordering, or prioritization of elements.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "When considering which laptop to purchase, you should look at several factors. Processing power is probably the most important feature for your needs as a graphic designer. Memory and storage are also key considerations, with memory being more crucial for your multitasking requirements. Screen quality matters too, especially color accuracy for your work. Battery life is less critical since you mentioned you'll mostly use it plugged in. As for brands, Dell and Apple tend to have better options for creative professionals than Lenovo or HP in this specific use case."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some ordinal organization by ranking certain features as more important than others and establishing a basic preference order among brands, but doesn't develop a comprehensive or systematic ranking system across all dimensions.",
+  "span_analysis": "Looking for ordinal organization in this text: The phrase 'Processing power is probably the most important feature' shows importance prioritization. The text 'with memory being more crucial for your multitasking requirements' demonstrates comparative ranking. The phrase 'Battery life is less critical' shows gradation recognition by establishing relative importance. The text 'Dell and Apple tend to have better options for creative professionals than Lenovo or HP' shows preference ordering among brands. These demonstrate basic ordinal organization but without systematic ranking.",
+  "spans": [[107, 168], [218, 279], [360, 389], [440, 538]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To evaluate these five treatment options for chronic lower back pain, I'll rank them across multiple dimensions and then establish an overall preference ordering.
+
+First, let's rank them by efficacy based on clinical trial evidence:
+1. Physical therapy (highest success rate at 68%)
+2. Prescription anti-inflammatories (59% effective)
+3. Surgical intervention (52% effective, but with higher variability)
+4. Over-the-counter pain relievers (45% effective)
+5. Acupuncture (41% effective, but studies show mixed results)
+
+For safety and risk profile, the ranking differs:
+1. Over-the-counter pain relievers (lowest serious risk profile)
+2. Physical therapy (minimal risks, mainly temporary discomfort)
+3. Acupuncture (slightly higher risks of infection or nerve damage)
+4. Prescription anti-inflammatories (moderate risks of GI issues and cardiovascular events)
+5. Surgical intervention (highest risk of complications)
+
+Considering cost-effectiveness:
+1. Over-the-counter pain relievers (lowest cost per QALY gained)
+2. Physical therapy (moderate initial cost, high long-term value)
+3. Acupuncture (moderate cost, variable effectiveness)
+4. Prescription anti-inflammatories (higher cost, especially long-term)
+5. Surgical intervention (highest cost, not always proportionate to outcomes)
+
+For long-term sustainability of results:
+1. Physical therapy (addresses underlying causes, teaches self-management)
+2. Surgical intervention (can provide permanent correction in ideal cases)
+3. Acupuncture (benefits often diminish without ongoing treatment)
+4. Prescription anti-inflammatories (efficacy often decreases over time)
+5. Over-the-counter pain relievers (primarily symptomatic relief)
+
+Weighing these dimensions by relative importance (efficacy: 40%, safety: 30%, cost-effectiveness: 20%, sustainability: 10%), I can establish an overall preference ordering:
+1. Physical therapy (scores highest overall due to strong ranking across all dimensions)
+2. Over-the-counter pain relievers (strong safety and cost profile compensate for lower efficacy)
+3. Prescription anti-inflammatories (balanced profile but with notable safety concerns)
+4. Acupuncture (lower risks but also lower proven efficacy)
+5. Surgical intervention (despite moderate efficacy, the risk profile and cost make it less preferable as a first-line treatment)
+
+This ordinal analysis suggests a stepped approach, starting with physical therapy, then progressing through the options in order if needed."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated ordinal organization by explicitly ranking treatment options along multiple dimensions with numerical specificity, recognizing gradations within each dimension, weighting the dimensions themselves by relative importance, and synthesizing these rankings into a comprehensive preference ordering with clear reasoning.",
+  "span_analysis": "Analyzing this text for ordinal organization: The phrase 'I'll rank them across multiple dimensions and then establish an overall preference ordering' explicitly establishes the ordinal approach. The text 'First, let's rank them by efficacy based on clinical trial evidence:' shows systematic ranking along dimensions. The numbered lists '1. Physical therapy (highest success rate at 68%)' and '2. Prescription anti-inflammatories (59% effective)' demonstrate clear ranking with numerical ordering and gradation recognition. The phrase 'Weighing these dimensions by relative importance (efficacy: 40%, safety: 30%, cost-effectiveness: 20%, sustainability: 10%), I can establish an overall preference ordering:' shows sophisticated importance prioritization and multi-dimensional ranking synthesis. These demonstrate advanced ordinal organization across multiple dimensions with systematic weighting.",
+  "spans": [[70, 162], [164, 232], [233, 282], [283, 334], [1123, 1275]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of ordinal organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

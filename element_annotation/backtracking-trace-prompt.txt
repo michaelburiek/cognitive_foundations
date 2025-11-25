@@ -1,0 +1,140 @@
+# Annotation Guidelines: Backtracking in the Reasoning Process
+
+## Definition
+**Backtracking** is the ability to identify unproductive paths and return to earlier decision points. In reasoning traces, backtracking refers to when the participant demonstrates the ability to recognize when a line of reasoning is not yielding progress, abandon that path, return to a previous state, and explore alternative directions.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates backtracking:
+
+1. **Dead-end recognition**: Does the participant identify when a reasoning path is unproductive?
+   - Look for acknowledgment that a current approach isn't working
+   - Check if the participant recognizes when it has reached an impasse
+
+2. **Path abandonment**: Does the participant explicitly abandon unfruitful approaches?
+   - Look for decisions to stop pursuing unproductive lines of reasoning
+   - Check if the participant willingly gives up on approaches that aren't yielding results
+
+3. **Return to decision points**: Does the participant go back to earlier points in the reasoning?
+   - Look for returns to previous states or junctures
+   - Check if the participant identifies where to backtrack to
+
+4. **Alternative exploration**: Does the participant try different approaches after backtracking?
+   - Look for exploration of multiple solution paths
+   - Check if the participant attempts new strategies after abandoning unsuccessful ones
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no backtracking. The participant persists with initial approaches without recognizing dead ends, abandoning unproductive paths, or exploring alternatives.
+
+**1 - Partially Present**: The reasoning trace shows some backtracking, but with limited systematicity or incomplete application. The participant occasionally recognizes unproductive paths and tries alternatives, but may not consistently or effectively backtrack when appropriate.
+
+**2 - Present**: The reasoning trace shows clear backtracking throughout. The participant consistently identifies unproductive paths, explicitly abandons them, returns to appropriate decision points, and explores alternative approaches.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of backtracking, you must identify specific spans (text segments) in the reasoning trace that demonstrate backtracking. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of backtracking (dead-end recognition, path abandonment, return to decision points, or alternative exploration)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to backtracking
+- **Multiple spans**: Identify all significant instances of backtracking, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of backtracking are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates backtracking
+
+### How to Identify Valid Spans
+1. **Look for backtracking language**: Words like "this isn't working," "let me try a different approach," "backtrack," "abandon," "switch to," "reconsider," "try again"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant recognizing dead ends, abandoning paths, or exploring alternatives?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether backtracking is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate backtracking. Describe what specific phrases or sentences show dead-end recognition, path abandonment, return to decision points, or alternative exploration, and explain why they demonstrate backtracking. This guides you to identify the character indices. Use an empty string "" if no backtracking is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate backtracking. Use an empty list [] if no spans demonstrate backtracking.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the area of the triangle with vertices at (0,0), (3,0), and (0,4), I'll use the formula Area = (1/2) × base × height. The base of the triangle is along the x-axis from (0,0) to (3,0), so the base length is 3 units. The height is the perpendicular distance from the third vertex to the base, which is 4 units. Applying the formula: Area = (1/2) × 3 × 4 = 6 square units."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a straightforward calculation without encountering any obstacles or unproductive paths, so there is no opportunity or need for backtracking in this simple reasoning task.",
+  "span_analysis": "This text shows no backtracking - it follows a single, direct path to the solution without any dead-end recognition, path abandonment, or alternative exploration.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this quadratic equation, 2x² - 5x - 3 = 0, I'll try factoring first. I need to find two numbers that multiply to -6 and add to -5. Let me try some pairs: (-6,1), (-3,2), etc. Hmm, this isn't working out easily.
+
+Let me try a different approach. I'll use the quadratic formula: x = (-b ± √(b² - 4ac))/2a, where a = 2, b = -5, and c = -3. Substituting these values:
+x = (5 ± √(25 + 24))/4
+x = (5 ± √49)/4
+x = (5 ± 7)/4
+
+So x = (5 + 7)/4 = 3 or x = (5 - 7)/4 = -1/2. Therefore, the solutions are x = 3 and x = -1/2."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some backtracking by recognizing that the factoring approach isn't working easily, abandoning that path, and switching to the quadratic formula, but this represents a relatively simple case of backtracking without multiple attempts or complex exploration of alternatives.",
+  "span_analysis": "Looking for backtracking in this text: The phrase 'Hmm, this isn't working out easily' shows dead-end recognition by acknowledging the current approach is unproductive. The text 'Let me try a different approach' demonstrates path abandonment and alternative exploration by explicitly switching strategies. These show basic backtracking but without complex multiple attempts.",
+  "spans": [[184, 219], [221, 253]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To prove this theorem about the properties of this mathematical structure, I'll try using induction.
+
+First, I need to establish the base case for n=1. For n=1, the left side equals 2¹-1, while the right side equals 1, so the base case holds.
+
+Now for the inductive step, I'll assume the statement is true for n=k and try to prove it for n=k+1. Starting with the left side for n=k+1...
+
+Hmm, this approach is getting quite complicated. The algebraic manipulation is becoming unwieldy, and I'm not seeing a clear path to connect to the right side of the equation. Let me backtrack and try a different proof strategy.
+
+Instead of induction, let's try a direct algebraic approach. I'll manipulate the expression...
+
+Actually, this is also becoming overly complex. The algebraic transformations don't seem to be simplifying in a helpful way. Let me abandon this path as well and reconsider the problem from a different angle.
+
+Looking at the theorem statement again, I notice it has a structure reminiscent of a combinatorial identity. Let me try a combinatorial proof approach.
+
+The left side can be interpreted as counting the number of ways to select subsets of specific sizes from a set of n elements. The right side represents...
+
+Wait, I see that this interpretation doesn't quite fit either. Let me backtrack once more.
+
+Let's return to the original expression and try yet another approach: a generating function method. If I define the generating function G(x) = ...
+
+Now I'm making progress! By manipulating this generating function and examining the coefficient of x^n, I can show that...
+
+Perfect! This approach successfully proves the theorem. The generating function method allowed me to establish the identity by connecting it to well-known properties of power series expansions, avoiding the algebraic complexity I encountered in my earlier attempts."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated backtracking by repeatedly recognizing when approaches are unproductive, explicitly abandoning each unsuccessful path, returning to earlier decision points to reconsider the problem from scratch, and systematically exploring multiple alternative strategies until finding one that works.",
+  "span_analysis": "Analyzing this text for backtracking: The phrase 'Hmm, this approach is getting quite complicated' shows dead-end recognition. The text 'Let me backtrack and try a different proof strategy' explicitly demonstrates backtracking and alternative exploration. The phrase 'Actually, this is also becoming overly complex' shows another dead-end recognition. The text 'Let me abandon this path as well and reconsider the problem from a different angle' demonstrates path abandonment and return to decision points. The phrase 'Let me backtrack once more' shows repeated backtracking. These demonstrate sophisticated, systematic backtracking across multiple failed approaches.",
+  "spans": [[387, 435], [563, 615], [713, 760], [838, 921], [1232, 1322]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of backtracking is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

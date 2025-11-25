@@ -1,0 +1,122 @@
+# Annotation Guidelines: Abstraction in the Reasoning Process with Span Identification
+
+## Definition
+**Abstraction** is the ability to extract general principles from specific instances. In reasoning traces, abstraction refers to when the participant demonstrates the ability to identify underlying concepts, generalize from concrete examples, derive broader principles, and apply general concepts across different contexts.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates abstraction:
+
+1. **Generalization from examples**: Does the participant derive general principles from specific instances?
+   - Look for extraction of broader patterns or rules from concrete cases
+   - Check if the participant identifies commonalities that transcend specific examples
+
+2. **Concept formation**: Does the participant form abstract concepts beyond surface features?
+   - Look for formulation of higher-level constructs or categories
+   - Check if the participant develops conceptual frameworks that organize specific instances
+
+3. **Level shifting**: Does the participant move between concrete and abstract levels?
+   - Look for transitions between specific examples and general principles
+   - Check if the participant can apply abstract ideas to specific cases and extract abstractions from specifics
+
+4. **Cross-domain application**: Does the participant apply principles across different domains?
+   - Look for transfer of abstract concepts between distinct contexts
+   - Check if the participant recognizes when the same abstract principle applies in different situations
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no abstraction. The participant focuses on specific details or concrete examples without extracting general principles or forming abstract concepts.
+
+**1 - Partially Present**: The reasoning trace shows some abstraction, but with limited depth or inconsistent application. The participant occasionally generalizes from examples or forms basic abstractions, but doesn't consistently operate at an abstract level or effectively move between concrete and abstract.
+
+**2 - Present**: The reasoning trace shows clear abstraction throughout. The participant consistently generalizes from specific instances, forms sophisticated abstract concepts, effectively moves between concrete and abstract levels, and applies principles across different domains.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of abstraction, you must identify specific spans (text segments) in the reasoning trace that demonstrate abstraction. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of abstraction (generalization from examples, concept formation, level shifting, or cross-domain application)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to abstraction
+- **Multiple spans**: Identify all significant instances of abstraction, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of abstraction are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates abstraction
+
+### How to Identify Valid Spans
+1. **Look for abstraction language**: Words like "general," "common," "pattern," "principle," "abstract," "applies across," "transcends"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant moving from specific examples to general principles or concepts?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether abstraction is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate abstraction. Describe what specific phrases or sentences show generalization, concept formation, level shifting, or cross-domain application, and explain why they demonstrate abstraction. This guides you to identify the character indices. Use an empty string "" if no abstraction is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate abstraction. Use an empty list [] if no spans demonstrate abstraction.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To calculate the area of this rectangle, I'll multiply the length by the width. The rectangle has a length of 8 cm and a width of 5 cm. Therefore, Area = Length × Width = 8 cm × 5 cm = 40 cm². The area of the rectangle is 40 square centimeters."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant performs a straightforward calculation on a specific example without any generalization, concept formation, level shifting between concrete and abstract, or application of principles beyond this single case.",
+  "span_analysis": "no signs of abstraction at all.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Looking at these three historical revolutions—the American Revolution, the French Revolution, and the Russian Revolution—I can identify some common elements despite their different contexts. All three involved issues of economic inequality, though the specific grievances varied: taxation without representation in America, feudal privileges in France, and industrial working conditions in Russia. Each revolution also included a radicalizing period where initial moderate reforms gave way to more extreme measures. The outcomes differed significantly, with America establishing a stable democracy relatively quickly, France experiencing the Reign of Terror followed by Napoleon's rise, and Russia transitioning to a communist state under Lenin and later Stalin. These historical examples show how revolutions, while sharing some characteristics, can follow different trajectories depending on their specific circumstances."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some abstraction by identifying common elements across different historical revolutions, but the analysis remains largely descriptive and tied to specific historical details without developing sophisticated abstract frameworks or applying principles beyond the given examples.",
+  "span_analysis": "Looking for abstraction in this text: The opening sentence 'I can identify some common elements despite their different contexts' shows basic generalization from specific examples. The final sentence 'These historical examples show how revolutions...can follow different trajectories depending on their specific circumstances' makes a general observation about revolutions as a category. However, most of the text focuses on specific historical details rather than abstract principles.",
+  "spans": [[0, 190], [763, 923]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "Examining these diverse conflict resolution scenarios—from international treaties to corporate mergers to family therapy—I can identify foundational principles that transcend their surface differences. At the most abstract level, all successful conflict resolution processes share a transformation pattern: they convert zero-sum framing (where one party's gain is another's loss) into positive-sum framing (where mutual benefit becomes possible). This principle manifests differently across domains but represents the same fundamental shift in conceptualization. From these specific instances, I can extract a general principle I'll call 'interest-based reconciliation.' This abstract principle involves distinguishing between positions (what parties say they want) and interests (why they want it). In the corporate merger, Company A's position was demanding full brand retention, but their underlying interest was market recognition. In the family therapy case, the teenager's position was demanding complete autonomy, but the underlying interest was respect and acknowledgment of growing maturity. This principle operates at three levels of abstraction: concrete level (specific demands and concessions in each case), mid-level abstraction (domain-specific applications like negotiation tactics, therapy techniques), and high-level abstraction (universal principles of human motivation and conflict dynamics). Moving between these levels, we can see how the same abstract principle manifests in different contexts. For example, the concept of 'saving face' appears critically important across these diverse scenarios—from nations needing to maintain dignity during treaty negotiations to family members needing to preserve self-image during reconciliation. I can apply these abstracted principles predictively: in a novel scenario like an environmental dispute between developers and conservation groups, we would expect successful resolution to involve reframing from zero-sum to positive-sum, identifying interests behind positions, and creating face-saving mechanisms for all parties. At the highest level of abstraction, these cases reveal a meta-principle about conflict itself: sustainable resolution requires addressing both objective factors (resources, rights, power) and subjective factors (perception, identity, meaning). This principle transcends specific domains and provides a conceptual framework for understanding conflict resolution universally."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated abstraction by extracting general principles from diverse conflict resolution examples, forming explicit abstract concepts like 'interest-based reconciliation,' systematically moving between concrete examples and increasingly abstract levels, developing a conceptual framework that organizes the domain, and applying these abstract principles predictively to novel scenarios.",
+  "span_analysis": "Analyzing this text for abstraction: The opening 'I can identify foundational principles that transcend their surface differences' shows cross-domain application across international, corporate, and family contexts. The phrase 'At the most abstract level, all successful conflict resolution processes share a transformation pattern' demonstrates concept formation and level shifting. The text 'From these specific instances, I can extract a general principle I'll call interest-based reconciliation' explicitly shows concept formation by creating a named abstract principle. The section about 'three levels of abstraction: concrete level...mid-level...high-level' demonstrates sophisticated level shifting and meta-abstraction. The phrase 'I can apply these abstracted principles predictively' to environmental disputes shows cross-domain application to novel scenarios. Finally, 'At the highest level of abstraction, these cases reveal a meta-principle' demonstrates the most sophisticated concept formation. These sections show advanced abstraction through concept formation, level shifting, and cross-domain application.",
+  "spans": [[0, 201], [202, 446], [563, 670], [1101, 1412], [1760, 2090], [2091, 2335]],
+  "score": 2
+}}
+```
+
+## Important Notes for Annotators
+
+1. **Character Counting**: Carefully count character indices to ensure spans can be extracted correctly using reasoning_trace[start_index:end_index]
+2. **Span Boundaries**: Ensure spans capture complete thoughts or sentences for meaningful analysis
+3. **Span Overlap**: Spans may overlap if a text segment demonstrates multiple types of abstraction
+4. **Context Sensitivity**: Consider the full context when determining if a span truly demonstrates abstraction
+5. **Quality over Quantity**: Focus on identifying the most clear and significant instances of abstraction rather than marking every possible span
+6. **Consistency**: Use consistent criteria across all annotations for reliable span identification
+7. **Validation**: Always include the exact text of each span to allow for verification of character indices
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of abstraction is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

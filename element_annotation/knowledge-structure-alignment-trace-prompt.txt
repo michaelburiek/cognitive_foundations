@@ -1,0 +1,127 @@
+# Annotation Guidelines: Knowledge Structure Alignment in the Reasoning Process
+
+## Definition
+**Knowledge structure alignment** is the ability to match reasoning organization to domain knowledge structure. In reasoning traces, knowledge structure alignment refers to when the participant demonstrates the ability to organize its reasoning in ways that reflect how knowledge is structured in the relevant domain, leverage domain-specific organizational patterns, and adapt its reasoning approach to align with the natural organization of the relevant knowledge.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates knowledge structure alignment:
+
+1. **Domain-appropriate organization**: Does the participant organize reasoning in ways that match how knowledge is structured in the domain?
+   - Look for reasoning structures that reflect domain conventions
+   - Check if the participant uses organizational patterns typical of experts in the field
+
+2. **Terminology and conceptual frameworks**: Does the participant use domain-specific frameworks and terminology?
+   - Look for specialized vocabulary and concepts from the relevant field
+   - Check if the participant organizes ideas according to established conceptual structures in the domain
+
+3. **Field-specific reasoning patterns**: Does the participant employ reasoning approaches typical of the domain?
+   - Look for thought processes that reflect how experts in the field think
+   - Check if the participant uses inference patterns or heuristics appropriate to the domain
+
+4. **Alignment with knowledge organization**: Does the participant structure its approach to match how the relevant knowledge is organized?
+   - Look for reasoning that mirrors the inherent structure of the domain knowledge
+   - Check if the participant leverages natural divisions or relationships in the knowledge area
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no knowledge structure alignment. The participant applies generic reasoning patterns without adapting to domain-specific knowledge structures.
+
+**1 - Partially Present**: The reasoning trace shows some knowledge structure alignment, but with limited depth or inconsistent application. The participant occasionally organizes reasoning in domain-appropriate ways or uses some field-specific patterns, but doesn't fully align with the knowledge structure of the domain.
+
+**2 - Present**: The reasoning trace shows clear knowledge structure alignment throughout. The participant consistently organizes reasoning to match domain knowledge structures, uses appropriate terminology and conceptual frameworks, employs field-specific reasoning patterns, and aligns its approach with the natural organization of domain knowledge.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of knowledge structure alignment, you must identify specific spans (text segments) in the reasoning trace that demonstrate knowledge structure alignment. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of knowledge structure alignment (domain-specific organization, field-appropriate frameworks, expert reasoning patterns, or disciplinary terminology)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to knowledge structure alignment
+- **Multiple spans**: Identify all significant instances of knowledge structure alignment, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of knowledge structure alignment are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates knowledge structure alignment
+
+### How to Identify Valid Spans
+1. **Look for domain-specific language**: Technical terms, field-specific concepts, disciplinary frameworks, expert terminology
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant using domain-appropriate knowledge structures or expert reasoning patterns?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether knowledge structure alignment is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate knowledge structure alignment. Describe what specific phrases or sentences show domain-specific organization, field-appropriate frameworks, expert reasoning patterns, or disciplinary terminology, and explain why they demonstrate knowledge structure alignment. This guides you to identify the character indices. Use an empty string "" if no knowledge structure alignment is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate knowledge structure alignment. Use an empty list [] if no spans demonstrate knowledge structure alignment.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve for x in the equation 2x² + 3x - 5 = 0, I'll use the quadratic formula. The formula states that for an equation ax² + bx + c = 0, the solutions are x = (-b ± √(b² - 4ac))/2a. In this case, a = 2, b = 3, and c = -5. Substituting these values: x = (-3 ± √(9 - 4(2)(-5)))/2(2) = (-3 ± √(9 + 40))/4 = (-3 ± √49)/4 = (-3 ± 7)/4. So x = (-3 + 7)/4 = 4/4 = 1 or x = (-3 - 7)/4 = -10/4 = -2.5. Therefore, the solutions are x = 1 and x = -2.5."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a standard mathematical procedure without demonstrating any alignment with domain-specific knowledge structures, specialized conceptual frameworks, or reasoning patterns beyond the routine application of a formula.",
+  "span_analysis": "This text shows no knowledge structure alignment - it follows a routine formula application without demonstrating domain-specific organization, expert reasoning patterns, or specialized frameworks.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "In analyzing this poem, I'll examine its form and content to understand its meaning. The poem follows a sonnet structure with 14 lines in iambic pentameter, divided into an octave (first 8 lines) presenting a problem and a sestet (last 6 lines) offering a resolution. This form was popularized by Petrarch and later adapted by Shakespeare, though this example more closely follows the Petrarchan model with its clear volta (turn) at line 9.
+
+The rhyme scheme is ABBAABBA CDECDE, confirming it as a Petrarchan sonnet. Thematically, the poem deals with the transience of beauty and time's inevitable progress, common concerns in the sonnet tradition. The imagery shifts from natural elements in the octave to more abstract concepts in the sestet, creating the contrast typical of this form. The final couplet delivers the poem's resolution, suggesting that art preserves what time destroys."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some knowledge structure alignment by organizing its literary analysis according to standard poetic forms (sonnet structure, rhyme scheme), using domain-specific terminology (volta, octave, sestet), and recognizing thematic patterns typical of the sonnet tradition, but doesn't fully develop the interpretive frameworks that would show deeper alignment with literary analysis methods.",
+  "span_analysis": "Looking for knowledge structure alignment in this text: The phrase 'The poem follows a sonnet structure with 14 lines in iambic pentameter, divided into an octave (first 8 lines) presenting a problem and a sestet (last 6 lines) offering a resolution' shows domain-specific organization using literary analysis frameworks and expert terminology. The text 'The rhyme scheme is ABBAABBA CDECDE, confirming it as a Petrarchan sonnet' demonstrates field-appropriate frameworks by using technical literary analysis methods. The phrase 'common concerns in the sonnet tradition' shows expert reasoning patterns by recognizing domain-specific patterns. These demonstrate knowledge structure alignment through literary analysis expertise.",
+  "spans": [[85, 267], [442, 516], [608, 647]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To diagnose the patient's condition, I'll approach this using the standard differential diagnosis methodology employed in clinical medicine.
+
+First, I'll organize the information according to the classic medical history structure: presenting complaint, history of present illness, past medical history, family history, social history, and review of systems. The patient presents with acute right lower quadrant abdominal pain (presenting complaint) that began periumbilically 24 hours ago before migrating (history of present illness). The associated symptoms include nausea, vomiting, and fever. Past medical history is unremarkable, and family history is negative for inflammatory bowel disease or cancer.
+
+Following the standard clinical reasoning pattern, I'll develop a problem representation: "A 22-year-old previously healthy male with acute-onset periumbilical pain migrating to the right lower quadrant, accompanied by nausea, vomiting, anorexia, and low-grade fever."
+
+Next, I'll employ semantic qualifiers, as is typical in medical reasoning, to characterize the problem: acute (vs. chronic), severe (vs. mild), migratory (vs. fixed), and associated with systemic symptoms.
+
+For the differential diagnosis, I'll use the anatomic framework that organizes abdominal pathology by structures in the right lower quadrant: appendix, terminal ileum, cecum, right ovary/fallopian tube (not applicable in this male patient), ureter, and abdominal wall. This anatomic organization is fundamental to clinical reasoning about abdominal pain.
+
+Given the classic progression from periumbilical to right lower quadrant pain, I'll prioritize appendicitis at the top of my differential, following the "common conditions are common" heuristic used in clinical reasoning. Alternative diagnoses include mesenteric adenitis, Crohn's disease flare, cecal diverticulitis, and kidney stone, organized by probability based on the clinical presentation.
+
+For diagnostic evaluation, I'll follow the evidence-based sequence: laboratory studies first (CBC with differential, looking for leukocytosis with left shift typical of appendicitis), then imaging (ultrasound or CT scan), reflecting the standard clinical pathway for suspected appendicitis.
+
+The treatment recommendation will follow the surgical decision tree for appendicitis: NPO status, IV fluids, antibiotics, and appendectomy, either laparoscopic or open depending on surgical expertise and patient factors."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates exceptional knowledge structure alignment by organizing its reasoning according to the precise structures used in clinical medicine (medical history framework, problem representation, anatomic organization of differential diagnosis), employing domain-specific terminology and conceptual frameworks (semantic qualifiers, evidence-based diagnostic sequence), using clinical reasoning patterns (common conditions are common heuristic), and structuring the entire approach to mirror how medical knowledge is organized and applied in clinical practice.",
+  "span_analysis": "Analyzing this text for knowledge structure alignment: The phrase 'I'll approach this using the standard differential diagnosis methodology employed in clinical medicine' shows domain-specific organization by using the exact framework employed in medical practice. The text 'I'll organize the information according to the classic medical history structure:' demonstrates field-appropriate frameworks by following established medical knowledge structures. These demonstrate exceptional knowledge structure alignment through precise medical domain expertise and systematic clinical reasoning patterns.",
+  "spans": [[37, 140], [149, 230]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of knowledge structure alignment is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

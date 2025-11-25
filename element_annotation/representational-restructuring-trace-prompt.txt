@@ -1,0 +1,138 @@
+# Annotation Guidelines: Representational Restructuring in the Reasoning Process
+
+## Definition
+**Representational restructuring** is the ability to reformulate problems to reveal new insights. In reasoning traces, representational restructuring refers to when the participant demonstrates the ability to change how a problem is represented, view it from different perspectives, transform the problem structure to make it more tractable, or reframe issues to reveal hidden patterns or solutions.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates representational restructuring:
+
+1. **Problem reformulation**: Does the participant reframe or reformulate the problem?
+   - Look for alternative ways of describing or representing the same problem
+   - Check if the participant transforms the problem into a different but equivalent form
+
+2. **Perspective shifting**: Does the participant view the problem from different angles?
+   - Look for multiple perspectives or viewpoints applied to the same issue
+   - Check if the participant considers how different framings affect understanding
+
+3. **Representation transformation**: Does the participant convert between different representational formats?
+   - Look for shifts between verbal, visual, symbolic, or other representations
+   - Check if the participant translates the problem into a more useful form
+
+4. **Insight generation**: Does restructuring lead to new insights or solution paths?
+   - Look for "aha moments" that emerge from restructuring
+   - Check if reformulation reveals patterns or solutions not visible in the original framing
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no representational restructuring. The participant works with the problem as initially presented without exploring alternative representations or perspectives.
+
+**1 - Partially Present**: The reasoning trace shows some representational restructuring, but with limited depth or inconsistent application. The participant occasionally reformulates aspects of the problem or shifts perspective, but doesn't fully leverage restructuring to generate new insights.
+
+**2 - Present**: The reasoning trace shows clear representational restructuring throughout. The participant actively reformulates problems, shifts between multiple perspectives, transforms representations, and generates new insights through restructuring.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of representational restructuring, you must identify specific spans (text segments) in the reasoning trace that demonstrate representational restructuring. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of representational restructuring (problem reformulation, perspective shifting, representation transformation, or insight generation)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to representational restructuring
+- **Multiple spans**: Identify all significant instances of representational restructuring, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of representational restructuring are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates representational restructuring
+
+### How to Identify Valid Spans
+1. **Look for restructuring language**: Words like "reframe," "reformulate," "different perspective," "another way," "transform," "restructure," "view as," "think of it as," "alternatively"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant changing how the problem is represented or viewed?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether representational restructuring is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate representational restructuring. Describe what specific phrases or sentences show problem reformulation, perspective shifting, representation transformation, or insight generation, and explain why they demonstrate representational restructuring. This guides you to identify the character indices. Use an empty string "" if no representational restructuring is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate representational restructuring. Use an empty list [] if no spans demonstrate representational restructuring.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the area of the circle, I need to use the formula A = πr², where r is the radius. The problem states that the diameter is 10 cm, so the radius is half of that, which is 5 cm. Substituting this value into the formula: A = π(5 cm)² = π(25 cm²) = 25π cm². Using π ≈ 3.14159, I get A ≈ 78.54 cm². Therefore, the area of the circle is approximately 78.54 square centimeters."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a standard formula using the given information without reformulating the problem, shifting perspectives, transforming representations, or generating insights through restructuring.",
+  "span_analysis": "This text shows no representational restructuring - it follows a straightforward formula application without reformulating the problem, shifting perspectives, or transforming representations.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To determine if we should launch the marketing campaign now or wait until next quarter, I'll consider this from multiple angles. 
+
+From a financial perspective, launching now would cost $50,000 from this quarter's budget, which is already tight. Waiting would allow us to use next quarter's fresh budget.
+
+Looking at it from a competitive angle, our main rival is launching their campaign next month, so waiting might mean our message gets lost in their promotion.
+
+From a product readiness standpoint, some features won't be fully tested until next month, so immediate promotion might create expectations we can't meet.
+
+Considering these factors, I recommend waiting until early next quarter, which balances budget constraints with competitive timing while ensuring product readiness."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some representational restructuring by examining the marketing decision from multiple perspectives (financial, competitive, product readiness), but doesn't fundamentally reformulate the problem, transform between representational formats, or generate significant insights through restructuring.",
+  "span_analysis": "Looking for representational restructuring in this text: The phrase 'I'll consider this from multiple angles' shows perspective shifting by explicitly adopting different viewpoints. The text 'From a financial perspective' demonstrates perspective shifting by reframing the problem through a financial lens. The phrase 'Looking at it from a competitive angle' shows continued perspective shifting. The text 'From a product readiness standpoint' demonstrates another perspective shift. These show basic representational restructuring through multiple perspective adoption.",
+  "spans": [[92, 139], [141, 181], [309, 351], [471, 513]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "The problem asks us to determine the minimum number of weighings needed to identify a counterfeit coin that's lighter than the others from a set of 12 identical-looking coins. My initial approach would be sequential elimination, testing pairs of coins, but this could require up to 11 weighings in the worst case.
+
+Let me restructure this problem as a information theoretic challenge: each weighing provides a 3-way outcome (left heavier, right heavier, or balanced). With 3 possible outcomes per weighing, n weighings can distinguish between at most 3^n different cases. Since we need to identify 1 counterfeit from 12 coins, we need to distinguish between 12 possibilities. So we need the smallest n where 3^n ≥ 12. Since 3^2 = 9 (too small) and 3^3 = 27 (sufficient), we need at least 3 weighings.
+
+But wait—I can restructure this more efficiently. Instead of viewing it as identifying which coin is counterfeit, let me reframe it as a decision tree problem. If I use the balance scale optimally, each weighing should eliminate roughly 2/3 of the remaining possibilities.
+
+Let me transform this into a different representation: divide the 12 coins into three groups of 4 coins each, labeled A, B, and C. First weighing: compare A vs B. 
+- If A is lighter, the counterfeit is in group A
+- If B is lighter, the counterfeit is in group B
+- If balanced, the counterfeit is in group C
+
+Now I have 4 coins with one counterfeit. For the second weighing, I take 3 of these coins, call them 1, 2, and 3, and split them: compare 1 vs 2.
+- If 1 is lighter, coin 1 is counterfeit
+- If 2 is lighter, coin 2 is counterfeit
+- If balanced, either coin 3 or the unweighed coin 4 is counterfeit
+
+If it's down to coins 3 and 4, a third weighing determines which is counterfeit.
+
+This restructuring reveals that the problem can be solved in exactly 3 weighings in all cases, which is optimal according to our information theory analysis. The key insight from this representational transformation is that we should maximize information gain by creating equal-sized partitions and utilizing the three-way outcome of each weighing."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated representational restructuring by reformulating the counterfeit coin problem multiple ways (from sequential testing to information theory to decision trees), transforming the representation from individual coins to groups and branches, shifting perspective from coin identification to information partitioning, and generating key insights about optimal weighing strategies that were not visible in the original problem formulation.",
+  "span_analysis": "Analyzing this text for representational restructuring: The phrase 'Let me restructure this problem as a information theoretic challenge:' explicitly demonstrates problem reformulation by transforming the problem into a different domain. The text 'But wait—I can restructure this more efficiently' shows continued reformulation and insight generation. The phrase 'Instead of viewing it as identifying which coin is counterfeit, let me reframe it as a decision tree problem' demonstrates perspective shifting and representation transformation by changing the fundamental approach. These demonstrate sophisticated representational restructuring through multiple reformulations and perspective shifts that generate new insights.",
+  "spans": [[315, 384], [802, 851], [852, 961]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of representational restructuring is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

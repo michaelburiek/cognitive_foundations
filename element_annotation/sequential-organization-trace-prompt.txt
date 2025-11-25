@@ -1,0 +1,131 @@
+# Annotation Guidelines: Sequential Organization in the Reasoning Process
+
+## Definition
+**Sequential organization** is the ability to arrange steps in linear order where sequence matters. In reasoning traces, sequential organization refers to when the participant demonstrates the ability to order reasoning steps logically, establish clear dependencies between consecutive steps, and ensure proper progression from premises to conclusions.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates sequential organization:
+
+1. **Logical ordering**: Does the participant arrange reasoning steps in a coherent order?
+   - Look for a clear progression from earlier to later steps
+   - Check if the participant organizes steps in a logical sequence rather than haphazardly
+
+2. **Step dependencies**: Does the participant establish dependencies between consecutive steps?
+   - Look for later steps that build on earlier ones
+   - Check if the participant ensures prerequisites are established before using them
+
+3. **Progressive development**: Does the participant develop ideas incrementally through sequential steps?
+   - Look for gradual build-up of complexity or understanding
+   - Check if the participant shows how each step contributes to the overall progression
+
+4. **Temporal/procedural clarity**: Does the participant clearly indicate the order of operations or reasoning?
+   - Look for explicit sequencing indicators (first, next, then, finally)
+   - Check if the participant makes clear which steps must precede others
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no sequential organization. The participant presents ideas in a disorganized or arbitrary order without clear dependencies between steps.
+
+**1 - Partially Present**: The reasoning trace shows some sequential organization, but with gaps or inconsistent application. The participant generally arranges steps in logical order, but may have some disorganized elements or fail to establish clear dependencies in some cases.
+
+**2 - Present**: The reasoning trace shows clear sequential organization throughout. The participant consistently arranges steps in a logical sequence, establishes clear dependencies between consecutive steps, and develops ideas progressively from beginning to end.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of sequential organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate sequential organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of sequential organization (logical step ordering, dependency establishment, progressive development, or temporal sequencing)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to sequential organization
+- **Multiple spans**: Identify all significant instances of sequential organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of sequential organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates sequential organization
+
+### How to Identify Valid Spans
+1. **Look for sequential organization language**: Words like "first," "next," "then," "after," "before," "following," "subsequently," "finally," "step by step," "in order"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant organizing information or steps in a logical sequence?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether sequential organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate sequential organization. Describe what specific phrases or sentences show logical step ordering, dependency establishment, progressive development, or temporal sequencing, and explain why they demonstrate sequential organization. This guides you to identify the character indices. Use an empty string "" if no sequential organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate sequential organization. Use an empty list [] if no spans demonstrate sequential organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The Great Depression had several causes including the stock market crash. Many banks failed during this period. The New Deal was Roosevelt's response. Unemployment reached about 25%. The dust bowl made farming difficult. World War II eventually helped end the economic downturn. Herbert Hoover was president when it started. Many people lost their homes and lived in makeshift settlements called Hoovervilles."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant presents a collection of disconnected facts about the Great Depression without any logical ordering, sequential relationships, or progressive development from one idea to the next.",
+  "span_analysis": "This text shows no sequential organization - it presents various facts about the Great Depression in a random order without establishing logical sequences, dependencies, or progressive development.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this equation 2x + 3 = 9, I need to isolate x. I'll subtract 3 from both sides to get 2x = 6. Now I need the value of x, so I divide both sides by 2. This gives me x = 3. I should check this answer by substituting it back into the original equation. If x = 3, then 2(3) + 3 = 9, which is 6 + 3 = 9. This is true, so x = 3 is the solution."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates basic sequential organization by arranging algebraic steps in a logical order with clear dependencies between steps, but the sequence follows a standard procedural template without requiring sophisticated sequential planning or organization.",
+  "span_analysis": "Looking for sequential organization in this text: The phrase 'I'll subtract 3 from both sides to get 2x = 6' shows logical step ordering. The text 'Now I need the value of x, so I divide both sides by 2' demonstrates dependency establishment between consecutive steps. The phrase 'I should check this answer by substituting it back' shows progressive development. These demonstrate basic sequential organization following a standard algebraic procedure.",
+  "spans": [[61, 108], [109, 174], [192, 255]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "I'll investigate how the 2008 financial crisis unfolded by tracing the sequential chain of events and their causal relationships.
+
+First, I need to examine the foundational conditions that created vulnerability in the financial system. During the early 2000s, a combination of low interest rates, financial deregulation, and government policies encouraging homeownership created the preconditions for the crisis.
+
+Second, these conditions enabled the housing bubble to form. From approximately 2002-2006, housing prices rose dramatically, fueled by easy credit and the belief that real estate values would continue to increase indefinitely.
+
+Third, this environment fostered the proliferation of subprime mortgages. Lenders extended loans to borrowers with poor credit histories, often with adjustable rates that would increase significantly after an initial period. This step was crucial because it introduced substantial risk into the system that would later trigger wider problems.
+
+Fourth, these high-risk mortgages were transformed through financial engineering. Investment banks purchased these loans, bundled them into mortgage-backed securities (MBS), and sold them to investors worldwide. This securitization process was a necessary precursor to the global spread of the crisis.
+
+Fifth, and building directly on the previous step, these securities were further repackaged into increasingly complex instruments like collateralized debt obligations (CDOs). The complexity obscured the underlying risks, a critical sequential development that prevented proper risk assessment.
+
+Sixth, when interest rates began rising around 2006-2007, the sequential effects began to cascade: adjustable-rate mortgage payments increased, leading to a rising number of defaults, particularly among subprime borrowers who could no longer afford their payments.
+
+Seventh, these defaults triggered a chain reaction: as foreclosures increased, housing prices declined, which led to more homeowners owing more than their homes were worth, leading to more defaults in a self-reinforcing cycle.
+
+Eighth, the value of mortgage-backed securities collapsed, causing massive losses for financial institutions that had invested heavily in these products. This step could only occur after the previous developments had unfolded.
+
+Finally, the crisis spread throughout the global financial system as institutions faced liquidity problems, culminating in the collapse of major firms like Lehman Brothers in September 2008, which triggered a full-blown financial panic and credit freeze.
+
+This sequential analysis reveals how each development built upon previous ones, creating a chain of events where the specific ordering was crucial to understanding how the crisis unfolded."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated sequential organization by meticulously arranging events in chronological order, explicitly numbering steps to indicate their sequence, establishing clear causal dependencies between consecutive developments, and showing how each step necessarily built upon previous ones in a complex chain of financial events.",
+  "span_analysis": "Analyzing this text for sequential organization: The opening 'I'll investigate how the 2008 financial crisis unfolded by tracing the sequential chain of events' explicitly establishes sequential organization as the approach. The numbered sequence markers 'First, I need to examine the foundational conditions', 'Second, these conditions enabled the housing bubble to form', and 'Third, this environment fostered the proliferation of subprime mortgages' demonstrate systematic logical step ordering. The phrase 'Finally, the crisis spread throughout the global financial system' shows temporal sequencing and progressive development. These demonstrate sophisticated sequential organization with explicit numbering and causal dependencies.",
+  "spans": [[0, 97], [131, 183], [414, 474], [642, 715], [2107, 2165]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of sequential organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

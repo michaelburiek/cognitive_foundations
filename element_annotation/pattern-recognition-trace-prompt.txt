@@ -1,0 +1,123 @@
+# Annotation Guidelines: Pattern Recognition in the Reasoning Process
+
+## Definition
+**Pattern recognition** is the ability to recognize recurring structures across different contexts. In reasoning traces, pattern recognition refers to when the participant demonstrates the ability to identify similarities between problems or situations, recognize common patterns in different domains, detect regularities in information, and leverage knowledge of patterns to guide reasoning.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates pattern recognition:
+
+1. **Similarity detection**: Does the participant identify similarities across different cases or instances?
+   - Look for recognition of shared features between distinct examples
+   - Check if the participant notices commonalities even when surface details differ
+
+2. **Recurring structure identification**: Does the participant recognize repeated patterns or structures?
+   - Look for identification of recurring formats, sequences, or relationships
+   - Check if the participant notices when the same underlying pattern appears in different contexts
+
+3. **Pattern generalization**: Does the participant extract general patterns from specific instances?
+   - Look for abstractions that capture common elements across examples
+   - Check if the participant formulates generalizations based on observed regularities
+
+4. **Pattern-based inference**: Does the participant use recognized patterns to guide reasoning?
+   - Look for predictions or inferences based on identified patterns
+   - Check if the participant leverages pattern knowledge to address new situations
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no pattern recognition. The participant treats each case or example as isolated without identifying similarities, recognizing recurring structures, or leveraging patterns.
+
+**1 - Partially Present**: The reasoning trace shows some pattern recognition, but with limited depth or inconsistent application. The participant occasionally identifies similarities or recognizes some patterns, but doesn't consistently detect or leverage patterns throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear pattern recognition throughout. The participant consistently identifies similarities across different cases, recognizes recurring structures, extracts general patterns, and effectively uses pattern knowledge to guide reasoning.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of pattern recognition, you must identify specific spans (text segments) in the reasoning trace that demonstrate pattern recognition. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of pattern recognition (similarity detection, recurring structure identification, pattern generalization, or pattern-based inference)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to pattern recognition
+- **Multiple spans**: Identify all significant instances of pattern recognition, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of pattern recognition are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates pattern recognition
+
+### How to Identify Valid Spans
+1. **Look for pattern recognition language**: Words like "similar to," "pattern," "recurring," "like before," "same structure," "this reminds me of," "follows the pattern"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant recognizing patterns, similarities, or recurring structures?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether pattern recognition is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate pattern recognition. Describe what specific phrases or sentences show similarity detection, recurring structure identification, pattern generalization, or pattern-based inference, and explain why they demonstrate pattern recognition. This guides you to identify the character indices. Use an empty string "" if no pattern recognition is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate pattern recognition. Use an empty list [] if no spans demonstrate pattern recognition.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the derivative of f(x) = 3x² + 2x - 5, I'll use the power rule and the sum rule. For the term 3x², the derivative is 3 · 2x = 6x. For the term 2x, the derivative is 2. For the constant term -5, the derivative is 0. Adding these results: f'(x) = 6x + 2 + 0 = 6x + 2. Therefore, the derivative of the function f(x) = 3x² + 2x - 5 is f'(x) = 6x + 2."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies calculus rules to find a derivative without demonstrating any pattern recognition, comparison across different cases, or identification of recurring structures; it simply executes a standard procedure on a single example.",
+  "span_analysis": "This text shows no pattern recognition - it follows a straightforward calculus procedure without identifying similarities, recurring structures, or patterns across different contexts.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Looking at the sequence 3, 6, 11, 18, 27, ..., I need to find the next number. First, let me check if this is an arithmetic sequence by looking at the differences between consecutive terms: 6-3=3, 11-6=5, 18-11=7, 27-18=9. These differences are increasing by 2 each time (3, 5, 7, 9), so this isn't an arithmetic sequence.
+
+Let me try a different approach. I notice that the differences form a pattern: 3, 5, 7, 9. These are odd numbers starting from 3. So each term in the original sequence is calculated by adding the next odd number (starting from 3) to the previous term. To find the next number after 27, I need to add the next odd number after 9, which is 11. So 27+11=38. The next number in the sequence is 38."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some pattern recognition by identifying a regular structure in the differences between sequence terms, but this represents a relatively straightforward pattern analysis on a single sequence without comparing across contexts or leveraging patterns for deeper insights.",
+  "span_analysis": "Looking for pattern recognition in this text: The phrase 'These differences are increasing by 2 each time (3, 5, 7, 9)' shows recurring structure identification by recognizing a regular pattern in the differences. The text 'I notice that the differences form a pattern: 3, 5, 7, 9' explicitly demonstrates pattern recognition. The phrase 'These are odd numbers starting from 3' shows pattern generalization by identifying the underlying mathematical structure. These demonstrate basic pattern recognition within a single sequence context.",
+  "spans": [[223, 283], [357, 414], [415, 453]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "Analyzing these biological invasion case studies, I notice several recurring patterns despite the different species and ecosystems involved.
+
+First, there's a consistent introduction phase pattern across cases. In the zebra mussel, kudzu vine, and cane toad examples, all show an initial lag period where population growth appeared manageable, followed by exponential expansion. This matches the classic "invasion curve" seen in theoretical models. I also notice that each case features an anthropogenic introduction vector—shipping ballast water (zebra mussels), deliberate planting (kudzu), and biocontrol introduction (cane toads).
+
+A second pattern emerges in ecological impact mechanisms. Despite being completely different taxa (mollusk, plant, amphibian), each invader disrupts ecosystems through resource monopolization. The zebra mussels filter excessive water volumes, kudzu blocks light through physical coverage, and cane toads monopolize insect prey. This pattern suggests that successful invaders often share the ability to capture resources at unsustainable rates regardless of their taxonomic group.
+
+I also observe a recurring management failure pattern. In each case, early control efforts focused on adult organisms when populations were already established, rather than targeting introduction pathways or early detection. The initial resource allocations were consistently smaller than later emergency responses by 1-2 orders of magnitude. This pattern suggests a general principle: invasion management tends to be reactive rather than preventative across different government systems and geographies.
+
+The most interesting pattern emerges when examining invasion success factors. All three cases show species with: (1) high reproductive rates, (2) dietary or habitat flexibility, and (3) lack of specialized predators in the invaded range. This "invasion triad" appears consistently despite the cases spanning aquatic, terrestrial, and amphibious habitats across different continents.
+
+Based on these recognized patterns, I can make predictions about the current emerald ash borer outbreak. Despite being a different taxon (insect) in a different ecosystem, I would predict: a rapid acceleration after the current lag phase, resource monopolization through ash phloem consumption, inadequate early management followed by larger emergency funding, and success driven by the invasion triad factors—all of which would suggest similar management failures without intervention that breaks these patterns."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated pattern recognition by identifying multiple recurring structures across diverse biological invasion cases (different species, ecosystems, and locations), extracting generalizable patterns like the \"invasion curve\" and \"invasion triad,\" noting similarities beneath surface differences, and then applying these recognized patterns to make predictions about a new invasion case.",
+  "span_analysis": "Analyzing this text for pattern recognition: The phrase 'I notice several recurring patterns despite the different species and ecosystems involved' shows similarity detection across diverse contexts. The text 'there's a consistent introduction phase pattern across cases' demonstrates recurring structure identification. The phrase 'This matches the classic \"invasion curve\" seen in theoretical models' shows pattern generalization by connecting to established patterns. The text 'A second pattern emerges in ecological impact mechanisms' shows systematic pattern identification. The phrase 'The most interesting pattern emerges when examining invasion success factors' demonstrates advanced pattern recognition. The text 'Based on these recognized patterns, I can make predictions' shows pattern-based inference. These demonstrate sophisticated pattern recognition across multiple dimensions and contexts.",
+  "spans": [[50, 140], [149, 210], [379, 448], [636, 693], [1623, 1700], [2007, 2065]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of pattern recognition is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

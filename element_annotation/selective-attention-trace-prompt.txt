@@ -1,0 +1,126 @@
+# Annotation Guidelines: Selective Attention in the Reasoning Process
+
+## Definition
+**Selective attention** is the ability to focus on relevant information while filtering out distractions. In reasoning traces, selective attention refers to when the participant demonstrates the ability to identify which information is most important for solving a problem, focus on the relevant details, and ignore irrelevant or misleading information.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates selective attention:
+
+1. **Relevance filtering**: Does the participant distinguish between relevant and irrelevant information?
+   - Look for explicit identification of which details matter and which don't
+   - Check if the participant focuses on information pertinent to the problem
+
+2. **Information prioritization**: Does the participant prioritize more important information over less important details?
+   - Look for emphasis on key factors or critical variables
+   - Check if the participant allocates more reasoning effort to central issues
+
+3. **Distraction resistance**: Does the participant avoid being sidetracked by irrelevant information?
+   - Look for the participant staying focused despite potential distractions
+   - Check if the participant filters out misleading or tangential details
+
+4. **Efficient information use**: Does the participant make efficient use of the most important information?
+   - Look for reasoning that leverages key insights effectively
+   - Check if the participant builds its solution around the most relevant data
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no selective attention. The participant treats all information as equally important, fails to distinguish relevant from irrelevant details, or gets distracted by tangential information.
+
+**1 - Partially Present**: The reasoning trace shows some selective attention, but with limited discrimination or inconsistent application. The participant sometimes identifies relevant information or ignores distractions, but doesn't consistently focus on what's most important throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear selective attention throughout. The participant consistently identifies which information is most relevant, prioritizes important details, resists distractions, and efficiently uses key information to solve the problem.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of selective attention, you must identify specific spans (text segments) in the reasoning trace that demonstrate selective attention. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of selective attention (relevance filtering, information prioritization, distraction resistance, or efficient information use)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to selective attention
+- **Multiple spans**: Identify all significant instances of selective attention, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of selective attention are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates selective attention
+
+### How to Identify Valid Spans
+1. **Look for selective attention language**: Words like "focus on," "ignore," "irrelevant," "key," "important," "crucial," "dismiss," "filter out," "concentrate on," "prioritize"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant filtering information, prioritizing relevance, or resisting distractions?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether selective attention is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate selective attention. Describe what specific phrases or sentences show relevance filtering, information prioritization, distraction resistance, or efficient information use, and explain why they demonstrate selective attention. This guides you to identify the character indices. Use an empty string "" if no selective attention is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate selective attention. Use an empty list [] if no spans demonstrate selective attention.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To analyze this novel, I'll look at various aspects. The author was born in Dublin in 1882 and spent much of his early life there. He later moved to Paris where he wrote most of his famous works. The novel was published in 1922 and contains many references to Irish culture and history. The protagonist walks through the city over the course of a day. There are 18 episodes in the novel, each with a different style. The novel's structure is complex and experimental. Many literary critics consider it a masterpiece of modernist literature. The author also wrote short stories and a play. The novel contains many references to Homer's Odyssey. The language is complex and includes many puns and wordplay."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant includes a series of disconnected facts about the author and novel without distinguishing between relevant and irrelevant information, prioritizing important aspects, or directing attention to the most significant elements for literary analysis.",
+  "span_analysis": "This text shows no selective attention - it presents various facts about the author and novel without filtering for relevance, prioritizing important information, or focusing on key aspects for analysis.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this word problem about a mixture of acid solutions, I need to focus on the concentrations and volumes. The problem mentions that there are 10 liters of 20% acid solution and 5 liters of 50% acid solution that will be mixed together. It also mentions the brand names of the acids and their colors, but those details aren't relevant to calculating the final concentration.
+
+I'll calculate the amount of pure acid in each solution. For the first solution: 10 liters × 20% = 2 liters of pure acid. For the second solution: 5 liters × 50% = 2.5 liters of pure acid. The total amount of pure acid is 2 + 2.5 = 4.5 liters. The total volume is 10 + 5 = 15 liters. Therefore, the concentration of the final mixture is 4.5 ÷ 15 = 0.3 or 30%."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some selective attention by explicitly identifying irrelevant details (brand names, colors) and focusing on the relevant variables (concentrations and volumes), but shows a relatively straightforward filtering process without needing to manage complex distractions or prioritize among multiple relevant factors.",
+  "span_analysis": "Looking for selective attention in this text: The phrase 'I need to focus on the concentrations and volumes' shows information prioritization by identifying key variables. The text 'but those details aren't relevant to calculating the final concentration' demonstrates relevance filtering by explicitly dismissing irrelevant information. These show basic selective attention through simple relevance filtering and prioritization.",
+  "spans": [[82, 133], [267, 336]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To diagnose the root cause of the manufacturing quality issue, I need to analyze the data strategically, focusing on the most informative variables while filtering out noise.
+
+From the extensive data provided, I'll first identify which parameters are most likely to influence product quality based on domain knowledge. The key variables to focus on are temperature, pressure, and raw material composition, as these directly affect the chemical reaction. I'll set aside variables like ambient humidity, operator shift schedules, and storage duration, which are less likely to be causal given the nature of the defect.
+
+Within the temperature data, the critical factor is the peak temperature during the reaction phase, not the pre-heating or cooling phases. Looking specifically at this parameter, I observe a pattern: defective batches consistently had peak temperatures between 182-187°C, while successful batches maintained 175-180°C. This temperature range stands out as highly relevant.
+
+For pressure data, I need to distinguish between normal process variations and significant deviations. The pressure fluctuations between 2.1-2.3 bar appear within normal operating parameters and show no correlation with defects. I can deprioritize this variable to focus on more promising leads.
+
+Examining raw material composition, there's extensive data on 23 different properties. Rather than analyzing all equally, I'll focus on the variables that could chemically influence the identified temperature issue. The catalyst concentration and monomer purity show the strongest correlation with defective batches. Specifically, when catalyst concentration exceeds 0.15% AND monomer purity falls below 98.2%, temperature control issues emerge. This interaction appears critical.
+
+I'll ignore the data on packaging materials entirely, as the defect manifests before the packaging stage. Additionally, the extensive data on ambient factory conditions shows no meaningful pattern related to the defects.
+
+By selectively focusing on the most relevant variables and their interactions while filtering out the considerable noise in this dataset, the root cause becomes clear: a specific combination of high catalyst concentration and lower monomer purity is creating an exothermic reaction that pushes temperatures above the critical threshold, resulting in the observed defects."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated selective attention by explicitly identifying which variables are most relevant to the manufacturing problem, strategically prioritizing specific parameters within broader categories, systematically filtering out numerous irrelevant data points and noise, focusing on interactions between the most critical factors, and efficiently directing attention to the most informative patterns while ignoring tangential information.",
+  "span_analysis": "Analyzing this text for selective attention: The phrase 'I need to analyze the data strategically, focusing on the most informative variables while filtering out noise' explicitly establishes selective attention through information prioritization and distraction resistance. The text 'I'll first identify which parameters are most likely to influence product quality' shows relevance filtering by distinguishing important variables. The phrase 'The key variables to focus on are temperature, pressure, and raw material composition' demonstrates information prioritization by identifying crucial factors. The text 'I'll set aside variables like ambient humidity, operator shift schedules, and storage duration' shows distraction resistance by explicitly filtering out irrelevant information. These demonstrate sophisticated selective attention through systematic relevance filtering and strategic focus.",
+  "spans": [[63, 174], [210, 291], [319, 404], [454, 548]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of selective attention is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,21 @@
+You are an expert cognitive scientist conducting research on reasoning behaviors. Analyze reasoning traces to identify specific text spans that demonstrate cognitive capabilities.
+
+## Task
+Analyze the provided reasoning trace and output JSON with:
+1. **"explanation"**: One-sentence assessment of capability presence
+2. **"span_analysis"**: Your reasoning for identifying relevant text segments  
+3. **"spans"**: Character indices [[start, end], [start, end]] for spans that demonstrate the capability
+4. **"score"**: 0 (absent), 1 (partial), or 2 (present)
+
+## Span Guidelines
+- **Character indices**: 0-based counting, reasoning_trace[start:end] must extract complete, meaningful text
+- **Relevance**: Only include text that clearly demonstrates the target capability
+- **Completeness**: Use complete sentences or phrases that make sense alone
+- **Precision**: Prefer shorter, focused spans over longer, unfocused ones
+
+## Edge Cases
+- No clear capability → spans: []
+- Uncertain boundaries → use shorter, precise spans
+
+## Quality Check
+Verify: accurate indices, clear capability demonstration, logical span_analysis, aligned score.

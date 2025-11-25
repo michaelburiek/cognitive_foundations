@@ -1,0 +1,129 @@
+# Annotation Guidelines: Temporal Organization in the Reasoning Process
+
+## Definition
+**Temporal organization** is the ability to arrange elements along a timeline with before/after relationships. In reasoning traces, temporal organization refers to when the participant demonstrates the ability to reason about sequences of events, understand how states change over time, establish temporal relationships between occurrences, and consider how past, present, and future states relate to each other.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates temporal organization:
+
+1. **Temporal sequencing**: Does the participant arrange events in chronological order?
+   - Look for clear ordering of events along a timeline
+   - Check if the participant establishes what happened before or after what
+
+2. **Temporal relationships**: Does the participant reason about relationships in time?
+   - Look for reasoning about durations, intervals, or temporal distances
+   - Check if the participant uses temporal relationships to draw inferences
+
+3. **State changes over time**: Does the participant track how situations evolve over time?
+   - Look for representation of how states transition to other states
+   - Check if the participant reasons about processes of change
+
+4. **Temporal contexts**: Does the participant consider how time frames affect interpretation?
+   - Look for recognition of how past and future contexts matter
+   - Check if the participant adapts reasoning based on temporal perspective
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no temporal organization. The participant doesn't arrange events chronologically, reason about temporal relationships, track changes over time, or consider temporal contexts.
+
+**1 - Partially Present**: The reasoning trace shows some temporal organization, but with limited sophistication or inconsistent application. The participant sometimes arranges events chronologically or reasons about temporal relationships, but doesn't consistently employ temporal organization throughout its reasoning.
+
+**2 - Present**: The reasoning trace shows clear temporal organization throughout. The participant consistently arranges events chronologically, reasons effectively about temporal relationships, tracks changes over time, and considers how temporal contexts affect interpretation.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of temporal organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate temporal organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of temporal organization (temporal sequencing, temporal relationships, state changes over time, or temporal contexts)
+- **Completeness**: Include enough context to understand the temporal organization being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to temporal organization
+- **Multiple spans**: Identify all significant instances of temporal organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of temporal organization are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of temporal organization it demonstrates (temporal sequencing, temporal relationships, state changes over time, or temporal contexts)
+- How it contributes to the overall temporal organization score
+
+### How to Identify Valid Spans
+1. **Look for temporal language**: Words like "sequence," "timeline," "before/after," "temporal," "chronological," "over time," "then," "next," "simultaneously"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant organizing information by time or tracking temporal relationships?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether temporal organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate temporal organization. Describe what specific phrases or sentences show temporal sequencing, chronological tracking, temporal relationships, or time-based structuring, and explain why they demonstrate temporal organization. This guides you to identify the character indices. Use an empty string "" if no temporal organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate temporal organization. Use an empty list [] if no spans demonstrate temporal organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To calculate the compound interest, we use the formula A = P(1 + r)^t. In this problem, P is the principal amount of $1000, r is the annual interest rate of 5% or 0.05, and t is the time period of 3 years. Substituting these values: A = $1000(1 + 0.05)^3 = $1000(1.05)^3 = $1000 × 1.157625 = $1157.63. Therefore, the total amount after 3 years will be $1157.63, and the compound interest earned is $1157.63 - $1000 = $157.63."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant performs a mathematical calculation that involves time as a variable, but doesn't demonstrate any temporal organization in its reasoning process, as it doesn't arrange events chronologically, reason about temporal relationships, or track changes across time.",
+  "span_analysis": "This text shows no temporal organization - while time is mentioned as a variable (3 years), there is no temporal sequencing, chronological tracking, or organization of information by time relationships.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "The process of mitosis has several distinct phases. It begins with prophase, where the chromatin condenses into chromosomes and the nuclear envelope breaks down. Next comes metaphase, where chromosomes align at the cell's equator. This is followed by anaphase, when the sister chromatids separate and move toward opposite poles of the cell. Finally, in telophase, new nuclear membranes form around the two sets of chromosomes, and the cytoplasm divides in cytokinesis, resulting in two daughter cells. The entire process ensures that each daughter cell receives an identical set of chromosomes."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates basic temporal organization by sequencing the phases of mitosis in chronological order with clear before/after relationships, but provides a relatively straightforward description of a standard biological process without sophisticated temporal reasoning about intervals, changing states, or temporal contexts.",
+  "span_analysis": "Looking for temporal organization in this text: The phrase 'It begins with prophase' shows temporal sequencing by establishing the starting point. The words 'Next comes metaphase' demonstrate chronological tracking with explicit temporal transitions. The phrase 'This is followed by anaphase' continues the temporal sequence. Finally, 'Finally, in telophase' completes the temporal organization. These show basic temporal sequencing but without complex temporal relationships.",
+  "spans": [[55, 157], [158, 228], [229, 340], [341, 410]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To understand how the current Middle East conflict evolved, I need to analyze the temporal patterns and sequences of events that led to this point, while recognizing how different time scales interact.
+
+In the very long-term context (over centuries), the region experienced the decline of the Ottoman Empire, followed by the colonial period of British and French mandates, which established borders that often didn't align with ethnic or religious distributions. This created a foundational instability that continues to influence events today, showing how distant temporal states can have persistent effects.
+
+Moving to the mid-term timescale (decades), several key events occurred in sequence, each building on previous temporal states: the 1948 establishment of Israel, followed by the 1967 Six-Day War, which significantly altered territorial control. Then the 1973 Yom Kippur War changed regional dynamics again, followed by the 1979 Iranian Revolution, which transformed religious-political power structures. The temporal proximity of these events matters—had they occurred with greater time intervals between them, regional adaptations might have developed differently.
+
+In the short-term context (years), we must track how the Arab Spring of 2011 triggered a sequence of rapidly evolving state changes across the region. Initially promising democratic reforms, this process instead led to power vacuums in several countries. The temporal overlap of these simultaneous transitions created unique interaction effects that wouldn't have occurred if they had happened sequentially instead of concurrently.
+
+Most recently (months to weeks), we need to examine how specific triggering events created cascade effects with compressed temporal dynamics. Initial protests escalated to limited confrontations, then to open conflict within just 14 days—a temporal acceleration pattern typical of modern conflicts. This phase requires almost hourly tracking to understand how each action created reactions in increasingly shortened time intervals.
+
+What's particularly important is recognizing how these different temporal scales interact: long-term historical grievances were activated by medium-term political developments, which created conditions for short-term escalations, all of which operate simultaneously in the present moment. Understanding current dynamics requires shifting between these temporal frames.
+
+Looking forward temporally, I can project several potential future states based on historical patterns of how similar conflicts evolved over time. If we examine previous regional conflicts, we observe that those with international involvement typically lasted 3-7 years before reaching stable resolution, suggesting a likely timeline for the current situation.
+
+This temporal organization reveals that what might appear as disconnected events actually form coherent temporal patterns when properly sequenced and analyzed across different time scales."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated temporal organization by analyzing events across multiple time scales (centuries, decades, years, weeks), explicitly tracking how states change over time, establishing complex temporal relationships between events, considering how different temporal contexts affect interpretations, and even projecting future temporal patterns based on historical sequences.",
+  "span_analysis": "Analyzing this text for temporal organization: The phrase 'I need to analyze the temporal patterns and sequences of events' explicitly establishes temporal organization as the approach. The text 'In the very long-term context (over centuries)' demonstrates multi-scale temporal structuring. The phrase 'Moving to the mid-term timescale (decades)' shows explicit temporal sequencing across different time scales. The text 'In the short-term context (years)' continues the multi-temporal framework. The phrase 'Most recently (months to weeks)' demonstrates fine-grained temporal tracking. The text 'What's particularly important is recognizing how these different temporal scales interact' shows sophisticated temporal relationship analysis. Finally, 'Looking forward temporally, I can project several potential future states' demonstrates temporal projection. These show advanced temporal organization across multiple scales and relationships.",
+  "spans": [[60, 123], [203, 249], [611, 653], [1178, 1211], [1611, 1642], [2044, 2183], [2414, 2517]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of temporal organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

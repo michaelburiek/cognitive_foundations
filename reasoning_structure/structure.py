@@ -50,7 +50,6 @@ class Problem:
     problem_type: str = ""
     modality: str = "text"
     correctness: Dict[str, bool] = field(default_factory=dict)  # model_name -> is_correct
-    expected_elements: Dict[str, int] = field(default_factory=dict)
     
     def add_model_result(self, model_name: str, is_correct: bool):
         """Record a model's correctness on this problem."""
@@ -200,8 +199,7 @@ class SpanTree:
                                     problem_id=problem_id,
                                     task_category=problem_info['task_category'],
                                     problem_type=problem_info['problem_type'],
-                                    modality=problem_info['modality'],
-                                    expected_elements=problem_info['expected_elements']
+                                    modality=problem_info['modality']
                                 )
                             # Add model result to problem
                             for model, is_correct in problem_info['model_results'].items():
@@ -304,8 +302,7 @@ class SpanTree:
                     'task_category': task_category,
                     'problem_type': problem_type,
                     'modality': modality,
-                    'model_results': {},
-                    'expected_elements': {}
+                    'model_results': {}
                 }
             problems_data[problem_id]['model_results'][model_name] = correctness
             
@@ -313,16 +310,10 @@ class SpanTree:
             models_data[model_name]['problem_results'][problem_id] = correctness
 
             # Process element annotations
-            for element_name, element_info in question_data['capability_annotation'].items():
+            for element_name, element_info in question_data['element_annotation'].items():
                 # Only consider if score >= 2
                 if ('score' not in element_info) or (element_info['score'] < 2):
                     continue
-                
-                if ('element_expectation' not in element_info) or element_info['element_expectation'] is None:
-                    element_expectation = None
-                else:
-                    element_expectation = int(element_info['element_expectation']) if (type(element_info['element_expectation']) == int) or element_info['element_expectation'].isnumeric() else 0
-                    problems_data[problem_id]['expected_elements'][element_name] = element_expectation
 
                 for span_group in element_info['spans']:
                     if not isinstance(span_group, list) or len(span_group) != 2:

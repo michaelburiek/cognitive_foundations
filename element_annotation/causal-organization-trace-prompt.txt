@@ -1,0 +1,126 @@
+# Annotation Guidelines: Causal Organization in the Reasoning Process
+
+## Definition
+**Causal organization** is the ability to arrange elements through cause-effect relationships. In reasoning traces, causal organization refers to when the participant demonstrates the ability to identify causal connections between events or states, reason about chains of causation, understand causal mechanisms, and evaluate how interventions would propagate through causal systems.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates causal organization:
+
+1. **Causal identification**: Does the participant explicitly identify cause-effect relationships?
+   - Look for statements about what causes what, or why something happens
+   - Check if the participant distinguishes causes from correlations or coincidences
+
+2. **Causal chains**: Does the participant trace extended chains of causation?
+   - Look for multi-step causal reasoning (A causes B, which causes C...)
+   - Check if the participant connects distant events through causal intermediaries
+
+3. **Causal mechanisms**: Does the participant explain how causes produce their effects?
+   - Look for explanations of the processes linking causes to effects
+   - Check if the participant identifies the underlying mechanisms of causation
+
+4. **Counterfactual reasoning**: Does the participant reason about what would happen under different causal conditions?
+   - Look for consideration of hypothetical interventions
+   - Check if the participant evaluates how changes would propagate through causal systems
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no causal organization. The participant describes events or states without establishing cause-effect relationships or shows only superficial attention to causation.
+
+**1 - Partially Present**: The reasoning trace shows some causal organization, but with limited depth or inconsistent application. The participant identifies some cause-effect relationships but may not develop extended causal chains, explain mechanisms in detail, or engage in sophisticated counterfactual reasoning.
+
+**2 - Present**: The reasoning trace shows clear causal organization throughout. The participant consistently identifies cause-effect relationships, traces extended causal chains, explains causal mechanisms, and engages in counterfactual reasoning about interventions.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of causal organization, you must identify specific spans (text segments) in the reasoning trace that demonstrate causal organization. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of causal organization (causal identification, causal chains, causal mechanisms, or counterfactual reasoning)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to causal organization
+- **Multiple spans**: Identify all significant instances of causal organization, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of causal organization are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates causal organization
+
+### How to Identify Valid Spans
+1. **Look for causal language**: Words like "causes," "because," "leads to," "results in," "due to," "triggers," "produces," "brings about," "if...then," "would result in"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant identifying cause-effect relationships or reasoning about causal mechanisms?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether causal organization is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate causal organization. Describe what specific phrases or sentences show causal identification, causal chains, causal mechanisms, or counterfactual reasoning, and explain why they demonstrate causal organization. This guides you to identify the character indices. Use an empty string "" if no causal organization is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate causal organization. Use an empty list [] if no spans demonstrate causal organization.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The water cycle consists of several phases: evaporation, condensation, precipitation, and collection. During evaporation, the sun heats water on Earth's surface, turning it into water vapor. In condensation, water vapor cools and forms clouds. Precipitation occurs when water falls from clouds as rain, snow, sleet, or hail. Collection happens when water returns to bodies of water like oceans, lakes, and rivers, or soaks into the ground to become groundwater."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant describes the phases of the water cycle sequentially but doesn't establish clear causal relationships between phases, explain the mechanisms that drive the transitions, or engage in any causal analysis of the process.",
+  "span_analysis": "This text shows no causal organization - it describes sequential phases without establishing cause-effect relationships, explaining causal mechanisms, or reasoning about causal connections between the phases.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "The Great Depression was caused primarily by the stock market crash of 1929, which led to a banking crisis as many banks had invested heavily in stocks. When banks failed, the money supply contracted, causing deflation. This deflation made debts more expensive in real terms, leading businesses to cut costs by laying off workers. Rising unemployment then reduced consumer spending, which further hurt businesses and led to more layoffs in a vicious cycle. Government policies at the time, like raising interest rates and tariffs, made the situation worse instead of better."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant identifies several cause-effect relationships and traces a basic causal chain in the development of the Great Depression, but provides limited explanation of the underlying mechanisms and doesn't engage in counterfactual reasoning about potential interventions.",
+  "span_analysis": "Looking for causal organization in this text: The phrase 'The Great Depression was caused primarily by the stock market crash of 1929, which led to a banking crisis' shows causal identification and causal chains. The text 'When banks failed, the money supply contracted, causing deflation' demonstrates causal chains by connecting events. The phrase 'This deflation made debts more expensive in real terms, leading businesses to cut costs' shows continued causal reasoning. These demonstrate basic causal organization through cause-effect identification and simple causal chains.",
+  "spans": [[0, 137], [138, 209], [210, 310]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "Let's analyze the causal pathways that led to the Arab Spring uprisings, focusing particularly on Tunisia as the initial case.
+
+The primary causal chain began with long-term structural factors: authoritarian governance created systems with limited political freedoms, which caused public frustration to build over decades. This authoritarian system directly caused economic conditions characterized by corruption and inequality, as political elites captured economic resources without accountability mechanisms.
+
+These economic conditions produced widespread unemployment, particularly among educated youth, through several mechanisms: corruption reduced meritocracy in hiring, patronage networks controlled job access, and state-dominated economies failed to create sufficient private sector opportunities. High youth unemployment specifically caused heightened grievances because it violated the implicit social contract where educational achievement should lead to employment opportunities.
+
+When economic crisis hit globally in 2008, it triggered an intensification of these existing problems through multiple causal pathways: food prices rose, remittances from abroad fell, tourism decreased, and export industries suffered. These factors caused immediate material hardship for populations already under economic stress.
+
+The self-immolation of Mohamed Bouazizi served as the proximate trigger that transformed these conditions into mass mobilization through several causal mechanisms: it crystallized existing grievances into a symbolic act, generated emotional solidarity, and provided a focal point for coordination.
+
+Social media played a crucial causal role by altering the information environment in three ways: it reduced communication costs for organization, circumvented state media controls, and created visibility of protests that caused preference falsification to collapse (people who privately opposed the regime could now see others felt similarly, causing a cascade effect).
+
+The causal relationship between Tunisia's uprising and subsequent movements in other countries operated through demonstration effects - the success in Tunisia showed similar actions were possible elsewhere - and through transnational information flows that transferred protest tactics and frames.
+
+If we consider counterfactual scenarios, several interventions might have altered this causal chain: had governments implemented genuine economic reforms that addressed youth unemployment earlier, the material grievances would have been reduced. If social media had been more effectively controlled by states, the coordination mechanisms would have been weakened. Had early protests been met with concessions rather than repression, escalation might have been prevented through a causal path of grievance reduction."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated causal organization by methodically identifying multiple cause-effect relationships at different levels, tracing complex causal chains with interconnected factors, explicitly explaining the mechanisms linking causes to effects, and engaging in detailed counterfactual reasoning about how different interventions would have altered causal pathways.",
+  "span_analysis": "Analyzing this text for causal organization: The phrase 'Let's analyze the causal pathways that led to the Arab Spring uprisings' explicitly establishes causal analysis as the approach. The text 'The primary causal chain began with long-term structural factors:' demonstrates causal chains by identifying the starting point of causation. The phrase 'authoritarian governance created systems with limited political freedoms, which caused public frustration to build over decades' shows causal identification and causal mechanisms by explaining how causes produce effects. These demonstrate sophisticated causal organization through explicit causal analysis and mechanism explanation.",
+  "spans": [[0, 71], [128, 193], [194, 321]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of causal organization is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,111 @@
+# Annotation Guidelines: Strategy Selection in the Reasoning Process
+
+## Definition
+**Strategy selection** is the ability to choose the most appropriate reasoning approaches based on task requirements and domain. In reasoning traces, strategy selection refers to when the participant demonstrates deliberate choice between different reasoning methods and adapts their approach to the specific problem type.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates strategy selection:
+
+1. **Explicit strategy consideration**: Does the participant explicitly consider which approach to use?
+   - Look for statements like "For this type of problem, I'll use...", "I'll approach this by...", or "There are several ways to solve this..."
+   - Check if the participant weighs different possible approaches before proceeding
+
+2. **Task-appropriate strategies**: Does the participant select strategies that fit the specific task requirements?
+   - Look for reasoning approaches that are well-suited to the particular problem type
+   - Check if the strategy matches domain conventions (e.g., mathematical problems use relevant theorems, logical problems use formal logic)
+
+3. **Strategy adaptation**: Does the participant adapt their strategy based on problem features?
+   - Look for different approaches used for different aspects of the problem
+   - Check if the participant modifies their approach when faced with unique features of the problem
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows no evidence of strategy selection. the participant applies a generic or inappropriate approach without considering which strategy would be most effective for the specific task.
+
+**1 - Partially Present**: The reasoning trace shows some evidence of strategy selection, but it is limited or not fully deliberate. The participant may briefly consider which approach to take or use task-appropriate methods, but doesn't thoroughly evaluate strategic options or show strong awareness that they are responsible for choosing the optimal strategy.
+
+**2 - Present**: The reasoning trace shows clear evidence of strategy selection throughout. the participant deliberately selects appropriate strategies based on task characteristics, adapts their approach as needed, and may consider alternative strategies when appropriate.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of strategy selection, you must identify specific spans (text segments) in the reasoning trace that demonstrate strategy selection. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of strategy selection
+- **Completeness**: Include enough context to understand the strategy selection being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to strategy selection
+- **Multiple spans**: Identify all significant instances of strategy selection, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of strategy selection are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of strategy selection it demonstrates (explicit strategy consideration, task-appropriate strategies, or strategy adaptation)
+- How it contributes to the overall strategy selection score
+
+### How to Identify Valid Spans
+1. **Look for strategy language**: Words like "approach," "method," "strategy," "technique," "way," "instead," "alternatively," "I could," "better approach"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant choosing between different approaches or methods?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether strategy selection is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate strategy selection. Describe what specific phrases or sentences show strategy identification, strategy comparison, strategy evaluation, or strategy choice, and explain why they demonstrate strategy selection. This guides you to identify the character indices. Use an empty string "" if no strategy selection is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate strategy selection. Use an empty list [] if no spans demonstrate strategy selection.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To answer this question, I'll think step by step. First, I need to understand what the question is asking. The problem asks for the value of x in the equation 2x + 3 = 7. I'll subtract 3 from both sides to get 2x = 4. Then I'll divide both sides by 2 to get x = 2. Therefore, x = 2 is the answer."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a standard algebraic approach without showing any deliberate consideration of strategy selection or evaluation of alternative approaches for this problem.",
+  "span_analysis": "This text shows no strategy selection - it follows a single, straightforward algebraic approach without considering alternatives, comparing methods, or making strategic choices.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "This is a probability problem involving dependent events. I'll use Bayes' theorem since we're dealing with conditional probabilities. Let's apply Bayes' theorem: P(A|B) = P(B|A) × P(A) / P(B)..."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant selects the strategy of Bayes' theorem because they realize the problem domain is probability, but doesn't thoroughly explain the strategic choice or considering alternative approaches.",
+  "span_analysis": "Looking for strategy selection in this text: The phrase 'I'll use Bayes' theorem since we're dealing with conditional probabilities' shows strategy identification and selection based on problem characteristics. However, there's no consideration of alternative approaches or comparison of methods.",
+  "spans": [[0, 132]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "This optimization problem could be approached in several ways. I could use calculus to find critical points, employ a graphical method, or use linear programming techniques. Since we're dealing with a function with multiple variables and constraints, I'll use Lagrange multipliers as the most efficient approach. However, I should first check if the constraints create a convex region to ensure we can find a global optimum rather than just a local one. Looking at the constraints, I can confirm they form a convex set, so Lagrange multipliers will work well here. If we encounter difficulties with this approach, I can switch to examining boundary conditions separately... [later in the solution] Since the Lagrangian isn't yielding a straightforward solution due to the complexity of the resulting equations, I'll switch to a numerical approach by examining critical points at the boundaries of our feasible region..."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated strategy selection by explicitly considering multiple possible approaches, justifying their initial strategy choice based on problem characteristics, verifying preconditions for the selected method, and adaptively switching strategies when the initial approach proves challenging.",
+  "span_analysis": "Analyzing this text for strategy selection: The opening 'This optimization problem could be approached in several ways. I could use calculus to find critical points, employ a graphical method, or use linear programming techniques' shows explicit strategy identification and comparison of multiple approaches. The text 'Since the Lagrangian isn't yielding a straightforward solution due to the complexity of the resulting equations, I'll switch to a numerical approach' demonstrates actual strategy switching when the initial approach proves challenging. These show comprehensive strategy selection through both initial comparison and adaptive switching.",
+  "spans": [[0, 173], [698, 846]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of strategy selection is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

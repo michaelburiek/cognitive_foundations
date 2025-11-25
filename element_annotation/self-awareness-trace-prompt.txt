@@ -1,0 +1,115 @@
+# Annotation Guidelines: Self-awareness in the Reasoning Process
+
+## Definition
+**Self-awareness** is the ability to assess one's own knowledge state, capabilities, and task solvability. In the context of reasoning traces, self-awareness refers to when the participant demonstrates awareness of what they know and don't know, expresses appropriate uncertainty, and recognizes their limitations.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates self-awareness:
+
+1. **Knowledge state assessment**: Does the participant explicitly acknowledge what they know or don't know?
+   - Look for phrases like "I'm not certain about...", "I know that...", "I'm confident that..."
+   - Check if the participant identifies gaps in their knowledge or expresses uncertainty appropriately
+
+2. **Capability evaluation**: Does the participant assess whether they can solve the given problem?
+   - Look for statements evaluating task difficulty relative to capabilities
+   - Check if the participant recognizes when a task might be beyond their abilities or when they need to approach it carefully
+
+3. **Information sufficiency assessment**: Does the participant evaluate whether they have enough information?
+   - Look for requests for clarification or additional information when needed
+   - Check if the participant identifies when critical information is missing
+
+4. **Uncertainty expression**: Does the participant appropriately qualify their statements with uncertainty?
+   - Look for nuanced confidence expressions rather than uniform certainty
+   - Check if confidence levels match the complexity or ambiguity of the problem
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows no evidence of self-awareness. The participant proceeds with reasoning without acknowledging knowledge limitations, expressing appropriate uncertainty, or recognizing when they lack sufficient information.
+
+**1 - Partially Present**: The reasoning trace shows some evidence of self-awareness, but they are limited or inconsistent. The participant occasionally expresses uncertainty or acknowledges knowledge limitations, but may do so inappropriately or fail to do so when needed.
+
+**2 - Present**: The reasoning trace shows clear evidence of self-awareness throughout. The participant consistently demonstrates awareness of their knowledge state, expresses appropriate levels of uncertainty, recognizes their capabilities, and identifies when they need more information.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of self-awareness, you must identify specific spans (text segments) in the reasoning trace that demonstrate self-awareness. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of self-awareness (knowledge state assessment, capability evaluation, information sufficiency assessment, or uncertainty expression)
+- **Completeness**: Include enough context to understand the self-awareness being demonstrated
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to self-awareness
+- **Multiple spans**: Identify all significant instances of self-awareness, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of self-awareness are demonstrated
+
+### Span Justification
+For each identified span, provide a brief explanation of:
+- Which type of self-awareness it demonstrates (knowledge state assessment, capability evaluation, information sufficiency assessment, or uncertainty expression)
+- How it contributes to the overall self-awareness score
+
+### How to Identify Valid Spans
+1. **Look for self-awareness language**: Words like "I know," "I don't know," "I'm uncertain," "my approach," "I realize," "I should note," "I'm not sure"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant reflecting on their own knowledge, reasoning process, or limitations?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether self-awareness is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate self-awareness. Describe what specific phrases or sentences show metacognitive reflection, knowledge assessment, process monitoring, or limitation recognition, and explain why they demonstrate self-awareness. This guides you to identify the character indices. Use an empty string "" if no self-awareness is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate self-awareness. Use an empty list [] if no spans demonstrate self-awareness.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The answer is definitely $342.7$. By using the formula, we multiply the values and get this exact result. This is the correct approach for all problems of this type."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant exhibits no self-awareness, stating their answer with inappropriate certainty, failing to acknowledge any possible limitations in their knowledge or approach.",
+  "span_analysis": "This text shows no self-awareness - the participant expresses absolute certainty ('definitely', 'exact result', 'correct approach') without any metacognitive reflection, knowledge assessment, or recognition of limitations.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To solve this problem, I'll try using the quadratic formula. I'm not completely sure if this is the most efficient approach, but it should work for finding the roots. Let me apply the formula: $x = (-b \pm \sqrt{{(b^2 - 4ac)}})/2a$... The answer appears to be $x = 3$ or $x = -2$."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant shows some self-awareness by acknowledging uncertainty about their chosen approach, but doesn't evaluate whether they have sufficient information or assess their confidence in the final answer.",
+  "span_analysis": "Looking for self-awareness in this text: The phrase 'I'm not completely sure if this is the most efficient approach' shows process monitoring and uncertainty expression about their method choice. The word 'appears' in 'The answer appears to be' shows some uncertainty about the result. However, the self-awareness is limited and doesn't extend to broader knowledge assessment.",
+  "spans": [[60, 148], [230, 280]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "This question asks about the implications of the Jordan-Dickson theorem for quantum computing. I should note that I'm not familiar with a 'Jordan-Dickson theorem' in this context, and it's possible this is either a novel theorem I'm not familiar with or there might be a confusion in the naming. Based on my knowledge of quantum computing, the most relevant theorems are the No-Cloning theorem and the Holevo bound. Without more specific information about what the Jordan-Dickson theorem states, I can't provide a definitive answer about its implications. If you could clarify what this theorem refers to, I'd be better able to address the question."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates clear self-awareness by explicitly identifying a gap in their knowledge, explaining what related information they do know, and requesting clarification rather than proceeding with an uncertain answer.",
+  "span_analysis": "Analyzing this text for self-awareness: The phrase 'I should note that I'm not familiar with a Jordan-Dickson theorem in this context' shows explicit knowledge state assessment and limitation recognition. The text 'Based on my knowledge of quantum computing' demonstrates knowledge assessment of what they do know. The phrase 'I can't provide a definitive answer about its implications' shows information sufficiency assessment and appropriate uncertainty expression. Finally, 'If you could clarify what this theorem refers to, I'd be better able to address the question' demonstrates metacognitive awareness of what would improve their ability to respond. These show comprehensive self-awareness across multiple dimensions.",
+  "spans": [[95, 178], [296, 338], [496, 554], [556, 648]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of the presence of self-awareness in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

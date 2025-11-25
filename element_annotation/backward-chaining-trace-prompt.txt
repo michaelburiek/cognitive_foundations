@@ -1,0 +1,133 @@
+# Annotation Guidelines: Backward Chaining in the Reasoning Process
+
+## Definition
+**Backward chaining** is the ability to start with goals and work backward to identify prerequisites. In reasoning traces, backward chaining refers to when the participant demonstrates the ability to begin with a desired outcome, determine what would be needed to achieve it, and recursively identify the conditions that would satisfy those requirements.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates backward chaining:
+
+1. **Goal-directed reasoning**: Does the participant start with the goal or desired outcome?
+   - Look for beginning with what needs to be proved or achieved
+   - Check if the participant identifies the target state before determining how to get there
+
+2. **Prerequisite identification**: Does the participant determine what conditions are needed to achieve the goal?
+   - Look for identification of necessary preconditions
+   - Check if the participant works out what must be true for the goal to be achieved
+
+3. **Recursive backtracking**: Does the participant recursively identify prerequisites of prerequisites?
+   - Look for multiple levels of backward reasoning
+   - Check if the participant traces chains of requirements back to initial conditions
+
+4. **Backward direction**: Does the participant work from effects to causes or conclusions to premises?
+   - Look for reasoning that moves from consequences to antecedents
+   - Check if the participant works backward from goals to find starting points
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no backward chaining. The participant doesn't start with goals and work backward, instead using other approaches like forward reasoning from premises or lateral thinking.
+
+**1 - Partially Present**: The reasoning trace shows some backward chaining, but with limited systematicity or incomplete application. The participant sometimes works backward from goals, but may not consistently apply recursive backtracking or may mix backward chaining with other approaches.
+
+**2 - Present**: The reasoning trace shows clear backward chaining throughout. The participant consistently begins with goals, identifies necessary prerequisites, recursively traces prerequisites of prerequisites, and works in a backward direction from goals to initial conditions.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of backward chaining, you must identify specific spans (text segments) in the reasoning trace that demonstrate backward chaining. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of backward chaining (goal-directed reasoning, prerequisite identification, recursive backtracking, or backward direction)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to backward chaining
+- **Multiple spans**: Identify all significant instances of backward chaining, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of backward chaining are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates backward chaining
+
+### How to Identify Valid Spans
+1. **Look for backward chaining language**: Words like "to achieve this, I need," "working backward," "what would be required," "in order to," "this depends on," "prerequisite," "necessary condition"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant working backward from goals to identify prerequisites?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether backward chaining is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate backward chaining. Describe what specific phrases or sentences show goal-directed reasoning, prerequisite identification, recursive backtracking, or backward direction, and explain why they demonstrate backward chaining. This guides you to identify the character indices. Use an empty string "" if no backward chaining is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate backward chaining. Use an empty list [] if no spans demonstrate backward chaining.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To find the value of x in the equation 3x + 7 = 22, I'll solve step by step. First, I have 3x + 7 = 22. To isolate the variable, I'll subtract 7 from both sides: 3x + 7 - 7 = 22 - 7, which gives 3x = 15. Next, I'll divide both sides by 3: 3x ÷ 3 = 15 ÷ 3, resulting in x = 5. Therefore, the value of x is 5. I can verify this answer by substituting it back into the original equation: 3(5) + 7 = 15 + 7 = 22, which confirms that x = 5 is correct."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant uses a forward approach by starting with the given equation and applying algebraic operations sequentially until reaching the solution, showing no evidence of backward reasoning from the goal to prerequisites.",
+  "span_analysis": "This text shows no backward chaining - it follows a forward, sequential approach from the given equation to the solution without working backward from goals to identify prerequisites.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To determine how to increase user engagement on our app by 20% next quarter, I'll start by defining the goal. We need to reach a 20% increase in our key engagement metric, which is currently average session duration of 3.5 minutes per user.
+
+So the goal is to reach about 4.2 minutes average session duration. What would cause users to spend more time in the app? They would need to find more valuable content and have a smoother user experience. What creates those conditions? We would need some combination of improved content recommendation algorithms, new content features, and UI improvements.
+
+For better recommendations, we would need to improve our machine learning models, which requires better user data collection and analysis. For new content features, we would need to identify what users want most, which requires market research and competitor analysis. For UI improvements, we would need usability testing and design improvements.
+
+Given our current resources and timeline, I recommend focusing on improving the recommendation algorithm, which has shown the highest impact on session duration in past tests."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some backward chaining by starting with the engagement goal and working backward to identify prerequisites (better content, smoother UX) and then further prerequisites for those conditions (improved algorithms, market research, usability testing), but the recursion is limited to a few levels and the approach is blended with other reasoning methods.",
+  "span_analysis": "Looking for backward chaining in this text: The question 'What would cause users to spend more time in the app?' shows goal-directed reasoning by working backward from the desired outcome. The question 'What creates those conditions?' demonstrates prerequisite identification by recursively identifying what's needed. The text 'For better recommendations, we would need to improve our machine learning models, which requires better user data collection and analysis' shows recursive backtracking by identifying prerequisites of prerequisites. These demonstrate basic backward chaining but with limited depth.",
+  "spans": [[310, 363], [447, 477], [600, 738]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "To prove that the triangle ABC is congruent to triangle DEF, I'll work backward from this goal.
+
+For triangles to be congruent, I need to establish one of the congruence criteria: SSS, SAS, ASA, or AAS. The most direct approach would be to use the SSS (Side-Side-Side) criterion, which requires showing that all corresponding sides are equal.
+
+So to achieve the goal of proving congruence, I need to establish:
+1. AB = DE
+2. BC = EF
+3. AC = DF
+
+Starting with the first requirement (AB = DE), what would allow me to conclude this? According to the given information, AB and DE are radii of circles with equal radii, so AB = DE is established.
+
+Moving to the second requirement (BC = EF), what conditions would make this true? The problem states that BC and EF are both tangents to their respective circles from points B and E. For a tangent from an external point to a circle, its length depends on the distance from the point to the center and the circle's radius. Since we know that the distances from B and E to their respective circle centers are equal (given), and the circles have equal radii (given), then BC = EF by the tangent-secant theorem.
+
+For the third requirement (AC = DF), what must be true? A and D are the centers of their respective circles, while C and F are the points of tangency. Since the tangent to a circle is perpendicular to the radius at the point of tangency, AC and DF are both radii of their respective circles. Given that the circles have equal radii, AC = DF is established.
+
+Since all three requirements for SSS congruence have been established by working backward from needed conditions to given facts, triangles ABC and DEF are congruent."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated backward chaining by explicitly starting with the goal (proving triangle congruence), identifying the criteria needed to establish that goal (SSS), working backward to identify the specific requirements for each criterion, and then systematically establishing the prerequisites for each requirement until reaching the given facts.",
+  "span_analysis": "Analyzing this text for backward chaining: The phrase 'I'll work backward from this goal' explicitly establishes the backward chaining approach. The text 'So to achieve the goal of proving congruence, I need to establish:' shows goal-directed reasoning by identifying prerequisites. The questions 'what would allow me to conclude this?', 'what conditions would make this true?', and 'what must be true?' demonstrate systematic prerequisite identification by working backward from each requirement to its necessary conditions. These show sophisticated, systematic backward chaining from goal to given facts.",
+  "spans": [[61, 95], [344, 410], [492, 529], [687, 724], [1189, 1207]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of backward chaining is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

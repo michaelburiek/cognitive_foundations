@@ -1,0 +1,131 @@
+# Annotation Guidelines: Logical Coherence in the Reasoning Process
+
+## Definition
+**Logical coherence** is the ability to maintain consistency in reasoning across steps and contexts. In reasoning traces, logical coherence refers to when the participant ensures that conclusions follow validly from premises, maintains internal consistency throughout the reasoning process, and avoids contradictions or invalid inferences.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates logical coherence:
+
+1. **Valid inference chains**: Does the participant draw conclusions that logically follow from premises?
+   - Look for proper application of logical rules and inference patterns
+   - Check if the participant avoids logical fallacies or unjustified jumps in reasoning
+
+2. **Internal consistency**: Does the participant maintain consistency throughout its reasoning?
+   - Look for an absence of contradictory statements or positions
+   - Check if later reasoning steps are compatible with earlier statements
+
+3. **Premise tracking**: Does the participant keep track of what has been established and what hasn't?
+   - Look for clear connections between premises and conclusions
+   - Check if the participant bases its reasoning on properly established facts
+
+4. **Appropriate logical structure**: Does the participant use appropriate logical forms for the context?
+   - Look for proper application of deductive, inductive, or abductive reasoning where appropriate
+   - Check if the participant structures arguments in logically valid forms
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no logical coherence. The participant makes unjustified leaps in reasoning, contradicts itself, or draws conclusions that don't follow from premises.
+
+**1 - Partially Present**: The reasoning trace shows some logical coherence, but with notable gaps or inconsistencies. The participant generally attempts to maintain logical structure but may make occasional invalid inferences or fail to fully connect all reasoning steps.
+
+**2 - Present**: The reasoning trace shows clear logical coherence throughout. The participant draws valid conclusions from premises, maintains internal consistency, properly tracks what has been established, and structures reasoning in logically appropriate forms.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of logical coherence, you must identify specific spans (text segments) in the reasoning trace that demonstrate logical coherence. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of logical coherence (valid inference chains, internal consistency, premise tracking, or appropriate logical structure)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to logical coherence
+- **Multiple spans**: Identify all significant instances of logical coherence, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of logical coherence are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates logical coherence
+
+### How to Identify Valid Spans
+1. **Look for logical coherence language**: Words like "therefore," "thus," "because," "since," "it follows that," "given that," "consequently," "this implies"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant maintaining logical consistency or drawing valid conclusions?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether logical coherence is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate logical coherence. Describe what specific phrases or sentences show valid inference chains, internal consistency, premise tracking, or appropriate logical structure, and explain why they demonstrate logical coherence. This guides you to identify the character indices. Use an empty string "" if no logical coherence is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate logical coherence. Use an empty list [] if no spans demonstrate logical coherence.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "Let's determine if all mammals can fly. Bats are mammals that can fly. Therefore, all mammals can fly. But wait, dogs are mammals and they can't fly. So some mammals can fly and others can't. But birds can fly, and they're animals. So if you're an animal, you might be able to fly. Therefore, some mammals can fly because they're animals."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates poor logical coherence by making invalid generalizations, drawing contradictory conclusions, conflating different categories, and presenting a disjointed reasoning chain that doesn't follow valid inference patterns.",
+  "span_analysis": "This text shows no logical coherence - it contains invalid generalizations, contradictory statements, and faulty reasoning chains without proper logical structure or valid inference patterns.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To determine whether the triangle is isosceles, I need to check if at least two sides have equal length. The triangle has sides of lengths 5 cm, 5 cm, and 8 cm. Since two sides have equal length (5 cm), this is an isosceles triangle. Isosceles triangles have two equal angles opposite the equal sides. So this triangle has two equal angles. Since angles in a triangle sum to 180°, and two angles are equal, let's call each equal angle x. Then we have x + x + third angle = 180°, so 2x + third angle = 180°. Therefore, each of the equal angles measures (180° - third angle)/2."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant maintains basic logical coherence by correctly identifying the triangle as isosceles based on side lengths and making valid inferences about angle relationships, but doesn't fully establish all connections in its reasoning chain when calculating specific angle values.",
+  "span_analysis": "Looking for logical coherence in this text: The phrase 'Since two sides have equal length (5 cm), this is an isosceles triangle' shows valid inference from premise to conclusion. The text 'So this triangle has two equal angles' demonstrates logical deduction from the isosceles property. The phrase 'Since angles in a triangle sum to 180°, and two angles are equal' shows premise tracking and logical structure. The text 'Therefore, each of the equal angles measures (180° - third angle)/2' shows a logical conclusion, though the reasoning chain has some gaps in fully establishing the specific calculation.",
+  "spans": [[161, 233], [302, 340], [341, 405], [507, 575]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "Let's examine the validity of the following argument:
+Premise 1: All scientists are logical thinkers.
+Premise 2: Some artists are logical thinkers.
+Conclusion: Some artists are scientists.
+
+I'll analyze this using categorical logic. Let's define our sets:
+S = scientists
+L = logical thinkers
+A = artists
+
+The premises can be symbolized as:
+Premise 1: All S are L. (Universal affirmative)
+Premise 2: Some A are L. (Particular affirmative)
+Conclusion: Some A are S. (Particular affirmative)
+
+The structure of this argument doesn't follow any valid syllogistic form. The middle term (L) is not distributed in either premise, which violates the rules for valid categorical syllogisms. Specifically, this is the fallacy of the undistributed middle.
+
+Let me verify this with a concrete example: Consider logical thinkers as a large set that fully contains scientists. Now imagine some artists fall within the logical thinkers set, but in a different region than the scientists. In this case, both premises would be true, but the conclusion would be false, which proves the argument form is invalid.
+
+Therefore, the given argument is invalid because the conclusion doesn't necessarily follow from the premises, even when the premises are true."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates excellent logical coherence by systematically analyzing the argument structure, correctly applying rules of categorical logic, identifying the specific logical fallacy, providing a counterexample that confirms the invalidity, and drawing a conclusion that follows necessarily from the analysis.",
+  "span_analysis": "Analyzing this text for logical coherence: The phrase 'I'll analyze this using categorical logic' shows appropriate logical structure by choosing a systematic approach. The text 'The premises can be symbolized as:' demonstrates premise tracking and formal logical structure. The phrase 'The structure of this argument doesn't follow any valid syllogistic form' shows valid inference about argument validity. The text 'which violates the rules for valid categorical syllogisms' demonstrates internal consistency and proper application of logical rules. The phrase 'Let me verify this with a concrete example:' shows systematic verification. The text 'Therefore, the given argument is invalid because the conclusion doesn't necessarily follow from the premises' demonstrates a valid final conclusion. These show excellent logical coherence throughout.",
+  "spans": [[190, 232], [305, 339], [490, 563], [622, 680], [745, 788], [1094, 1202]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of logical coherence is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,104 @@
+# Annotation Guidelines: Context Awareness in the Reasoning Process
+
+## Definition
+**Context awareness** is the meta-cognitive ability to recognize how the situational context shapes which reasoning strategies and goals are appropriate. This includes understanding what kind of task is being performed (e.g., answering a teacher vs. scientific inquiry), what constraints the context imposes (social, institutional, practical), and adapting one's reasoning approach accordingly.
+
+**Key distinction**: Context awareness is about recognizing "this type of situation calls for this type of reasoning"—not merely considering multiple factors. It's meta-cognitive: awareness of how context determines appropriate reasoning approaches.
+
+## What to Look For
+
+Look for evidence the participant recognizes how context shapes appropriate reasoning:
+
+1. **Task context recognition**: Does the participant identify what type of reasoning task this is and what that implies?
+   - Examples: "In an educational context...", "For a practical decision...", "If this is testing logic vs. real-world knowledge..."
+
+2. **Constraint identification**: Does the participant identify situational constraints that affect how to reason?
+   - Social constraints: audience, expectations, roles (teacher/student, expert/novice)
+   - Institutional constraints: procedures, standards, conventions
+   - Practical constraints: time, resources, available information
+
+3. **Strategic adaptation**: Does the participant adapt their reasoning strategy based on the context?
+   - Must show actual adaptation, not just listing considerations
+   - Examples: "In this context, I should prioritize X over Y", "Given this audience, I'll avoid technical terms"
+
+## Label Levels
+
+**0 - Absent**: No recognition of how context shapes appropriate reasoning. The participant treats the task acontextually.
+
+**1 - Partially Present**: Limited context awareness. The participant may acknowledge context but doesn't meaningfully adapt reasoning, or recognizes only superficial aspects.
+
+**2 - Present**: Clear context awareness. The participant recognizes the situational demands, identifies relevant constraints, and adapts their reasoning approach based on what the context requires.
+
+## Span Identification
+
+Identify text segments where the participant demonstrates context awareness.
+
+**Span format**: [start_index, end_index] using 0-based character indices.
+
+**Selection criteria**:
+- The span must show the participant recognizing how context shapes appropriate reasoning
+- Include complete sentences or meaningful phrases
+- Identify all significant instances
+- Prefer non-overlapping spans
+
+**How to identify valid spans**:
+- Look for language indicating contextual awareness: "in this context", "given the situation", "for this type of task", "depending on the audience", "this calls for"
+- Verify: Does this show the participant adjusting their reasoning approach based on situational demands?
+
+## Output Format
+
+Provide strict JSON with exactly four fields:
+
+1. **"explanation"**: One-sentence explanation of whether context awareness is present
+2. **"span_analysis"**: Your reasoning for identifying context-aware spans. Describe what phrases show recognition that context shapes appropriate strategies/goals. Use "" if absent.
+3. **"spans"**: List of [start_index, end_index] pairs demonstrating context awareness. Use [] if absent.
+4. **"score"**: Integer (0, 1, or 2)
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "The question asks whether we should recommend Policy A or Policy B. Policy A costs $10 million and affects 1 million people. Policy B costs $5 million and affects 500,000 people. The cost per person for Policy A is $10, while for Policy B it's also $10. Since both have the same cost per person, I'll recommend Policy A because it helps more people. Therefore, Policy A is the better choice."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies mechanical cost-benefit calculation without recognizing how the policy recommendation context should shape the reasoning approach (e.g., considering stakeholders, feasibility, political constraints).",
+  "span_analysis": "No context awareness is demonstrated. The participant treats this as acontextual arithmetic without acknowledging this is a policy recommendation requiring consideration of implementation constraints, stakeholder needs, or institutional factors.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "To determine if this argument is valid, I need to check the logical structure. This seems like a classroom exercise, so I should show my work step by step. The argument has the form: If P then Q, P, therefore Q. This is modus ponens. Let me verify: Premise 1 states the conditional relationship, Premise 2 affirms the antecedent, and the conclusion follows necessarily. The inference rule of modus ponens is: ((P → Q) ∧ P) → Q. Given the truth table for material implication, when both premises are true, the conclusion must be true. Therefore, this argument is deductively valid by modus ponens."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant shows limited context awareness by recognizing this is a classroom exercise requiring step-by-step work, but treats it as purely formal logic without considering whether a classroom context might value pedagogical explanation over technical formalism.",
+  "span_analysis": "The phrase 'This seems like a classroom exercise, so I should show my work step by step' demonstrates minimal context awareness—identifying the task type (classroom) and one constraint (show work). However, the response immediately shifts to formal logical notation and truth tables without considering whether a classroom context requires more accessible explanation. The participant recognizes context superficially but doesn't meaningfully adapt the reasoning approach to be pedagogical rather than technical.",
+  "spans": [[79, 155]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "This problem asks whether penguins fly, given 'all birds fly' and 'penguins are birds'. In a formal logic exam context, I would apply the syllogism mechanically: the conclusion 'penguins fly' follows from the premises. However, this appears to be testing critical thinking about when to apply formal rules versus real-world knowledge. The appropriate strategy depends on context. For a logic exam: accept the conclusion follows deductively while noting the premise is empirically false. For assessing real-world reasoning: reject the faulty premise. Since this seems designed to test critical thinking rather than mechanical deduction, I'll prioritize real-world knowledge: the premise 'all birds fly' is false because penguins, ostriches, and emus are flightless."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates strong context awareness by explicitly recognizing how different contexts (logic exam vs. critical thinking) demand different reasoning strategies, and adapting accordingly.",
+  "span_analysis": "Multiple spans show context awareness. 'In a formal logic exam context, I would apply the syllogism mechanically: the conclusion 'penguins fly' follows from the premises' recognizes task type shapes strategy. 'However, this appears to be testing critical thinking about when to apply formal rules versus real-world knowledge' identifies the actual contextual demand. 'The appropriate strategy depends on context. For a logic exam: accept the conclusion follows deductively while noting the premise is empirically false' explicitly shows how different contexts require different approaches. 'For assessing real-world reasoning: reject the faulty premise. Since this seems designed to test critical thinking rather than mechanical deduction, I'll prioritize real-world knowledge' demonstrates strategic adaptation based on contextual assessment.",
+  "spans": [[88, 218], [219, 334], [335, 486], [487, 672]],
+  "score": 2
+}}
+```
+
+Now analyze the reasoning trace below. Provide your professional judgment of whether context awareness is present, regardless of correctness.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

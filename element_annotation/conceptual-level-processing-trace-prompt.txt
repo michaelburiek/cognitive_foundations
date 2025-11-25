@@ -1,0 +1,124 @@
+# Annotation Guidelines: Conceptual-level Processing in the Reasoning Process
+
+## Definition
+**Conceptual-level processing** is the ability to reason with abstract concepts before translating to linguistic forms. In reasoning traces, conceptual-level processing refers to when the participant demonstrates an understanding of the deep meaning or abstract structure of a problem beyond surface features, works with high-level concepts rather than just procedural steps, and shows evidence of thinking at a more abstract level than mere linguistic manipulation.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates conceptual-level processing:
+
+1. **Abstract representation**: Does the participant work with abstract concepts rather than just concrete details?
+   - Look for identification of underlying principles or patterns
+   - Check if the participant represents problems in terms of abstract structures
+
+2. **Meaning-focused reasoning**: Does the participant focus on meaning rather than just linguistic form?
+   - Look for reasoning that captures the essence of concepts beyond their verbal expression
+   - Check if the participant distinguishes between surface expressions and deeper meaning
+
+3. **Structural understanding**: Does the participant grasp the conceptual structure of the problem?
+   - Look for recognition of deep similarities between superficially different problems
+   - Check if the participant can identify abstract patterns or schemas
+
+4. **Conceptual transformation**: Does the participant transform problems at a conceptual level?
+   - Look for reformulation of problems in more useful conceptual terms
+   - Check if the participant can shift between different conceptual frameworks
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no conceptual-level processing. The participant works primarily with surface features, focuses on procedural steps without higher-level understanding, or manipulates language without apparent grasp of deeper meaning.
+
+**1 - Partially Present**: The reasoning trace shows some conceptual-level processing, but with limited depth or inconsistent application. The participant occasionally works with abstract concepts or demonstrates some understanding of deeper structures, but doesn't consistently reason at a conceptual level.
+
+**2 - Present**: The reasoning trace shows clear conceptual-level processing throughout. The participant consistently works with abstract concepts, focuses on meaning rather than just form, demonstrates understanding of deep structure, and transforms problems at a conceptual level.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of conceptual-level processing, you must identify specific spans (text segments) in the reasoning trace that demonstrate conceptual-level processing. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of conceptual-level processing (abstract representation, meaning-focused reasoning, structural understanding, or conceptual transformation)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to conceptual-level processing
+- **Multiple spans**: Identify all significant instances of conceptual-level processing, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of conceptual-level processing are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates conceptual-level processing
+
+### How to Identify Valid Spans
+1. **Look for conceptual language**: Words like "abstract," "concept," "principle," "essence," "underlying," "fundamental," "structure," "pattern," "framework," "meaning," "represents"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant working with abstract concepts or deep meaning rather than just surface features?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether conceptual-level processing is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate conceptual-level processing. Describe what specific phrases or sentences show abstract representation, meaning-focused reasoning, structural understanding, or conceptual transformation, and explain why they demonstrate conceptual-level processing. This guides you to identify the character indices. Use an empty string "" if no conceptual-level processing is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate conceptual-level processing. Use an empty list [] if no spans demonstrate conceptual-level processing.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve 15 × 27, I'll use the standard multiplication algorithm. First, I multiply 7 × 5 = 35, so I write down 5 and carry the 3. Then I multiply 7 × 1 = 7, and add the carried 3 to get 10, so I write down 0 and carry the 1. Then I multiply 2 × 5 = 10, and write down 0 and carry the 1. Finally, I multiply 2 × 1 = 2, add the carried 1 to get 3, and write that down. So the answer is 405."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant follows a procedural algorithm without demonstrating any understanding of the conceptual meaning of multiplication, number properties, or alternative representations, focusing entirely on mechanical steps rather than abstract concepts.",
+  "span_analysis": "This text shows no conceptual-level processing - it follows mechanical procedural steps without working with abstract concepts, understanding deeper meaning, or demonstrating structural understanding beyond surface operations.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "The problem asks whether a monopolist would increase or decrease production if the marginal cost increases. I'll approach this using the concept of profit maximization, where a rational monopolist produces at the quantity where marginal revenue equals marginal cost. If marginal cost increases, the intersection point of marginal revenue and marginal cost will shift to the left, meaning a lower quantity. This makes intuitive sense because higher costs make producing additional units less profitable. Therefore, the monopolist would decrease production."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some conceptual-level processing by working with economic concepts like profit maximization and the relationship between marginal revenue and cost, but provides a relatively straightforward application without exploring deeper conceptual implications or alternative frameworks.",
+  "span_analysis": "Looking for conceptual-level processing in this text: The phrase 'I'll approach this using the concept of profit maximization' shows abstract representation by working with economic concepts. The text 'where a rational monopolist produces at the quantity where marginal revenue equals marginal cost' demonstrates structural understanding of economic principles. These show basic conceptual-level processing through abstract economic concepts.",
+  "spans": [[102, 158], [160, 259]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "Let's consider what freedom of speech truly means conceptually, beyond just its legal definition. At its core, this concept involves a tension between individual expression and collective harm. I need to think about this in terms of several abstract frameworks:
+
+First, a rights-based framework: Here, freedom of speech represents an inherent liberty of individuals to express their thoughts without prior restraint. This conceptualizes speech as an extension of autonomy and thought itself.
+
+Second, a consequentialist framework: Here, we might view speech in terms of its outcomes—what harms or benefits does it create? This transforms the concept from an absolute right to a social activity with measurable impacts.
+
+Third, a power dynamics framework: This reconceptualizes speech as a mechanism that can either reinforce or challenge existing power structures. The same formal right can have vastly different practical meanings depending on one's social position.
+
+These frameworks reveal that the superficial question of whether someone should be "allowed" to say something masks deeper conceptual questions about what we mean by freedom, harm, autonomy, and power. The legal doctrine of freedom of speech is merely one manifestation of these underlying conceptual tensions.
+
+From a structural perspective, we can see that freedom of speech shares conceptual features with other liberties that involve balancing individual rights against collective interests—similar to property rights or freedom of movement. This allows us to transfer insights from those domains.
+
+If we reconceptualize speech as a form of action rather than mere expression, the question transforms yet again. This suggests that the conceptual boundaries between speech and conduct are themselves social constructions rather than natural categories."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated conceptual-level processing by examining the abstract meaning of freedom of speech through multiple conceptual frameworks, identifying structural similarities with other concepts, transforming the concept in different ways, and revealing deeper patterns beneath surface manifestations.",
+  "span_analysis": "Analyzing this text for conceptual-level processing: The phrase 'Let's consider what freedom of speech truly means conceptually, beyond just its legal definition' shows meaning-focused reasoning by going beyond surface features to deeper meaning. The text 'At its core, this concept involves a tension between individual expression and collective harm' demonstrates abstract representation by identifying underlying conceptual structures. The phrase 'I need to think about this in terms of several abstract frameworks:' shows conceptual transformation by explicitly working with abstract frameworks. These demonstrate sophisticated conceptual-level processing through deep meaning analysis and abstract framework application.",
+  "spans": [[0, 97], [98, 193], [194, 261]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of conceptual-level processing is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:

@@ -1,0 +1,136 @@
+# Annotation Guidelines: Context Alignment in the Reasoning Process
+
+## Definition
+**Context alignment** is the ability to select appropriate organizational patterns based on context. In reasoning traces, context alignment refers to when the participant demonstrates the ability to adapt its reasoning approach based on the specific problem type, select different organizational structures for different contexts, and flexibly switch between structures as needed.
+
+## What to Look For
+When analyzing a reasoning trace, look for evidence that the participant demonstrates context alignment:
+
+1. **Contextual assessment**: Does the participant evaluate the context to determine appropriate structures?
+   - Look for explicit recognition of problem type or domain
+   - Check if the participant considers what approach would be most suitable for the specific context
+
+2. **Structural adaptation**: Does the participant adapt its organizational approach to fit the context?
+   - Look for different reasoning structures used for different problems
+   - Check if the participant organizes its thinking differently depending on the task
+
+3. **Multiple structure repertoire**: Does the participant show familiarity with various organizational patterns?
+   - Look for evidence that the participant can use different structures (hierarchical, sequential, etc.)
+   - Check if the participant selects from a repertoire of approaches rather than using one universal method
+
+4. **Flexible switching**: Does the participant change structures if the context shifts?
+   - Look for transitions between organizational patterns when appropriate
+   - Check if the participant can adapt its approach if initial structures prove ineffective
+
+## Label Levels
+
+**0 - Absent**: The reasoning trace shows little to no context alignment. The participant applies the same organizational pattern regardless of context, without adapting its approach to the specific problem type.
+
+**1 - Partially Present**: The reasoning trace shows some context alignment, but with limited flexibility or inconsistent application. The participant sometimes adapts its organizational approach based on context, but may not select the most appropriate structure or fully adjust to contextual requirements.
+
+**2 - Present**: The reasoning trace shows clear context alignment throughout. The participant consistently evaluates contexts, selects appropriate organizational patterns, draws from a diverse repertoire of structures, and flexibly adapts its approach as needed.
+
+## Span Identification Instructions
+
+In addition to scoring the overall presence of context alignment, you must identify specific spans (text segments) in the reasoning trace that demonstrate context alignment. Follow these guidelines:
+
+### Span Format
+- Use character indices (0-based) to identify exact text segments
+- Format: [start_index, end_index] where reasoning_trace[start_index:end_index] extracts the exact span
+- Ensure spans capture complete thoughts or sentences for meaningful analysis
+- Character indices should include any leading/trailing spaces that are part of the meaningful text
+
+### Span Selection Criteria
+- **Relevance**: The span must clearly demonstrate one or more aspects of context alignment (contextual assessment, structural adaptation, multiple structure repertoire, or flexible switching)
+- **Completeness**: Include complete sentences or meaningful phrases that can be understood in isolation
+- **Precision**: Don't include unnecessary surrounding text that doesn't contribute to context alignment
+- **Multiple spans**: Identify all significant instances of context alignment, even if they occur in different parts of the response
+- **Non-overlapping**: Prefer non-overlapping spans when possible, but overlaps are acceptable if different aspects of context alignment are demonstrated
+- **Verification**: After identifying spans, manually verify that the extracted text actually demonstrates context alignment
+
+### How to Identify Valid Spans
+1. **Look for context alignment language**: Words like "given the context," "for this type of problem," "appropriate approach," "different strategy," "adapt," "switch," "suitable for," "depending on"
+2. **Check completeness**: Make sure your span contains complete sentences that make sense alone
+3. **Verify the capability**: Ask "Does this text clearly show the participant adapting its approach based on context or selecting appropriate structures?"
+
+## Output Format
+Provide your analysis in strict JSON format with exactly four fields:
+
+1. **"explanation"**: A brief one-sentence explanation of your reasoning about whether context alignment is present in the reasoning trace
+2. **"span_analysis"**: Your reasoning process for identifying parts of the text that demonstrate context alignment. Describe what specific phrases or sentences show contextual assessment, structural adaptation, multiple structure repertoire, or flexible switching, and explain why they demonstrate context alignment. This guides you to identify the character indices. Use an empty string "" if no context alignment is found.
+3. **"spans"**: A list of lists, where each sublist contains [start_index, end_index] for character indices that demonstrate context alignment. Use an empty list [] if no spans demonstrate context alignment.
+4. **"score"**: Your final score as an integer (0, 1, or 2)
+
+
+## Example Annotations
+
+### Example 1 (Score: 0)
+Reasoning trace: "To solve this problem, I'll work through it step by step. First, I need to understand what the question is asking. Then, I'll identify the key information provided. Next, I'll apply the relevant formula. After that, I'll calculate the answer. Finally, I'll check my work to make sure the answer makes sense. Following this approach, I see that the question asks for the force needed to accelerate a 50kg object at 10 m/s². Using Newton's Second Law, F = ma, I can substitute the mass and acceleration: F = 50kg × 10m/s² = 500N. Therefore, the force needed is 500 Newtons."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant applies a generic step-by-step approach without any evidence of assessing the specific context to determine an appropriate structure, adapting its organization to the problem type, or considering alternative organizational patterns.",
+  "span_analysis": "This text shows no context alignment - it uses a generic step-by-step approach without assessing the context, adapting organizational structures to the problem type, or showing awareness of different structural approaches.",
+  "spans": [],
+  "score": 0
+}}
+```
+
+### Example 2 (Score: 1)
+Reasoning trace: "Since this is a legal analysis question, I'll approach it by examining case precedent and statutory interpretation. The question concerns whether a contract was validly formed between parties A and B.
+
+First, I need to identify the elements required for valid contract formation: offer, acceptance, consideration, and intent to create legal relations. For each element, I'll assess the evidence from the scenario.
+
+Regarding the offer, Party A sent an email on March 3rd stating specific terms for the sale of goods. This constitutes a clear offer under contract law principles.
+
+For acceptance, Party B replied on March 5th saying "I agree to your terms." This appears to be unequivocal acceptance.
+
+Consideration is present as Party A was offering goods in exchange for Party B's payment of $5,000.
+
+The intent to create legal relations can be inferred from the business context and formal language used.
+
+Therefore, based on this analysis of the elements, a valid contract was formed between the parties."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates some context alignment by recognizing this is a legal question and using an element-by-element analysis appropriate for contract law, but it applies a fairly standard approach without showing a sophisticated repertoire of structures or adapting its organization beyond the basic domain-appropriate format.",
+  "span_analysis": "Looking for context alignment in this text: The phrase 'Since this is a legal analysis question, I'll approach it by examining case precedent and statutory interpretation' shows contextual assessment by recognizing the problem type and selecting an appropriate approach. The text 'First, I need to identify the elements required for valid contract formation:' demonstrates structural adaptation by using an element-by-element structure appropriate for legal analysis. These show basic context alignment through domain-appropriate structure selection.",
+  "spans": [[0, 120], [204, 287]],
+  "score": 1
+}}
+```
+
+### Example 3 (Score: 2)
+Reasoning trace: "I notice this is a multifaceted problem with both quantitative and ethical dimensions, so I'll need to adapt my approach for each component.
+
+For the quantitative part—calculating the environmental impact of the factory expansion—I'll use a sequential, computational structure. First, I'll calculate the current emissions (50,000 tons CO₂/year) and project the 30% increase (additional 15,000 tons/year). Then I'll analyze water usage similarly (current 2M gallons/day increasing to 2.6M gallons/day) and estimate impact on local water tables using hydrological principles.
+
+Now switching to the economic analysis, which requires a different structure. Here, a comparative framework is more appropriate. I'll create a table comparing current vs. projected states across multiple variables: jobs (250 current, 325 projected), tax revenue ($3M vs. $4.2M), and infrastructure costs ($1M vs. $1.4M).
+
+For the stakeholder analysis portion, I need to adopt yet another structure—a network approach mapping relationships between different parties. The company, local residents, regulatory bodies, and environmental groups form nodes with competing interests. This network reveals potential conflict points and alliance opportunities that wouldn't be visible in a linear analysis.
+
+When addressing the ethical dimension, I'll transition to a principlist framework examining the case through four core principles: autonomy (community's right to self-determination), beneficence (economic benefits), non-maleficence (environmental harm), and justice (distribution of benefits and burdens). This structure is particularly suited for ethical dilemmas where values conflict.
+
+Finally, for the policy recommendation section, I need to integrate these diverse analyses. Here, a hierarchical structure works best: starting with high-level principles, moving to specific criteria, then to concrete recommendations. At the top level, I'll establish the principle of sustainable development, then develop mid-level criteria like "no irreversible environmental damage," and finally specific recommendations like "approve with conditions requiring carbon offsetting."
+
+If this were purely a business case or purely an environmental science problem, I would have structured my entire approach differently. The context-specific requirements of this mixed problem require this adaptive approach."
+
+Annotation:
+```json
+{{
+  "explanation": "The participant demonstrates sophisticated context alignment by explicitly recognizing the multifaceted nature of the problem, deliberately selecting different organizational structures for different components (sequential for quantitative analysis, comparative for economic analysis, network for stakeholders, principlist for ethics, and hierarchical for recommendations), and clearly articulating why each structure is appropriate for its specific context.",
+  "span_analysis": "Analyzing this text for context alignment: The phrase 'I notice this is a multifaceted problem with both quantitative and ethical dimensions, so I'll need to adapt my approach for each component' shows contextual assessment and structural adaptation by recognizing different problem dimensions and adapting approach accordingly. The text 'For the quantitative part—calculating the environmental impact of the factory expansion—I'll use a sequential, computational structure' demonstrates multiple structure repertoire by selecting a specific organizational structure appropriate for the quantitative context. These demonstrate sophisticated context alignment through explicit contextual assessment and adaptive structure selection.",
+  "spans": [[0, 140], [142, 277]],
+  "score": 2
+}}
+```
+
+Now it's your turn, you are provided with a question and the participant's response with their reasoning process. You should carefully analyze the reasoning trace and provide your professional and scientific judgment of whether the cognitive capability of context alignment is present in the reasoning, regardless of the correctness of the response. Provide your analysis in the strict JSON format specified above.
+
+Question: {question}
+
+Reasoning trace: {response}
+
+Annotation:
