@@ -1,4 +1,5 @@
 <p align="center"><img src="https://github.com/pkargupta/cognitive_foundations/blob/main/figs/readme_image.png" alt="Cognitive Foundations"/></p>
+
 # Cognitive Foundations for Reasoning and Their Manifestation in LLMs
 
 
