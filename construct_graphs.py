@@ -30,7 +30,7 @@ if __name__ == "__main__":
     parser.add_argument("--overlap_threshold", type=float, default=0.8, help="Overlap threshold for span tree")
     parser.add_argument("--parallel_threshold", type=float, default=20, help="Parallel threshold for span tree")
     parser.add_argument("--target_type", type=str, default=None, help="Target type to filter elements")
-    parser.add_argument("--output_dir", type=str, default="reasoning_structure/output_consensus_test_graphs", help="Output directory for consensus graphs")
+    parser.add_argument("--output_dir", type=str, default="reasoning_structure/output_consensus_graphs", help="Output directory for consensus graphs")
     parser.add_argument("--path_to_question_info", type=str, default="/shared/data3/pk36/structured_survey/accuracy_evaluation/all_evaluations_gpt4o.json", help="Directory for question info")
     parser.add_argument("--max_nodes", type=int, default=7, help="Maximum number of nodes in consensus graph")
     parser.add_argument("--generate_steered_traces", action="store_true")
